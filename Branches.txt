@@ -1,0 +1,8 @@
+We houden de volgende branches aan:
+
+Alex
+Bob
+Dennis
+Henk
+
+Probeer wanneer je hiernaar toe wilt pushen, geen conflicterende bestanden te hebben!
