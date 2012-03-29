@@ -5,5 +5,5 @@ public class RuleDTO {
 	public String[] violationTypes;
 	public ModuleDTO moduleFrom;
 	public ModuleDTO moduleTo;
-	public RuleDTO exceptionRules;
+	public RuleDTO[] exceptionRules;
 }

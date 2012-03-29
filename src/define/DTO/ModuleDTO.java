@@ -2,6 +2,6 @@ package define.DTO;
 
 public class ModuleDTO {
 	public String name;
-	public String[] regexes;
+	public String[] uniqueNames;
 	public ModuleDTO[] subModules;
 }
