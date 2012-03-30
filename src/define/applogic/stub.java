@@ -1,75 +1,69 @@
 package define.applogic;
 
 import define.DTO.*;
-import define.domain.*;
 
 public class stub implements IDefineService{
 
 	@Override
 	public RuleDTO[] getDefinedRules() {
-		//DEFINE ARCHITECTURE
-		//DEFINE ARCHITECTURE
-		//IGNORE
-		//IGNORE
-		//IGNORE
-		ModuleDTO module5 = new ModuleDTO();
-		module5.name = "m5";
-		module5.uniqueNames = new String[] {};
-		module5.subModules = new ModuleDTO[]{};
+		//Temporary architecture
+		ModuleDTO lbDAOModule = new ModuleDTO();
+		lbDAOModule.name = "locationbasedDAO";
+		lbDAOModule.uniqueNames = new String[] {"infrastructure.socialmedia.locationbased.foursquare.AccountDAO",
+				"infrastructure.socialmedia.locationbased.foursquare.FriendsDAO",
+				"infrastructure.socialmedia.locationbased.foursquare.IMap",
+				"infrastructure.socialmedia.locationbased.foursquare.HistoryDAO"};
+		lbDAOModule.subModules = new ModuleDTO[]{};
 		
-		ModuleDTO module6 = new ModuleDTO();
-		module6.name = "m6";
-		module6.uniqueNames = new String[] {};
-		module6.subModules = new ModuleDTO[]{};
+		ModuleDTO latitudeModule = new ModuleDTO();
+		latitudeModule.name = "latitudeConnection";
+		latitudeModule.uniqueNames = new String[] {"domain.locationbased.latitude.Account",
+				"domain.locationbased.latitude.Friends", "domain.locationbased.latitude.Map"};
+		latitudeModule.subModules = new ModuleDTO[]{};
 		
-		ModuleDTO module1 = new ModuleDTO();
-		module1.name = "m1";
-		module1.uniqueNames = new String[] {};
-		module1.subModules = new ModuleDTO[]{module5};
+		ModuleDTO fqConnectionModule = new ModuleDTO();
+		fqConnectionModule.name = "foursquareConnection";
+		fqConnectionModule.uniqueNames = new String[] {"domain.locationbased.foursquare.Account",
+				"domain.locationbased.foursquare.Friends", "domain.locationbased.foursquare.Map"};
+		fqConnectionModule.subModules = new ModuleDTO[]{};
 		
-		ModuleDTO module2 = new ModuleDTO();
-		module2.name = "m2";
-		module2.uniqueNames = new String[] {};
-		module2.subModules = new ModuleDTO[]{module6};
+		ModuleDTO lbHistoryModule = new ModuleDTO();
+		lbHistoryModule.name = "locationbasedHistory";
+		lbHistoryModule.uniqueNames = new String[] {"domain.locationbased.foursquare.History"};
+		lbHistoryModule.subModules = new ModuleDTO[]{};
 		
-		ModuleDTO module3 = new ModuleDTO();
-		module3.name = "m3";
-		module3.uniqueNames = new String[] {};
-		module3.subModules = new ModuleDTO[]{};
+		ModuleDTO lbConnectionsModule = new ModuleDTO();
+		lbConnectionsModule.name = "locationbasedConnections";
+		lbConnectionsModule.uniqueNames = new String[] {};
+		lbConnectionsModule.subModules = new ModuleDTO[]{fqConnectionModule, latitudeModule};
 		
-		ModuleDTO module4 = new ModuleDTO();
-		module4.name = "m4";
-		module4.uniqueNames = new String[] {};
-		module4.subModules = new ModuleDTO[]{};
+		LayerDTO infrastructureLayer = new LayerDTO();
+		infrastructureLayer.name = "Infrastructure layer";
+		infrastructureLayer.subModules = new ModuleDTO[]{lbDAOModule};
 		
-		LayerDTO layer1 = new LayerDTO();
-		layer1.name = "l1";
-		layer1.subModules = new ModuleDTO[]{module1, module2};
+		LayerDTO domainLayer = new LayerDTO();
+		domainLayer.name = "Domain Layer";
+		domainLayer.subModules = new ModuleDTO[]{lbConnectionsModule, lbHistoryModule};
 		
-		LayerDTO layer2 = new LayerDTO();
-		layer2.name = "l2";
-		layer2.subModules = new ModuleDTO[]{module3, module4};
+		//All violationTypes
+//		new String[]{"Invocation of a method/contructor", "Access of a property of field," +
+//				"Extending a class/struct", "Implementing an interface", "Declaration", "Annotation of an attribute" +
+//				"Import", "Throw an exception of a class"};
 		
 		//ACTUAL RULES
 		//ACTUAL RULES
 		RuleDTO ruleOne = new RuleDTO();
 		ruleOne.ruleType = "Is not allowed to use";
-		ruleOne.violationTypes = new String[]{"Import","Annotation"};
-		ruleOne.moduleFrom = module1;			
-		ruleOne.moduleTo = module2;
-			RuleDTO exceptionRuleOnRuleOne = new RuleDTO();
-			ruleOne.ruleType = "Exception";
-			ruleOne.moduleFrom = module5;			
-			ruleOne.moduleTo = module6;
-		ruleOne.exceptionRules = new RuleDTO[]{exceptionRuleOnRuleOne};
+		ruleOne.violationTypes = new String[]{"Invocation of a method/contructor","Extending an abstract class", "Implementing an interface"};
+		ruleOne.moduleFrom = lbConnectionsModule;			
+		ruleOne.moduleTo = lbDAOModule;
+		ruleOne.exceptionRules = new RuleDTO[]{};
 
 		RuleDTO ruleTwo = new RuleDTO();
-		ruleTwo.ruleType = "Must Use";
-		ruleTwo.violationTypes = new String[]{"Invocation of a method/contructor", "Access of a proprty of field," +
-				"Extending a class/struct", "Implementing an interface", "Declaration", "Annotation of an attribute" +
-				"Import", "Throw an exception of a class"};
-		ruleTwo.moduleFrom = module5;
-		ruleTwo.moduleTo = module6;
+		ruleTwo.ruleType = "Is not allowed to use";		
+		ruleTwo.violationTypes = new String[] {"Extending a class/struct"};
+		ruleTwo.moduleFrom = lbHistoryModule;
+		ruleTwo.moduleTo = lbDAOModule;
 		ruleOne.exceptionRules = new RuleDTO[]{};
 		
 		RuleDTO[] rules = new RuleDTO[]{ruleOne, ruleTwo};
@@ -77,46 +71,46 @@ public class stub implements IDefineService{
 	}
 
 	@Override
-	public LayerDTO[] getDefinedLayers() {
-		ModuleDTO module5 = new ModuleDTO();
-		module5.name = "m5";
-		module5.uniqueNames = new String[] {};
-		module5.subModules = new ModuleDTO[]{};
+	public LayerDTO[] getDefinedLayers() {	
+		ModuleDTO lbDAOModule = new ModuleDTO();
+		lbDAOModule.name = "locationbasedDAO";
+		lbDAOModule.uniqueNames = new String[] {"infrastructure.socialmedia.locationbased.foursquare.AccountDAO",
+				"infrastructure.socialmedia.locationbased.foursquare.FriendsDAO",
+				"infrastructure.socialmedia.locationbased.foursquare.IMap",
+				"infrastructure.socialmedia.locationbased.foursquare.HistoryDAO"};
+		lbDAOModule.subModules = new ModuleDTO[]{};
 		
-		ModuleDTO module6 = new ModuleDTO();
-		module6.name = "m6";
-		module6.uniqueNames = new String[] {};
-		module6.subModules = new ModuleDTO[]{};
+		ModuleDTO latitudeModule = new ModuleDTO();
+		latitudeModule.name = "latitudeConnection";
+		latitudeModule.uniqueNames = new String[] {"domain.locationbased.latitude.Account",
+				"domain.locationbased.latitude.Friends", "domain.locationbased.latitude.Map"};
+		latitudeModule.subModules = new ModuleDTO[]{};
 		
-		ModuleDTO module1 = new ModuleDTO();
-		module1.name = "m1";
-		module1.uniqueNames = new String[] {};
-		module1.subModules = new ModuleDTO[]{module5};
+		ModuleDTO fqConnectionModule = new ModuleDTO();
+		fqConnectionModule.name = "foursquareConnection";
+		fqConnectionModule.uniqueNames = new String[] {"domain.locationbased.foursquare.Account",
+				"domain.locationbased.foursquare.Friends", "domain.locationbased.foursquare.Map"};
+		fqConnectionModule.subModules = new ModuleDTO[]{};
 		
-		ModuleDTO module2 = new ModuleDTO();
-		module2.name = "m2";
-		module2.uniqueNames = new String[] {};
-		module2.subModules = new ModuleDTO[]{module6};
+		ModuleDTO lbHistoryModule = new ModuleDTO();
+		lbHistoryModule.name = "locationbasedHistory";
+		lbHistoryModule.uniqueNames = new String[] {"domain.locationbased.foursquare.History"};
+		lbHistoryModule.subModules = new ModuleDTO[]{};
 		
-		ModuleDTO module3 = new ModuleDTO();
-		module3.name = "m3";
-		module3.uniqueNames = new String[] {};
-		module3.subModules = new ModuleDTO[]{};
+		ModuleDTO lbConnectionsModule = new ModuleDTO();
+		lbConnectionsModule.name = "locationbasedConnections";
+		lbConnectionsModule.uniqueNames = new String[] {};
+		lbConnectionsModule.subModules = new ModuleDTO[]{fqConnectionModule, latitudeModule};
 		
-		ModuleDTO module4 = new ModuleDTO();
-		module4.name = "m4";
-		module4.uniqueNames = new String[] {};
-		module4.subModules = new ModuleDTO[]{};
+		LayerDTO infrastructureLayer = new LayerDTO();
+		infrastructureLayer.name = "Infrastructure layer";
+		infrastructureLayer.subModules = new ModuleDTO[]{lbDAOModule};
 		
-		LayerDTO layer1 = new LayerDTO();
-		layer1.name = "l1";
-		layer1.subModules = new ModuleDTO[]{module1, module2};
-		
-		LayerDTO layer2 = new LayerDTO();
-		layer2.name = "l2";
-		layer2.subModules = new ModuleDTO[]{module3, module4};
+		LayerDTO domainLayer = new LayerDTO();
+		domainLayer.name = "Domain Layer";
+		domainLayer.subModules = new ModuleDTO[]{lbConnectionsModule, lbHistoryModule};
 
-		LayerDTO[] allLayers = new LayerDTO[]{layer1,layer2};
+		LayerDTO[] allLayers = new LayerDTO[]{domainLayer,infrastructureLayer};
 		return allLayers;
 	}
 
