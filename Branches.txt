@@ -1,3 +1,5 @@
+Clone de master repository, en switch gelijk naar je eigen branche toe. Blijf daar ook in!
+
 We houden de volgende branches aan:
 
 Alex
