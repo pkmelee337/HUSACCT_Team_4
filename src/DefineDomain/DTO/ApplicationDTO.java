@@ -1,4 +1,4 @@
-package define.DTO;
+package DefineDomain.DTO;
 
 public class ApplicationDTO {
 	public String name;

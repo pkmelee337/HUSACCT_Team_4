@@ -1,8 +1,8 @@
-package define.DTO;
+package DefineDomain.DTO;
 
 public class RuleDTO {
-	public String ruleType;
-	public String[] violationTypes;
+	public String ruleTypeKey;
+	public String[] violationTypeKeys;
 	public ModuleDTO moduleFrom;
 	public ModuleDTO moduleTo;
 	public RuleDTO[] exceptionRules;

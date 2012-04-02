@@ -1,4 +1,4 @@
-package define.domain;
+package DefineDomain.domain;
 
 public class AppliedRule {
 
