@@ -1,4 +1,4 @@
-package define.domainOLD;
+package DefineDomain.domainOLD;
 
 public class RuleException 
 {

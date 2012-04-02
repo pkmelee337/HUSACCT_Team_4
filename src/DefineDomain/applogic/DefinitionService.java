@@ -1,9 +1,9 @@
-package define.applogic;
+package DefineDomain.applogic;
 
 import java.util.HashMap;
 
-import define.domainOLD.ApplicationDefinition;
-import define.domainOLD.ArchitectureDefinition;
+import DefineDomain.domainOLD.ApplicationDefinition;
+import DefineDomain.domainOLD.ArchitectureDefinition;
 
 public class DefinitionService
 {

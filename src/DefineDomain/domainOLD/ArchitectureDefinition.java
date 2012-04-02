@@ -1,4 +1,4 @@
-package define.domainOLD;
+package DefineDomain.domainOLD;
 
 import java.util.ArrayList;
 import java.util.HashMap;
