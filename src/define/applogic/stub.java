@@ -2,7 +2,7 @@ package define.applogic;
 
 import define.DTO.*;
 
-public class stub implements IDefineService{
+public class Stub implements IDefineService{
 
 	@Override
 	public RuleDTO[] getDefinedRules() {
