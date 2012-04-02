@@ -5,9 +5,15 @@ import java.util.HashMap;
 import DefineDomain.domainOLD.ApplicationDefinition;
 import DefineDomain.domainOLD.ArchitectureDefinition;
 
-public class DefinitionService
-{
-	public DefinitionService(){}
+public class DefinitionService {
+	private static DefinitionService instance = null;
+	public static DefinitionService getInstance() {
+		return instance == null ? (instance = new DefinitionService()) : instance;
+	}
+	
+	public DefinitionService() {
+		
+	}
 	
 	public void addLayer(String name, int level) throws Exception
 	{
