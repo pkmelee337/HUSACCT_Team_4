@@ -13,6 +13,12 @@ public class Application {
 		this.setLanguage("");
 	}
 	
+	public Application(String name, String lang)
+	{
+		this.setName(name);
+		this.setLanguage(lang);
+	}
+	
 	public Application(String name, String[] paths, String lang)
 	{
 		this.setName(name);
