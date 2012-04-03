@@ -1,8 +1,8 @@
-package husacct.define.domain.define_domain.domain;
+package husacct.define.domain;
 
 import java.util.ArrayList;
 
-import husacct.define.domain.define_domain.domain.module.Module;
+import husacct.define.domain.module.Module;
 
 public class AppliedRule {
 	
@@ -13,11 +13,11 @@ public class AppliedRule {
 	private String suffix;
 	private Module usedModule;
 	private Module restrictedModule;
-	private ArrayList<AppliedRule> exceptions;
+	private ArrayList<AppliedRule> exceptions;	
 
 	public AppliedRule(int id, String description, String[] dependencies,
 			String prefix, String suffix, Module usedModule,
-			Module restrictedModule, ArrayList<AppliedRule> exceptions) {
+			Module restrictedModule) {
 		this.id = id;
 		this.description = description;
 		this.dependencies = dependencies;
@@ -25,7 +25,7 @@ public class AppliedRule {
 		this.suffix = suffix;
 		this.usedModule = usedModule;
 		this.restrictedModule = restrictedModule;
-		this.exceptions = exceptions;
+		this.exceptions = new ArrayList<AppliedRule>();
 	}
 
 	public AppliedRule() {

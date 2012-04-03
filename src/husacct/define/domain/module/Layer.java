@@ -1,4 +1,4 @@
-package husacct.define.domain.define_domain.domain.module;
+package husacct.define.domain.module;
 
 public class Layer extends Module {
 	
@@ -14,6 +14,13 @@ public class Layer extends Module {
 	{
 		super();
 		setHierarchicalLevel(0);
+	}
+	
+	public Layer(String name, String description)
+	{
+		super.name = name;
+		super.description = description;
+		super.type = "Layer";
 	}
 
 	public void setHierarchicalLevel(int hierarchicalLevel) {

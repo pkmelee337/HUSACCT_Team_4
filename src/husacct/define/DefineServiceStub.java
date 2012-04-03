@@ -1,6 +1,6 @@
-package husacct.define.domain.define_domain;
+package husacct.define;
 
-import husacct.define.domain.define_domain.DTO.*;
+import husacct.define.dto.*;
 
 public class DefineServiceStub implements IDefineService{
 

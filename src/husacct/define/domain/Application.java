@@ -1,4 +1,4 @@
-package husacct.define.domain.define_domain.domain;
+package husacct.define.domain;
 
 public class Application {
 	
@@ -11,6 +11,12 @@ public class Application {
 		this.setName("");
 		this.setPaths(new String[1]);
 		this.setLanguage("");
+	}
+	
+	public Application(String name, String lang)
+	{
+		this.setName(name);
+		this.setLanguage(lang);
 	}
 	
 	public Application(String name, String[] paths, String lang)

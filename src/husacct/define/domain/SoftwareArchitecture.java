@@ -1,8 +1,8 @@
-package husacct.define.domain.define_domain.domain;
+package husacct.define.domain;
 
 import java.util.ArrayList;
 
-import husacct.define.domain.define_domain.domain.module.Module;
+import husacct.define.domain.module.Module;
 
 public class SoftwareArchitecture {
 	
@@ -68,6 +68,8 @@ public class SoftwareArchitecture {
 		return appliedRules;
 	}
 
+	
+	//Module
 	public void addModule(Module module)
 	{
 		modules.add(module);
@@ -91,6 +93,8 @@ public class SoftwareArchitecture {
 		return false;
 	}
 	
+	
+	//Application
 	public void addApplication(Application app)
 	{
 		applications.add(app);
@@ -114,6 +118,8 @@ public class SoftwareArchitecture {
 		return false;
 	}
 	
+	
+	//AppliedRule
 	public void addAppliedRule(AppliedRule rule)
 	{
 		appliedRules.add(rule);
