@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 
@@ -51,20 +50,19 @@ public class JFrameSoftwareUnit extends JFrame {
 	public JButton jButtonRemoveExceptionRow;
 	public JButton jButtonSave;
 	public JButton jButtonCancel;
-	public JComboBox jComboBoxSoftwareUnitType;
-	public JTextField jTextFieldSoftwareUnitName;
+	public JComboBox jComboBoxSoftwareUnit;
 	public JTableException jTableException;
 
 	/**
 	 * Auto-generated main method to display this JFrame
 	 */
 
-	public JFrameSoftwareUnit() {
+	public JFrameSoftwareUnit(String[] comboBoxValues) {
 		super();
-		initUI();
+		initUI(comboBoxValues);
 	}
 
-	private void initUI() {
+	private void initUI(String[] comboBoxValues) {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			setTitle("New Software Unit");
@@ -80,18 +78,9 @@ public class JFrameSoftwareUnit extends JFrame {
 				jPanel1.setLayout(jPanel1Layout);
 				jPanel1.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 				{
-					jLabel1 = new JLabel();
-					jPanel1.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-					jLabel1.setText("Software unit name");
-				}
-				{
-					jTextFieldSoftwareUnitName = new JTextField(50);
-					jPanel1.add(jTextFieldSoftwareUnitName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-				}
-				{
 					jLabel2 = new JLabel();
 					jPanel1.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-					jLabel2.setText("Type");
+					jLabel2.setText("Selecteer software definitie");
 				}
 				{
 //					old =
@@ -99,53 +88,58 @@ public class JFrameSoftwareUnit extends JFrame {
 //							SoftwareUnitDefinition.PACKAGE, 
 //							SoftwareUnitDefinition.CLASS, 
 //							SoftwareUnitDefinition.METHOD });
-					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new String[] { 
-							"package", "class", "method"  });
-					jComboBoxSoftwareUnitType = new JComboBox();
-					jPanel1.add(jComboBoxSoftwareUnitType, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-					jComboBoxSoftwareUnitType.setModel(jComboBox1Model);
+					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(comboBoxValues);
+					jComboBoxSoftwareUnit = new JComboBox();
+					jPanel1.add(jComboBoxSoftwareUnit, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+					jComboBoxSoftwareUnit.setModel(jComboBox1Model);
 				}
-				{
-					jLabel3 = new JLabel();
-					jPanel1.add(jLabel3, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-					jLabel3.setText("Exceptions");
-				}
-				{
-					jPanel3 = new JPanel();
-					BorderLayout jPanel3Layout = new BorderLayout();
-					jPanel3.setLayout(jPanel3Layout);
-					jPanel1.add(jPanel3, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-					{
-						jScrollPane1 = new JScrollPane();
-						jPanel3.add(jScrollPane1, BorderLayout.CENTER);
-						jScrollPane1.setPreferredSize(new java.awt.Dimension(516, 55));
-						{
-							jTableException = new JTableException();
-							jScrollPane1.setViewportView(jTableException);
-						}
-					}
-					{
-						jPanel4 = new JPanel();
-						GridBagLayout jPanel4Layout = new GridBagLayout();
-						jPanel3.add(jPanel4, BorderLayout.EAST);
-						jPanel4Layout.rowWeights = new double[] { 0.0, 0.1 };
-						jPanel4Layout.rowHeights = new int[] { 15, 7 };
-						jPanel4Layout.columnWeights = new double[] { 0.1 };
-						jPanel4Layout.columnWidths = new int[] { 7 };
-						jPanel4.setLayout(jPanel4Layout);
-						jPanel4.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
-						{
-							jButtonAddExceptionRow = new JButton();
-							jPanel4.add(jButtonAddExceptionRow, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-							jButtonAddExceptionRow.setText("Add row");
-						}
-						{
-							jButtonRemoveExceptionRow = new JButton();
-							jPanel4.add(jButtonRemoveExceptionRow, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-							jButtonRemoveExceptionRow.setText("Remove row");
-						}
-					}
-				}
+				
+				
+				
+				
+				
+				// IS DIT GEDEELTE NODIG? DENK HET NIET?
+//				{
+//					jLabel3 = new JLabel();
+//					jPanel1.add(jLabel3, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+//					jLabel3.setText("Exceptions");
+//				}
+//				{
+//					jPanel3 = new JPanel();
+//					BorderLayout jPanel3Layout = new BorderLayout();
+//					jPanel3.setLayout(jPanel3Layout);
+//					jPanel1.add(jPanel3, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+//					{
+//						jScrollPane1 = new JScrollPane();
+//						jPanel3.add(jScrollPane1, BorderLayout.CENTER);
+//						jScrollPane1.setPreferredSize(new java.awt.Dimension(516, 55));
+//						{
+//							jTableException = new JTableException();
+//							jScrollPane1.setViewportView(jTableException);
+//						}
+//					}
+//					{
+//						jPanel4 = new JPanel();
+//						GridBagLayout jPanel4Layout = new GridBagLayout();
+//						jPanel3.add(jPanel4, BorderLayout.EAST);
+//						jPanel4Layout.rowWeights = new double[] { 0.0, 0.1 };
+//						jPanel4Layout.rowHeights = new int[] { 15, 7 };
+//						jPanel4Layout.columnWeights = new double[] { 0.1 };
+//						jPanel4Layout.columnWidths = new int[] { 7 };
+//						jPanel4.setLayout(jPanel4Layout);
+//						jPanel4.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
+//						{
+//							jButtonAddExceptionRow = new JButton();
+//							jPanel4.add(jButtonAddExceptionRow, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+//							jButtonAddExceptionRow.setText("Add row");
+//						}
+//						{
+//							jButtonRemoveExceptionRow = new JButton();
+//							jPanel4.add(jButtonRemoveExceptionRow, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+//							jButtonRemoveExceptionRow.setText("Remove row");
+//						}
+//					}
+//				}
 			}
 			{
 				jPanel2 = new JPanel();

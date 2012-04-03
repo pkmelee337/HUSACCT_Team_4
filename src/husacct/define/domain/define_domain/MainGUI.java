@@ -1,9 +1,11 @@
-package husacct.define.domain.define_domain.applogic.view;
+package husacct.define.domain.define_domain;
 
+import husacct.define.domain.define_domain.applogic.controller.ApplicationController;
 
-public class MainUI {
+public class MainGUI {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String args[])
+	{
 //		ImportController importc = new ImportController();
 //		importc.importXML(new File("./xml/architecture.xml"));
 

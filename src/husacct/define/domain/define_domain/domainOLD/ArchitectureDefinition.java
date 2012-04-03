@@ -83,6 +83,11 @@ public class ArchitectureDefinition extends Definition
 		throw new Exception(String.format("No layer on level '%s'", layerLevel));
 	}
 	
+	public void changeLayerName(int layerLevel, String layerName) throws Exception {
+		LayerDefinition layer = getLayerByLevel(layerLevel);
+		layer.setName(layerName);
+	}
+	
 	public String getLayerNameByLevel(int layerLevel) throws Exception {
 		LayerDefinition layer = this.getLayerByLevel(layerLevel);
 		return layer.getName();
@@ -195,10 +200,14 @@ public class ArchitectureDefinition extends Definition
 		return layer.getName();
 	}
 	
-	public void setSoftwareUnitLayer(String uniqueName, String layerName) throws Exception
+	public void getSoftwareUnitsForLayer(int layerLevel) {
+		
+	}
+	
+	public void setSoftwareUnitLayer(String uniqueName, int layerLevel) throws Exception
 	{
 		SoftwareUnitDefinition unit = getUnitByUniqueName(uniqueName);
-		LayerDefinition layer = getLayerByName(layerName);
+		LayerDefinition layer = getLayerByLevel(layerLevel);
 		
 		unit.setLayer(layer);
 	}

@@ -1,8 +1,9 @@
-package husacct.define.domain.define_domain.applogic.view;
+package husacct.define.domain.define_domain.applogic.controller;
 
 import husacct.define.domain.define_domain.applogic.controller.DefinitionController;
 import husacct.define.domain.define_domain.applogic.view.utils.Log;
 import husacct.define.domain.define_domain.applogic.view.utils.UiDialogs;
+import husacct.define.domain.define_domain.applogic.view.ApplicationJFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

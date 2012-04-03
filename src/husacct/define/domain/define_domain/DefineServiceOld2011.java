@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import husacct.define.domain.define_domain.domainOLD.ApplicationDefinition;
 import husacct.define.domain.define_domain.domainOLD.ArchitectureDefinition;
+import husacct.define.domain.define_domain.domainOLD.SoftwareUnitDefinition;
 
 public class DefineServiceOld2011 {
 	private static DefineServiceOld2011 instance = null;
@@ -39,14 +40,22 @@ public class DefineServiceOld2011 {
 		return ArchitectureDefinition.getInstance().getLayerLevels();
 	}
 	
+	public void setLayerName(int layer_level, String newName) throws Exception {
+		ArchitectureDefinition.getInstance().changeLayerName(layer_level, newName);
+	}
+	
 	public void addSoftwareUnit(String uniqueName, String type)
 	{		
 		ApplicationDefinition.getInstance().addSoftwareUnit(uniqueName, type);
 	}
 	
-	public void setSoftwareUnitLayer(String uniqueName, String layerName) throws Exception
+	public void addUniqueName(String name, SoftwareUnitDefinition unit) {
+		ArchitectureDefinition.getInstance().addUniqueName(name, unit);
+	}
+	
+	public void setSoftwareUnitLayer(String uniqueName, int layerLevel) throws Exception
 	{
-		ArchitectureDefinition.getInstance().setSoftwareUnitLayer(uniqueName, layerName);
+		ArchitectureDefinition.getInstance().setSoftwareUnitLayer(uniqueName, layerLevel);
 	}
 	
 	public String getLayerForSoftwareUnit(String uniqueName) throws Exception
