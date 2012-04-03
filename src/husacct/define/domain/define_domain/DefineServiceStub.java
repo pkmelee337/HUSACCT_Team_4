@@ -1,8 +1,8 @@
-package DefineDomain.applogic;
+package husacct.define.domain.define_domain;
 
-import DefineDomain.DTO.*;
+import husacct.define.domain.define_domain.DTO.*;
 
-public class Stub implements IDefineService{
+public class DefineServiceStub implements IDefineService{
 
 	@Override
 	public RuleDTO[] getDefinedRules() {

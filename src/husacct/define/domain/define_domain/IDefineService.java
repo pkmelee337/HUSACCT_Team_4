@@ -1,6 +1,6 @@
-package DefineDomain.applogic;
+package husacct.define.domain.define_domain;
 
-import DefineDomain.DTO.*;
+import husacct.define.domain.define_domain.DTO.*;
 
 public interface IDefineService {
 	

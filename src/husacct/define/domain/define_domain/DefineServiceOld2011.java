@@ -1,13 +1,13 @@
-package DefineDomain.applogic;
+package husacct.define.domain.define_domain;
 
 import java.util.HashMap;
 
-import DefineDomain.domainOLD.ApplicationDefinition;
-import DefineDomain.domainOLD.ArchitectureDefinition;
+import husacct.define.domain.define_domain.domainOLD.ApplicationDefinition;
+import husacct.define.domain.define_domain.domainOLD.ArchitectureDefinition;
 
-public class DefinitionService
+public class DefineServiceOld2011
 {
-	public DefinitionService(){}
+	public DefineServiceOld2011(){}
 	
 	public void addLayer(String name, int level) throws Exception
 	{

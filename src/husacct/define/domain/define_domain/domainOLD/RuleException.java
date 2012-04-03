@@ -1,4 +1,4 @@
-package DefineDomain.domainOLD;
+package husacct.define.domain.define_domain.domainOLD;
 
 public class RuleException 
 {
