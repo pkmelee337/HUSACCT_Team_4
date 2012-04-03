@@ -1,18 +1,18 @@
-package DefineDomain.applogic;
+package husacct.define.domain.define_domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import DefineDomain.domainOLD.ApplicationDefinition;
-import DefineDomain.domainOLD.ArchitectureDefinition;
+import husacct.define.domain.define_domain.domainOLD.ApplicationDefinition;
+import husacct.define.domain.define_domain.domainOLD.ArchitectureDefinition;
 
-public class DefinitionService {
-	private static DefinitionService instance = null;
-	public static DefinitionService getInstance() {
+public class DefinitionServiceOld2011 {
+	private static DefinitionServiceOld2011 instance = null;
+	public static DefinitionServiceOld2011 getInstance() {
 		return instance == null ? (instance = new DefinitionService()) : instance;
 	}
 	
-	public DefinitionService() {
+	public DefinitionServiceOld2011() {
 		
 	}
 	
