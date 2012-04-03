@@ -8,7 +8,7 @@ public class Stub implements IDefineService{
 	public RuleDTO[] getDefinedRules() {
 		//Temporary architecture
 		ModuleDTO lbDAOModule = new ModuleDTO();
-		lbDAOModule.logicalPath = "locationbasedDAO";
+		lbDAOModule.logicalPath = "InfrastructureLayer.locationbasedDAO";
 		lbDAOModule.physicalPaths = new String[] {"infrastructure.socialmedia.locationbased.foursquare.AccountDAO",
 				"infrastructure.socialmedia.locationbased.foursquare.FriendsDAO",
 				"infrastructure.socialmedia.locationbased.foursquare.IMap",
@@ -16,33 +16,33 @@ public class Stub implements IDefineService{
 		lbDAOModule.subModules = new ModuleDTO[]{};
 		
 		ModuleDTO latitudeModule = new ModuleDTO();
-		latitudeModule.logicalPath = "latitudeConnection";
+		latitudeModule.logicalPath = "DomainLayer.locationbasedConnections.latitudeConnection";
 		latitudeModule.physicalPaths = new String[] {"domain.locationbased.latitude.Account",
 				"domain.locationbased.latitude.Friends", "domain.locationbased.latitude.Map"};
 		latitudeModule.subModules = new ModuleDTO[]{};
 		
 		ModuleDTO fqConnectionModule = new ModuleDTO();
-		fqConnectionModule.logicalPath = "foursquareConnection";
+		fqConnectionModule.logicalPath = "DomainLayer.locationbasedConnections.foursquareConnection";
 		fqConnectionModule.physicalPaths = new String[] {"domain.locationbased.foursquare.Account",
 				"domain.locationbased.foursquare.Friends", "domain.locationbased.foursquare.Map"};
 		fqConnectionModule.subModules = new ModuleDTO[]{};
 		
 		ModuleDTO lbHistoryModule = new ModuleDTO();
-		lbHistoryModule.logicalPath = "locationbasedHistory";
+		lbHistoryModule.logicalPath = "DomainLayer.locationbasedHistory";
 		lbHistoryModule.physicalPaths = new String[] {"domain.locationbased.foursquare.History"};
 		lbHistoryModule.subModules = new ModuleDTO[]{};
 		
 		ModuleDTO lbConnectionsModule = new ModuleDTO();
-		lbConnectionsModule.logicalPath = "locationbasedConnections";
+		lbConnectionsModule.logicalPath = "DomainLayer.locationbasedConnections";
 		lbConnectionsModule.physicalPaths = new String[] {};
 		lbConnectionsModule.subModules = new ModuleDTO[]{fqConnectionModule, latitudeModule};
 		
 		ModuleDTO infrastructureLayer = new ModuleDTO();
-		infrastructureLayer.logicalPath = "Infrastructure layer";
+		infrastructureLayer.logicalPath = "InfrastructureLayer";
 		infrastructureLayer.subModules = new ModuleDTO[]{lbDAOModule};
 		
 		ModuleDTO domainLayer = new ModuleDTO();
-		domainLayer.logicalPath = "Domain Layer";
+		domainLayer.logicalPath = "DomainLayer";
 		domainLayer.subModules = new ModuleDTO[]{lbConnectionsModule, lbHistoryModule};
 		
 		//All violationTypes
@@ -75,14 +75,15 @@ public class Stub implements IDefineService{
 
 	@Override
 	public ModuleDTO[] getDefinedLayers() {			
-		//Gets only the top level abstraction Modules, aka the layers only
+		//Gets only the top level abstraction Modules
+		
 		ModuleDTO infrastructureLayer = new ModuleDTO();
-		infrastructureLayer.logicalPath = "Infrastructure layer";
-		infrastructureLayer.subModules = new ModuleDTO[]{};//lbDAOModule};
+		infrastructureLayer.logicalPath = "InfrastructureLayer";
+		infrastructureLayer.subModules = new ModuleDTO[]{};
 		
 		ModuleDTO domainLayer = new ModuleDTO();
-		domainLayer.logicalPath = "Domain Layer";
-		domainLayer.subModules = new ModuleDTO[]{};//lbConnectionsModule, lbHistoryModule};
+		domainLayer.logicalPath = "DomainLayer";
+		domainLayer.subModules = new ModuleDTO[]{};
 
 		ModuleDTO[] allLayers = new ModuleDTO[]{domainLayer,infrastructureLayer};
 		return allLayers;
@@ -99,14 +100,28 @@ public class Stub implements IDefineService{
 
 	@Override
 	public ModuleDTO[] getChildsFromModule(String logicalPath) {
-		// TODO Auto-generated method stub
-		return null;
+		ModuleDTO lbHistoryModule = new ModuleDTO();
+		lbHistoryModule.logicalPath = "DomainLayer.locationbasedHistory";
+		lbHistoryModule.physicalPaths = new String[] {"domain.locationbased.foursquare.History"};
+		lbHistoryModule.subModules = new ModuleDTO[]{};
+		
+		ModuleDTO lbConnectionsModule = new ModuleDTO();
+		lbConnectionsModule.logicalPath = "DomainLayer.locationbasedConnections";
+		lbConnectionsModule.physicalPaths = new String[] {};
+		lbConnectionsModule.subModules = new ModuleDTO[]{};
+		
+		ModuleDTO[] subModules = new ModuleDTO[]{lbConnectionsModule,lbHistoryModule};
+		return subModules;
 	}
 
 	@Override
 	public String getParentFromModule(String logicalPath) {
-		// TODO Auto-generated method stub
-		return null;
+		//returns parent from DomainLayer
+		return "**";
+		
+		//another example:
+		//parent from module: DomainLayer.locationbasedHistory would be
+		//return "DomainLayer";
 	}
 
 }
