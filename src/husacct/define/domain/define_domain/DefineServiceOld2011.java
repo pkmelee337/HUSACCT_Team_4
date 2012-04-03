@@ -6,13 +6,13 @@ import java.util.HashMap;
 import husacct.define.domain.define_domain.domainOLD.ApplicationDefinition;
 import husacct.define.domain.define_domain.domainOLD.ArchitectureDefinition;
 
-public class DefinitionServiceOld2011 {
-	private static DefinitionServiceOld2011 instance = null;
-	public static DefinitionServiceOld2011 getInstance() {
-		return instance == null ? (instance = new DefinitionService()) : instance;
+public class DefineServiceOld2011 {
+	private static DefineServiceOld2011 instance = null;
+	public static DefineServiceOld2011 getInstance() {
+		return instance == null ? (instance = new DefineServiceOld2011()) : instance;
 	}
 	
-	public DefinitionServiceOld2011() {
+	public DefineServiceOld2011() {
 		
 	}
 	
