@@ -63,12 +63,9 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-			if (DefinitionService.getInstance().hasArchitectureDefinition()) {
-				setTitle(DefinitionService.getInstance().getArchitectureName());
-			} else {
-				setTitle("");
-			}
-			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/jframeicon.jpg")).getImage());
+			setTitle(DefinitionService.getInstance().getArchitectureDefinitionName());
+			
+			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("DefineDomain/resources/jframeicon.jpg")).getImage());
 			{
 				jPanelContentView = new JPanel();
 				BorderLayout jPanel1Layout = new BorderLayout();
@@ -95,7 +92,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenu1.add(jMenuItemNewArchitecture);
 						jMenuItemNewArchitecture.setText("New architecture");
 						jMenuItemNewArchitecture.setMnemonic(KeyEvent.VK_N);
-						jMenuItemNewArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/new.png")));
+						jMenuItemNewArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("DefineDomain/resources/new.png")));
 						jMenuItemNewArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 					}
 					{
@@ -103,7 +100,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenu1.add(jMenuItemOpenArchitecture);
 						jMenuItemOpenArchitecture.setText("Open architecture");
 						jMenuItemOpenArchitecture.setMnemonic(KeyEvent.VK_O);
-						jMenuItemOpenArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/open.png")));
+						jMenuItemOpenArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("DefineDomain/resources/open.png")));
 						jMenuItemOpenArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 					}
 					{
@@ -111,7 +108,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenu1.add(jMenuItemSaveArchitecture);
 						jMenuItemSaveArchitecture.setText("Save architecture");
 						jMenuItemSaveArchitecture.setMnemonic(KeyEvent.VK_S);
-						jMenuItemSaveArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/save.png")));
+						jMenuItemSaveArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("DefineDomain/resources/save.png")));
 						jMenuItemSaveArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 					}
 					{
@@ -122,7 +119,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenuItemExit = new JMenuItem();
 						jMenu1.add(jMenuItemExit);
 						jMenuItemExit.setText("Exit");
-						jMenuItemExit.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/exit.png")));
+						jMenuItemExit.setIcon(new ImageIcon(getClass().getClassLoader().getResource("DefineDomain/resources/exit.png")));
 					}
 				}
 				{
@@ -134,7 +131,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenu2.add(jMenuItemStartAnalyse);
 						jMenuItemStartAnalyse.setText("Start analyse");
 						jMenuItemStartAnalyse.setMnemonic(KeyEvent.VK_1);
-						jMenuItemStartAnalyse.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/analyse.png")));
+						jMenuItemStartAnalyse.setIcon(new ImageIcon(getClass().getClassLoader().getResource("DefineDomain/resources/analyse.png")));
 						jMenuItemStartAnalyse.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.CTRL_MASK));
 					}
 					{
@@ -142,7 +139,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenu2.add(jMenuItemCheckDependencies);
 						jMenuItemCheckDependencies.setText("Check dependencies");
 						jMenuItemCheckDependencies.setMnemonic(KeyEvent.VK_2);
-						jMenuItemCheckDependencies.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/analyse.png")));
+						jMenuItemCheckDependencies.setIcon(new ImageIcon(getClass().getClassLoader().getResource("DefineDomain/resources/analyse.png")));
 						jMenuItemCheckDependencies.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.CTRL_MASK));
 					}
 				}
@@ -155,7 +152,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 						jMenu3.add(jMenuItemAbout);
 						jMenuItemAbout.setText("About");
 						jMenuItemAbout.setMnemonic(KeyEvent.VK_H);
-						jMenuItemAbout.setIcon(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/about.png")));
+						jMenuItemAbout.setIcon(new ImageIcon(getClass().getClassLoader().getResource("DefineDomain/resources/about.png")));
 						jMenuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.CTRL_MASK));
 					}
 				}

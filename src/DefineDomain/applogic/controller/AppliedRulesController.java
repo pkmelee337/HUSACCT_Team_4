@@ -1,4 +1,4 @@
-package DefineDomain.applogic.view.controller;
+package DefineDomain.applogic.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

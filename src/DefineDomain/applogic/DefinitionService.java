@@ -1,5 +1,6 @@
 package DefineDomain.applogic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import DefineDomain.domainOLD.ApplicationDefinition;
@@ -20,9 +21,22 @@ public class DefinitionService {
 		ArchitectureDefinition.getInstance().addLayer(name, level);
 	}
 	
+	public void removeLayerByLevel(int layerLevel) throws Exception {
+		ArchitectureDefinition.getInstance().removeLayerByLevel(layerLevel);
+	}
+	
 	public int getLevelForLayer(String layerName) throws Exception
 	{
 		return ArchitectureDefinition.getInstance().getLevelForLayer(layerName);
+	}
+	
+	public String getLayerNameByLevel(int layerLevel) throws Exception
+	{
+		return ArchitectureDefinition.getInstance().getLayerNameByLevel(layerLevel);
+	}
+	
+	public ArrayList<Integer> getLayerLevels() {
+		return ArchitectureDefinition.getInstance().getLayerLevels();
 	}
 	
 	public void addSoftwareUnit(String uniqueName, String type)
@@ -72,5 +86,14 @@ public class DefinitionService {
 		ArchitectureDefinition.getInstance().addException(rule, properties);
 	}
 	
+	public String getArchitectureDefinitionName() {
+		return ArchitectureDefinition.getInstance().getName();
+	}
+	
+	public void createNewArchitectureDefinition(String name) {
+		ArchitectureDefinition architectureDefinition = ArchitectureDefinition.getInstance();
+		architectureDefinition.createNewInstance();
+		architectureDefinition.setName(name);
+	}
 }
 

@@ -1,4 +1,4 @@
-package DefineDomain.applogic.view.controller;
+package DefineDomain.applogic.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,7 +86,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				JPanelStatus.getInstance("Creating new configuration").start();
 
 				// Create a new configuration
-				definitionService.newConfiguration(response, "");
+				definitionService.createNewArchitectureDefinition(response);
 
 				// Update the layer list, this method is called because it will also clear the existing layers
 				updateLayerList();
@@ -107,41 +107,42 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	public void openConfiguration() {
 		Log.i(this, "openConfiguration()");
-		try {
-			// Create a file chooser
-			JFileChooser fc = new JFileChooser();
-			fc.setFileFilter(new XmlFileFilter());
-
-			// In response to a button click:
-			int returnVal = fc.showOpenDialog(definitionJPanel);
-
-			// The user did click on Open
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-
-				JPanelStatus.getInstance("Opening configuration").start();
-
-				// Getting selected file from dialog
-				File file = fc.getSelectedFile();
-				Log.i(this, "openConfiguration() - opening file: " + file.getName());
-
-				// Pass the file to the service
-				definitionService.importConfiguration(file);
-
-				// Set the architecture name in the jframe title
-				mainController.jframe.setTitle(definitionService.getArchitectureName());
-
-				Log.i(this, "openConfiguration() - updating layers list");
-				updateLayerList();
-
-				Log.i(this, "openConfiguration() - success opening configuration");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
-			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
-		} finally {
-			JPanelStatus.getInstance().stop();
-		}
+		UiDialogs.errorDialog(definitionJPanel, "XML import yet not possible", "Error");
+//		try {
+//			// Create a file chooser
+//			JFileChooser fc = new JFileChooser();
+//			fc.setFileFilter(new XmlFileFilter());
+//
+//			// In response to a button click:
+//			int returnVal = fc.showOpenDialog(definitionJPanel);
+//
+//			// The user did click on Open
+//			if (returnVal == JFileChooser.APPROVE_OPTION) {
+//
+//				JPanelStatus.getInstance("Opening configuration").start();
+//
+//				// Getting selected file from dialog
+//				File file = fc.getSelectedFile();
+//				Log.i(this, "openConfiguration() - opening file: " + file.getName());
+//
+//				// Pass the file to the service
+//				definitionService.importConfiguration(file);
+//
+//				// Set the architecture name in the jframe title
+//				mainController.jframe.setTitle(definitionService.getArchitectureDefinitionName());
+//
+//				Log.i(this, "openConfiguration() - updating layers list");
+//				updateLayerList();
+//
+//				Log.i(this, "openConfiguration() - success opening configuration");
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			Log.e(this, "openConfiguration() - exeption: " + e.getMessage());
+//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+//		} finally {
+//			JPanelStatus.getInstance().stop();
+//		}
 	}
 
 	/**
@@ -149,39 +150,40 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	public void saveConfiguration() {
 		Log.i(this, "saveConfiguration()");
-		try {
-			// Create a file chooser
-			JFileChooser fc = new JFileChooser();
-			fc.setFileFilter(new XmlFileFilter());
-
-			// In response to a button click:
-			int returnVal = fc.showSaveDialog(definitionJPanel);
-
-			// The user did click on Save
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-
-				JPanelStatus.getInstance("Saving configuration").start();
-
-				// Getting selected file from dialog
-				File file;
-				if (fc.getSelectedFile().getName().endsWith(".xml")) {
-					file = fc.getSelectedFile();
-				} else {
-					file = new File(fc.getSelectedFile().getAbsolutePath() + ".xml");
-				}
-				Log.i(this, "saveConfiguration() - configuration needs to be saved to file: " + file.getName());
-
-				// Pass the file to the service
-				definitionService.exportConfiguration(file);
-
-				Log.i(this, "saveConfiguration() - success saving configuration");
-			}
-		} catch (Exception e) {
-			Log.e(this, "saveConfiguration() - exeption: " + e.getMessage());
-			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
-		} finally {
-			JPanelStatus.getInstance().stop();
-		}
+		UiDialogs.errorDialog(definitionJPanel, "XML export yet not possible", "Error");
+//		try {
+//			// Create a file chooser
+//			JFileChooser fc = new JFileChooser();
+//			fc.setFileFilter(new XmlFileFilter());
+//
+//			// In response to a button click:
+//			int returnVal = fc.showSaveDialog(definitionJPanel);
+//
+//			// The user did click on Save
+//			if (returnVal == JFileChooser.APPROVE_OPTION) {
+//
+//				JPanelStatus.getInstance("Saving configuration").start();
+//
+//				// Getting selected file from dialog
+//				File file;
+//				if (fc.getSelectedFile().getName().endsWith(".xml")) {
+//					file = fc.getSelectedFile();
+//				} else {
+//					file = new File(fc.getSelectedFile().getAbsolutePath() + ".xml");
+//				}
+//				Log.i(this, "saveConfiguration() - configuration needs to be saved to file: " + file.getName());
+//
+//				// Pass the file to the service
+//				definitionService.exportConfiguration(file);
+//
+//				Log.i(this, "saveConfiguration() - success saving configuration");
+//			}
+//		} catch (Exception e) {
+//			Log.e(this, "saveConfiguration() - exeption: " + e.getMessage());
+//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+//		} finally {
+//			JPanelStatus.getInstance().stop();
+//		}
 	}
 
 	/**
@@ -193,14 +195,18 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			// Ask the user for the layer name
 			String layerName = UiDialogs.inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
 			if (layerName != null) {
-				JPanelStatus.getInstance("Creating new layer").start();
+				String levelString = UiDialogs.inputDialog(definitionJPanel, "Please enter layer level", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+				if (levelString != null) {
+					JPanelStatus.getInstance("Creating new layer").start();
+					int layerLevel = Integer.parseInt(levelString);
 
-				Log.i(this, "newLayer() - value: " + layerName);
-				// Create the layer
-				definitionService.newLayer(layerName, "");
+					Log.i(this, "newLayer() - name: " + layerName + " level: " + layerLevel);
+					// Create the layer
+					definitionService.addLayer(layerName, layerLevel);
 
-				// Update the layer list
-				updateLayerList();
+					// Update the layer list
+					updateLayerList();
+				}
 			}
 		} catch (Exception e) {
 			Log.e(this, "newLayer() - exception: " + e.getMessage());
@@ -216,13 +222,13 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void removeLayer() {
 		Log.i(this, "removeLayer()");
 		try {
-			int layer_id = definitionJPanel.getSelectedLayer();
-			if (layer_id != -1) {
-				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove layer: \"" + definitionService.getLayerName(layer_id) + "\"", "Remove?");
+			int layer_level = definitionJPanel.getSelectedLayer();
+			if (layer_level != -1) {
+				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove layer: \"" + layer_level + "\"", "Remove?");
 				if (confirm) {
 					JPanelStatus.getInstance("Removing layer").start();
 
-					definitionService.removeLayer(layer_id);
+					definitionService.removeLayerByLevel(layer_level);
 
 					updateLayerList();
 				}
@@ -241,22 +247,23 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void moveLayerUp() {
 		Log.i(this, "moveLayerUp()");
-		try {
-			int layer_id = definitionJPanel.getSelectedLayer();
-
-			if (layer_id != -1) {
-				JPanelStatus.getInstance("Moving layer up").start();
-
-				definitionService.moveLayerUp(layer_id);
-
-				updateLayerList();
-			}
-		} catch (Exception e) {
-			Log.e(this, "moveLayerUp() - exception: " + e.getMessage());
-			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
-		} finally {
-			JPanelStatus.getInstance().stop();
-		}
+		UiDialogs.errorDialog(definitionJPanel, "Maybe coming in future", "Error");
+//		try {
+//			int layer_id = definitionJPanel.getSelectedLayer();
+//
+//			if (layer_id != -1) {
+//				JPanelStatus.getInstance("Moving layer up").start();
+//
+//				definitionService.moveLayerUp(layer_id);
+//
+//				updateLayerList();
+//			}
+//		} catch (Exception e) {
+//			Log.e(this, "moveLayerUp() - exception: " + e.getMessage());
+//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+//		} finally {
+//			JPanelStatus.getInstance().stop();
+//		}
 	}
 
 	/**
@@ -264,22 +271,23 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void moveLayerDown() {
 		Log.i(this, "moveLayerDown()");
-		try {
-			int layer_id = definitionJPanel.getSelectedLayer();
-
-			if (layer_id != -1) {
-				JPanelStatus.getInstance("Moving layer down").start();
-
-				definitionService.moveLayerDown(layer_id);
-
-				updateLayerList();
-			}
-		} catch (Exception e) {
-			Log.e(this, "moveLayerDown() - exception: " + e.getMessage());
-			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
-		} finally {
-			JPanelStatus.getInstance().stop();
-		}
+		UiDialogs.errorDialog(definitionJPanel, "Maybe coming in future", "Error");
+//		try {
+//			int layer_id = definitionJPanel.getSelectedLayer();
+//
+//			if (layer_id != -1) {
+//				JPanelStatus.getInstance("Moving layer down").start();
+//
+//				definitionService.moveLayerDown(layer_id);
+//
+//				updateLayerList();
+//			}
+//		} catch (Exception e) {
+//			Log.e(this, "moveLayerDown() - exception: " + e.getMessage());
+//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+//		} finally {
+//			JPanelStatus.getInstance().stop();
+//		}
 	}
 
 	/**
@@ -444,8 +452,6 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 			if (layer_id != -1) {
 				definitionService.setLayerName(layer_id, definitionJPanel.jTextFieldLayerName.getText());
-				definitionService.setLayerDescription(layer_id, definitionJPanel.jTextAreaLayerDescription.getText());
-				definitionService.setLayerInterfaceAccesOnly(layer_id, definitionJPanel.jCheckBoxAccess.isSelected());
 
 				//To update the layer list: we need to fetch the DataHelper from the list, update it and fire an updateUI to notice that there is an update
 				DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();				
@@ -474,7 +480,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		JPanelStatus.getInstance("Updating layers").start();
 
 		// Get all layers from the service
-		ArrayList<Integer> layers = definitionService.getLayers();
+		ArrayList<Integer> layers = definitionService.getLayerLevels();
 
 		// Get ListModel from listlayers
 		DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();
@@ -487,7 +493,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			for (int layer_id : layers) {
 				DataHelper datahelper = new DataHelper();
 				datahelper.setId(layer_id);
-				datahelper.setValue(definitionService.getLayerName(layer_id));
+				try {
+					datahelper.setValue(definitionService.getLayerNameByLevel(layer_id));
+				} catch (Exception e) {
+					Log.e(this, "updateLayer() - exception: " + e.getMessage());
+					UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+				}
 				dlm.addElement(datahelper);
 			}
 		}

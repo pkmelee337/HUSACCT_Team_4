@@ -1,4 +1,4 @@
-package DefineDomain.applogic.view.controller;
+package DefineDomain.applogic.controller;
 
 import java.awt.event.ActionListener;
 import java.util.Observable;

@@ -5,14 +5,18 @@ import java.util.HashMap;
 
 public class ArchitectureDefinition extends Definition
 {
+	private String name = "Architecture Definitie";
 	private static ArchitectureDefinition instance = null;
-	public static ArchitectureDefinition getInstance()
-	{
-		return instance == null ? (instance = new ArchitectureDefinition()) : instance;
-	}
-
 	private ArrayList<LayerDefinition> layers;
 	private HashMap<String, SoftwareUnitDefinition> uniqueNames; //cache that provides easy lookup for softwareunits by its uniquename
+	
+	public static ArchitectureDefinition getInstance() {
+		return instance == null ? (instance = new ArchitectureDefinition()) : instance;
+	}
+	
+	public void createNewInstance() {
+		instance = new ArchitectureDefinition();
+	}
 	
 	private ArchitectureDefinition()
 	{
@@ -52,6 +56,11 @@ public class ArchitectureDefinition extends Definition
 		layers.add(layer);
 	}
 	
+	public void removeLayerByLevel(int layerLevel) throws Exception {
+		LayerDefinition layer = this.getLayerByLevel(layerLevel);
+		this.layers.remove(layer);
+	}
+	
 	public LayerDefinition getLayerByName(String layerName) throws Exception {
 		for(LayerDefinition layer : layers)
 		{
@@ -62,6 +71,21 @@ public class ArchitectureDefinition extends Definition
 		}
 		
 		throw new Exception(String.format("Layer '%s' not found", layerName));
+	}
+	
+	public LayerDefinition getLayerByLevel(int layerLevel) throws Exception {
+		for(LayerDefinition layer : layers) {
+			if(layer.getLevel() == (layerLevel)) {
+				return layer;
+			}
+		}
+		
+		throw new Exception(String.format("No layer on level '%s'", layerLevel));
+	}
+	
+	public String getLayerNameByLevel(int layerLevel) throws Exception {
+		LayerDefinition layer = this.getLayerByLevel(layerLevel);
+		return layer.getName();
 	}
 	
 	public int getLevelForLayer(String layerName) throws Exception
@@ -93,6 +117,14 @@ public class ArchitectureDefinition extends Definition
 		}
 		
 		return false;
+	}
+	
+	public ArrayList<Integer> getLayerLevels() {
+		ArrayList<Integer> levels = new ArrayList<Integer>();
+		for(LayerDefinition layer : layers) {
+			levels.add(layer.getLevel());
+		}
+		return levels;
 	}
 
 	// Unit related methods
@@ -200,6 +232,14 @@ public class ArchitectureDefinition extends Definition
 		}
 		
 		return false;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import DefineDomain.applogic.view.controller.DefinitionController;
+import DefineDomain.applogic.controller.DefinitionController;
 import DefineDomain.applogic.view.utils.Log;
 import DefineDomain.applogic.view.utils.UiDialogs;
 
@@ -102,7 +102,7 @@ public class ApplicationController implements ActionListener {
 			//dependencycontroller.initUI();
 		} else if (action.getSource() == jframe.jMenuItemAbout) {
 			Log.i(this, "actionPerformed() - about");
-			UiDialogs.messageDialog(jframe, "© 2011 - This application is made by a project team at Hogeschool Utrecht.", "About");
+			UiDialogs.messageDialog(jframe, "© 2012 - This application is made by a project team at Hogeschool Utrecht.", "About");
 		} else if (action.getSource() == jframe.jMenuItemExit) {
 			System.exit(0);
 		} else {
