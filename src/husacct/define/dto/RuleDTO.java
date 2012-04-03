@@ -1,4 +1,4 @@
-package husacct.define.domain.define_domain.DTO;
+package husacct.define.dto;
 
 public class RuleDTO {
 	public String ruleTypeKey;

@@ -1,9 +1,9 @@
-package husacct.define.domain.define_domain;
+package husacct.define;
 
 import java.util.HashMap;
 
-import husacct.define.domain.define_domain.domainOLD.ApplicationDefinition;
-import husacct.define.domain.define_domain.domainOLD.ArchitectureDefinition;
+import husacct.define.domain.domainOLD.ApplicationDefinition;
+import husacct.define.domain.domainOLD.ArchitectureDefinition;
 
 public class DefineServiceOld2011
 {

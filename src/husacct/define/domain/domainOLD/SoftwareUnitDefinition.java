@@ -1,4 +1,4 @@
-package husacct.define.domain.define_domain.domainOLD;
+package husacct.define.domain.domainOLD;
 
 import java.util.ArrayList;
 

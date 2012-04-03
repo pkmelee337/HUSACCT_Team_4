@@ -1,8 +1,8 @@
-package husacct.define.domain.define_domain.domain;
+package husacct.define.domain;
 
 import java.util.ArrayList;
 
-import husacct.define.domain.define_domain.domain.module.Module;
+import husacct.define.domain.module.*;
 
 public class SoftwareArchitecture {
 	

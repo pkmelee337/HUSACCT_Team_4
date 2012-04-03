@@ -1,4 +1,4 @@
-package husacct.define.domain.define_domain.domain.module;
+package husacct.define.domain.module;
 
 public class Component extends Module {
 	
