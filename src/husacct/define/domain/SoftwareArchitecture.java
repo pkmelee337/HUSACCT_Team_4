@@ -2,6 +2,7 @@ package husacct.define.domain;
 
 import java.util.ArrayList;
 
+import husacct.define.domain.module.Layer;
 import husacct.define.domain.module.Module;
 
 public class SoftwareArchitecture {
@@ -87,14 +88,25 @@ public class SoftwareArchitecture {
 		}
 	}
 	
-	//New method removeModule/LayerByLevel
+	public boolean removeLayerByLevel(int level)
+	{
+		for(Module layer : modules) 
+		{
+			if(layer instanceof Layer)
+			{
+				modules.remove(layer);
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+	
 	public void removeModule(Module module)
 	{
 		if(modules.contains(module) && this.hasModule(module.getName())) {
 			modules.remove(module);
-		}//else if(module.getClass().isInstance(arg0)) {
-			
-		//}
+		}
 		else{
 			System.out.println("This module does not exist!");
 		}
@@ -181,10 +193,5 @@ public class SoftwareArchitecture {
 		}
 		
 		return false;
-	}
-
-	public void removeLayerByLevel(int layerLevel) {
-		// TODO Auto-generated method stub
-		
 	}
 }
