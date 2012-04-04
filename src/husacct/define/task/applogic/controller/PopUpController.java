@@ -1,5 +1,6 @@
 package husacct.define.task.applogic.controller;
 
+import husacct.define.domain.DefineDomainService;
 import husacct.define.domain.DefineDomainServiceOld2011;
 
 import java.awt.event.ActionListener;
@@ -9,7 +10,8 @@ public abstract class PopUpController extends Observable implements ActionListen
 	public static final String ACTION_NEW = "NEW";
 	public static final String ACTION_EDIT = "EDIT";
 
-	protected DefineDomainServiceOld2011 definitionService = DefineDomainServiceOld2011.getInstance();
+	protected DefineDomainServiceOld2011 definitionServiceOLD = DefineDomainServiceOld2011.getInstance();
+	protected DefineDomainService definitionService = DefineDomainService.getInstance();
 	protected String action = PopUpController.ACTION_NEW;
 	protected int layer_id;
 

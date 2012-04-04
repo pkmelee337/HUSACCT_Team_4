@@ -212,4 +212,17 @@ public class SoftwareArchitecture {
 		
 		return false;
 	}
+
+	public String getLayerNameByLevel(int layerLevel) {
+		String layerName = "";
+		for(Module layer : modules)
+		{
+			if(layer instanceof Layer && ((Layer) layer).getHierarchicalLevel() == layerLevel)
+			{
+				layerName = layer.getName();
+				break;
+			}
+		}
+		return layerName;
+	}
 }

@@ -27,7 +27,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private DefinitionJPanel definitionJPanel;
 	// create own service
-	private DefineDomainServiceOld2011 defineDomainServiceOLD;
+	//private DefineDomainServiceOld2011 defineDomainServiceOLD;
 	private DefineDomainService defineDomainService;
 	private ApplicationController mainController;
 
@@ -35,7 +35,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(this, "constructor()");
 		mainController = mc;
 		definitionJPanel = new DefinitionJPanel();
-		defineDomainServiceOLD = DefineDomainServiceOld2011.getInstance();
+		defineDomainService = DefineDomainService.getInstance();
+		//defineDomainServiceOLD = DefineDomainServiceOld2011.getInstance();
 	}
 
 	/**
@@ -84,7 +85,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				JPanelStatus.getInstance("Creating new configuration").start();
 
 				// Create a new configuration
-				defineDomainServiceOLD.createNewArchitectureDefinition(response);
+				defineDomainService.createNewArchitectureDefinition(response);
 
 				// Update the layer list, this method is called because it will also clear the existing layers
 				updateLayerList();
@@ -451,18 +452,18 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void updateLayer() {
 		Log.i(this, "updateLayer()");
 		try {
-			int layer_id = definitionJPanel.getSelectedLayer();
+			int layerId = definitionJPanel.getSelectedLayer();
 
 			JPanelStatus.getInstance("Saving layer").start();
 
-			if (layer_id != -1) {
-				defineDomainServiceOLD.setLayerName(layer_id, definitionJPanel.jTextFieldLayerName.getText());
+			if (layerId != -1) {
+				defineDomainService.setLayerName(layerId, definitionJPanel.jTextFieldLayerName.getText());
 
 				//To update the layer list: we need to fetch the DataHelper from the list, update it and fire an updateUI to notice that there is an update
 				DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();				
 				for (int i = 0; i < dlm.getSize(); i++) {
 					DataHelper datahelper = (DataHelper) dlm.getElementAt(i);
-					if (datahelper.getIntId() == layer_id) {
+					if (datahelper.getIntId() == layerId) {
 						datahelper.setValue(definitionJPanel.jTextFieldLayerName.getText());
 					}
 				}
@@ -485,7 +486,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		JPanelStatus.getInstance("Updating layers").start();
 
 		// Get all layers from the service
-		ArrayList<Integer> layers = defineDomainServiceOLD.getLayerLevels();
+		ArrayList<Integer> layers = defineDomainService.getLayerLevels();
 
 		// Get ListModel from listlayers
 		DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();
@@ -495,11 +496,11 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 		// Add layers to the list
 		if (layers != null) {
-			for (int layer_id : layers) {
+			for (int layerLevel : layers) {
 				DataHelper datahelper = new DataHelper();
-				datahelper.setId(layer_id);
+				datahelper.setId(layerLevel);
 				try {
-					datahelper.setValue(defineDomainServiceOLD.getLayerNameByLevel(layer_id));
+					datahelper.setValue(defineDomainService.getLayerNameByLevel(layerLevel));
 				} catch (Exception e) {
 					Log.e(this, "updateLayer() - exception: " + e.getMessage());
 					UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
@@ -519,12 +520,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void loadLayerDetail() {
 		Log.i(this, "loadLayerDetail()");
 
-		int layer_id = definitionJPanel.getSelectedLayer();
+		int layerLevel = definitionJPanel.getSelectedLayer();
 
-		if (layer_id != -1) {
+		if (layerLevel != -1) {
 			// Set the values
 			try {
-				definitionJPanel.jTextFieldLayerName.setText(defineDomainServiceOLD.getLayerNameByLevel(layer_id));
+				definitionJPanel.jTextFieldLayerName.setText(defineDomainService.getLayerNameByLevel(layerLevel));
 			} catch (Exception e) {
 				Log.e(this, "loadLayerDetail() - exception: " + e.getMessage());
 				UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");

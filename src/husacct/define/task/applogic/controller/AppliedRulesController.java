@@ -41,21 +41,21 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 			jframe.setTitle("Edit applied rule");
 			if (appliedrule_id != -1L) {
 				// Load name & type
-				jframe.jComboBoxAppliedRule.setSelectedItem(definitionService.getAppliedRuleRuleType(getLayerID(), appliedrule_id));
-				jframe.jComboBoxToLayer.setSelectedItem(definitionService.getLayerName(definitionService.getAppliedRuleToLayer(getLayerID(), appliedrule_id)));
-				jframe.jCheckBoxEnabled.setSelected(definitionService.getAppliedRuleIsEnabled(getLayerID(), appliedrule_id));
+				jframe.jComboBoxAppliedRule.setSelectedItem(definitionServiceOLD.getAppliedRuleRuleType(getLayerID(), appliedrule_id));
+				jframe.jComboBoxToLayer.setSelectedItem(definitionServiceOLD.getLayerName(definitionServiceOLD.getAppliedRuleToLayer(getLayerID(), appliedrule_id)));
+				jframe.jCheckBoxEnabled.setSelected(definitionServiceOLD.getAppliedRuleIsEnabled(getLayerID(), appliedrule_id));
 
 				// Load table with exceptions
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
-				ArrayList<Long> exceptions = definitionService.getAppliedRuleExceptions(getLayerID(), appliedrule_id);
+				ArrayList<Long> exceptions = definitionServiceOLD.getAppliedRuleExceptions(getLayerID(), appliedrule_id);
 				for (long exception_id : exceptions) {
 					DataHelper datahelper = new DataHelper();
 					datahelper.setId(exception_id);
-					datahelper.setValue(definitionService.getAppliedruleExceptionName(getLayerID(), appliedrule_id, exception_id));
+					datahelper.setValue(definitionServiceOLD.getAppliedruleExceptionName(getLayerID(), appliedrule_id, exception_id));
 
-					Object[] row = { datahelper, definitionService.getAppliedruleExceptionType(getLayerID(), appliedrule_id, exception_id) };
+					Object[] row = { datahelper, definitionServiceOLD.getAppliedruleExceptionType(getLayerID(), appliedrule_id, exception_id) };
 					tablemodel.addRow(row);
 				}
 			}
@@ -75,7 +75,7 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 
 	public void loadSelectBoxes() {
 		// Laden van alle layers
-		ArrayList<Integer> layers = definitionService.getLayers();
+		ArrayList<Integer> layers = definitionServiceOLD.getLayers();
 
 		if (layers != null) {
 			// Remove the current layer from the list
@@ -85,7 +85,7 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 			for (int layer_id : layers) {
 				DataHelper datahelper = new DataHelper();
 				datahelper.setId(layer_id);
-				datahelper.setValue("" + definitionService.getLayerName(layer_id));
+				datahelper.setValue("" + definitionServiceOLD.getLayerName(layer_id));
 				layernames.add(datahelper);
 			}
 
@@ -98,28 +98,28 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 	public void save() {
 		try {
 			if (getAction().equals(PopUpController.ACTION_NEW)) {
-				appliedrule_id = definitionService.newAppliedRule(getLayerID(), ((DataHelper) jframe.jComboBoxToLayer.getSelectedItem()).getIntId(), jframe.jComboBoxAppliedRule.getSelectedItem().toString());
-				definitionService.setAppliedRuleIsEnabled(getLayerID(), appliedrule_id, jframe.jCheckBoxEnabled.isSelected());
+				appliedrule_id = definitionServiceOLD.newAppliedRule(getLayerID(), ((DataHelper) jframe.jComboBoxToLayer.getSelectedItem()).getIntId(), jframe.jComboBoxAppliedRule.getSelectedItem().toString());
+				definitionServiceOLD.setAppliedRuleIsEnabled(getLayerID(), appliedrule_id, jframe.jCheckBoxEnabled.isSelected());
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
 				int tablerows = tablemodel.getRowCount();
 				for (int i = 0; i < tablerows; i++) {
-					definitionService.newAppliedRuleException(getLayerID(), appliedrule_id, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
+					definitionServiceOLD.newAppliedRuleException(getLayerID(), appliedrule_id, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
 				}
 			} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
-				definitionService.setAppliedRuleToLayer(getLayerID(), appliedrule_id, ((DataHelper) jframe.jComboBoxToLayer.getSelectedItem()).getIntId());
-				definitionService.setAppliedRuleRuleType(getLayerID(), appliedrule_id, jframe.jComboBoxAppliedRule.getSelectedItem().toString());
-				definitionService.setAppliedRuleIsEnabled(getLayerID(), appliedrule_id, jframe.jCheckBoxEnabled.isSelected());
+				definitionServiceOLD.setAppliedRuleToLayer(getLayerID(), appliedrule_id, ((DataHelper) jframe.jComboBoxToLayer.getSelectedItem()).getIntId());
+				definitionServiceOLD.setAppliedRuleRuleType(getLayerID(), appliedrule_id, jframe.jComboBoxAppliedRule.getSelectedItem().toString());
+				definitionServiceOLD.setAppliedRuleIsEnabled(getLayerID(), appliedrule_id, jframe.jCheckBoxEnabled.isSelected());
 
-				definitionService.removeAppliedRuleExceptions(getLayerID(), appliedrule_id);
+				definitionServiceOLD.removeAppliedRuleExceptions(getLayerID(), appliedrule_id);
 
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
 				int tablerows = tablemodel.getRowCount();
 				for (int i = 0; i < tablerows; i++) {
-					definitionService.newAppliedRuleException(getLayerID(), appliedrule_id, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
+					definitionServiceOLD.newAppliedRuleException(getLayerID(), appliedrule_id, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
 				}
 			}
 			jframe.dispose();

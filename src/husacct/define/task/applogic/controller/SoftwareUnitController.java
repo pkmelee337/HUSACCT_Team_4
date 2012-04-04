@@ -40,7 +40,7 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 			// TODO:: add different types
 			SoftwareUnitDefinition softwareUnit = new SoftwareUnitDefinition(module.name, SoftwareUnitDefinition.Type.PACKAGE);
 			softwareUnits.add(softwareUnit);
-			definitionService.addUniqueName(softwareUnit.getName(), softwareUnit);
+			definitionServiceOLD.addUniqueName(softwareUnit.getName(), softwareUnit);
 		}
 	}
 	
@@ -109,7 +109,7 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 	public void save() {
 		try {
 			if (getAction().equals(PopUpController.ACTION_NEW)) {
-				definitionService.setSoftwareUnitLayer(jframe.jComboBoxSoftwareUnit.getSelectedItem().toString(), getLayerID());
+				definitionServiceOLD.setSoftwareUnitLayer(jframe.jComboBoxSoftwareUnit.getSelectedItem().toString(), getLayerID());
 				
 				// Niet Nodig naar mijn idee!
 //				JTableException table = jframe.jTableException;
