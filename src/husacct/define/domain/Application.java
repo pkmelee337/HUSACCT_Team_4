@@ -4,7 +4,7 @@ public class Application {
 	
 	private String name;
 	private String[] paths;
-	private String language;
+	private String programmingLanguage;
 	
 	public Application()
 	{
@@ -43,11 +43,11 @@ public class Application {
 	}
 
 	public void setLanguage(String language) {
-		this.language = language;
+		this.programmingLanguage = language;
 	}
 
 	public String getLanguage() {
-		return language;
+		return programmingLanguage;
 	}
 	
 	

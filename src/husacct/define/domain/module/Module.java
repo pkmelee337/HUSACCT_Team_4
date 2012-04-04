@@ -31,8 +31,6 @@ public class Module {
 		this.subModules = new ArrayList<Module>();
 	}
 	
-	
-	
 	public String getName() {
 		return name;
 	}
@@ -74,12 +72,12 @@ public class Module {
 	}
 	
 	//SoftwareUnitDefinition
-	public void addSwuDefinition(SoftwareUnitDefinition unit)
+	public void addSUDefinition(SoftwareUnitDefinition unit)
 	{
 		units.add(unit);
 	}
 	
-	public void removeSwuDefintion(SoftwareUnitDefinition unit)
+	public void removeSUDefintion(SoftwareUnitDefinition unit)
 	{
 		units.remove(unit);
 	}
@@ -100,12 +98,20 @@ public class Module {
 	//Module
 	public void addSubModule(Module subModule)
 	{
-		subModules.add(subModule);
+		if(!subModules.contains(subModule) && !this.hasSubModule(subModule.getName())) {
+			subModules.add(subModule);
+		}else{
+			System.out.println("This sub module has already been added!");
+		}
 	}
 	
 	public void removeSubModule(Module subModule)
 	{
-		subModules.remove(subModule);
+		if(subModules.contains(subModule) && this.hasSubModule(subModule.getName())) {
+			subModules.remove(subModule);
+		}else{
+			System.out.println("This sub module does not exist!");
+		}
 	}
 	
 	private boolean hasSubModule(String name) 

@@ -13,7 +13,11 @@ public class AppliedRule {
 	private String suffix;
 	private Module usedModule;
 	private Module restrictedModule;
-	private ArrayList<AppliedRule> exceptions;	
+	private String ruleType;
+	//TODO: Construct rule string
+	private ArrayList<AppliedRule> exceptions;
+
+	
 
 	public AppliedRule(int id, String description, String[] dependencies,
 			String prefix, String suffix, Module usedModule,
@@ -114,12 +118,22 @@ public class AppliedRule {
 	
 	public void addException(AppliedRule exception)
 	{
-		exceptions.add(exception);
+		if(!exceptions.contains(exception) && !this.hasException(exception.getId()))
+		{
+			exceptions.add(exception);
+		}else{
+			System.out.println("This exception has already been added!");
+		}
 	}
 	
 	public void removeException(AppliedRule exception)
 	{
-		exceptions.remove(exception);
+		if(exceptions.contains(exception) && this.hasException(exception.getId()))
+		{
+			exceptions.remove(exception);
+		}else{
+			System.out.println("This exception does not exist!");
+		}
 	}
 	
 	private boolean hasException(int id) 
@@ -134,5 +148,4 @@ public class AppliedRule {
 		
 		return false;
 	}
-
 }

@@ -4,22 +4,30 @@ public class Layer extends Module {
 	
 	private int hierarchicalLevel;
 	
-	public Layer(int level)
+	public Layer(String name)
 	{
-		super();
-		this.setHierarchicalLevel(level);
+		super.name = name;
+		super.type = "Layer";
 	}
 	
 	public Layer()
 	{
 		super();
-		setHierarchicalLevel(0);
+		super.type = "Layer";
 	}
-	
-	public Layer(String name, String description)
+
+	public Layer(String name, String description, int level)
 	{
 		super.name = name;
 		super.description = description;
+		super.type = "Layer";
+		this.hierarchicalLevel = level;
+	}
+	
+	public Layer(String name, int level)
+	{
+		super.name = name;
+		this.hierarchicalLevel = level;
 		super.type = "Layer";
 	}
 
