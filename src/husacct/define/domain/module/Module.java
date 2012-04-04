@@ -9,7 +9,7 @@ public class Module {
 	protected String name;
 	protected String description;
 	protected String type;
-	protected ArrayList<SoftwareUnitDefinition> units;
+	protected ArrayList<SoftwareUnitDefinition> mappedSUunits;
 	protected ArrayList<Module> subModules;
 	
 	public Module()
@@ -27,7 +27,7 @@ public class Module {
 		this.name = name;
 		this.description = description;
 		this.type = "Module";
-		this.units = new ArrayList<SoftwareUnitDefinition>();
+		this.mappedSUunits = new ArrayList<SoftwareUnitDefinition>();
 		this.subModules = new ArrayList<Module>();
 	}
 	
@@ -56,11 +56,11 @@ public class Module {
 	}
 
 	public ArrayList<SoftwareUnitDefinition> getUnits() {
-		return units;
+		return mappedSUunits;
 	}
 
 	public void setUnits(ArrayList<SoftwareUnitDefinition> units) {
-		this.units = units;
+		this.mappedSUunits = units;
 	}
 
 	public ArrayList<Module> getSubModules() {
@@ -74,17 +74,17 @@ public class Module {
 	//SoftwareUnitDefinition
 	public void addSUDefinition(SoftwareUnitDefinition unit)
 	{
-		units.add(unit);
+		mappedSUunits.add(unit);
 	}
 	
 	public void removeSUDefintion(SoftwareUnitDefinition unit)
 	{
-		units.remove(unit);
+		mappedSUunits.remove(unit);
 	}
 	
 	private boolean hasSUDefinition(String name) 
 	{
-		for(SoftwareUnitDefinition unit : units) 
+		for(SoftwareUnitDefinition unit : mappedSUunits) 
 		{
 			if(unit.getName().equals(name))
 			{

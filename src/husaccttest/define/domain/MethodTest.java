@@ -1,6 +1,5 @@
 package husaccttest.define.domain;
 
-import husacct.define.domain.Application;
 import husacct.define.domain.AppliedRule;
 import husacct.define.domain.SoftwareArchitecture;
 import husacct.define.domain.module.Layer;
@@ -13,10 +12,6 @@ public class MethodTest {
 	 */
 	public static void main(String[] args) {
 		SoftwareArchitecture sA = new SoftwareArchitecture("Test architecture", "This architecture is used for testing purposes");
-		
-		Application app1 = new Application("Application 1", "Pearl");
-		Application app2 = new Application("Application 1", "Pearl");
-		Application app3 = new Application("Application 3", "Java");
 		
 		Module module1 = new Module("Module 1", "This is module 1");
 		Module module2 = new Module("Module 1", "This is module 1");
@@ -67,30 +62,23 @@ public class MethodTest {
 		sA.addModule(module3);
 		sA.addModule(layer2);
 		
-		sA.addApplication(app1);
-		sA.addApplication(app2);
-		sA.addApplication(app3);
-		
 		sA.addAppliedRule(rule1);
 		sA.addAppliedRule(rule1);
 		sA.addAppliedRule(rule2);
 		sA.addAppliedRule(rule3);
 		
-		sA.removeModule(layer1);
+		//sA.removeModule(layer1);
 		System.out.println("Before removing: ");
 		System.out.println("\n" + "This is : " + sA.getName()+ "\n" + "Its description is: " + sA.getDescription());
-		System.out.println("The name of the Application is: " + app1.getName());
 		
 		System.out.println("\n" + "The amount of submodules in Module 1: " + module1.getSubModules().size());
 		System.out.println("The amount of modules in the Software Architecture: " + sA.getModules().size());		
-		System.out.println("The amount of applications in the Software Architecture: " + sA.getApplications().size());
 		System.out.println("The amount of applied rules within this Software Architecture: " + sA.getAppliedRules().size());
 
 		
 		System.out.println("Layer 1 is of type: " + layer1.getType());
 		System.out.println("Rule 1 has " + rule1.getExceptions().size() + " exceptions");
 		
-		sA.removeApplication(app3);
 		sA.removeModule(module3);
 		sA.removeModule(layer2);
 		module1.removeSubModule(subModule3);
@@ -100,16 +88,17 @@ public class MethodTest {
 		
 		System.out.println("\n" + "After removing: ");
 		System.out.println("\n" + "This is : " + sA.getName()+ "\n" + "Its description is: " + sA.getDescription());
-		System.out.println("The name of the Application is: " + app1.getName());
 		
 		System.out.println("\n" + "The amount of submodules in Module 1: " + module1.getSubModules().size());
 		System.out.println("The amount of modules in the Software Architecture: " + sA.getModules().size());		
-		System.out.println("The amount of applications in the Software Architecture: " + sA.getApplications().size());
 		System.out.println("The amount of applied rules within this Software Architecture: " + sA.getAppliedRules().size());
 
 		
 		System.out.println("Layer 1 is of type: " + layer1.getType());
 		System.out.println("Rule 1 has " + rule1.getExceptions().size() + " exceptions");
+		
+		System.out.println("\n" + sA.getLevelFromLayers().toString());
+		//System.out.println("\n" + new int[]{1,2,3}.toString());
 	}
 
 }

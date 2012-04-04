@@ -10,7 +10,6 @@ public class SoftwareArchitecture {
 	private String name;
 	private String description;
 	private ArrayList<Module> modules;
-	private ArrayList<Application> applications;
 	private ArrayList<AppliedRule> appliedRules;
 	
 	private static SoftwareArchitecture instance = null;
@@ -24,7 +23,6 @@ public class SoftwareArchitecture {
 		setName("");
 		setDescription("");
 		setModules(new ArrayList<Module>());
-		setApplications(new ArrayList<Application>());
 		setAppliedRules(new ArrayList<AppliedRule>());
 	}
 	
@@ -33,7 +31,6 @@ public class SoftwareArchitecture {
 		this.setName(name);
 		this.setDescription(description);
 		setModules(new ArrayList<Module>());
-		setApplications(new ArrayList<Application>());
 		setAppliedRules(new ArrayList<AppliedRule>());
 	}
 
@@ -59,14 +56,6 @@ public class SoftwareArchitecture {
 
 	public ArrayList<Module> getModules() {
 		return modules;
-	}
-	
-	public void setApplications(ArrayList<Application> applications) {
-		this.applications = applications;
-	}
-
-	public ArrayList<Application> getApplications() {
-		return applications;
 	}
 	
 	public void setAppliedRules(ArrayList<AppliedRule> appliedRules) {
@@ -125,9 +114,38 @@ public class SoftwareArchitecture {
 		return false;
 	}
 	
+	public void setLayerName(int level, String newName)
+	{
+		for(Module layer : modules) 
+		{
+			if(layer instanceof Layer)
+			{
+				if (((Layer) layer).getHierarchicalLevel() == level)
+				{
+					layer.setName(newName);
+				}
+			}
+		}
+		
+		System.out.println("This layer name cannot be set!");
+	}
+	
+	public ArrayList<Integer> getLevelFromLayers()
+	{
+		ArrayList<Integer> integerList = new ArrayList<Integer>();
+		for(Module layer : modules)
+		{
+			if(layer instanceof Layer)
+			{
+				integerList.add(((Layer) layer).getHierarchicalLevel());
+			}
+		}
+		return integerList;
+	}
+	
 	
 	//Application
-	public void addApplication(Application app)
+	/*public void addApplication(Application app)
 	{
 		if(!applications.contains(app) && !this.hasApplication(app.getName())) {
 			applications.add(app);
@@ -158,7 +176,7 @@ public class SoftwareArchitecture {
 		}
 		
 		return false;
-	}
+	}*/
 	
 	
 	//AppliedRule
