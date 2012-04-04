@@ -1,12 +1,12 @@
-package define.applogic;
+package husaccttest.define.domain;
 
-import define.domain.Application;
-import define.domain.AppliedRule;
-import define.domain.SoftwareArchitecture;
-import define.domain.module.Layer;
-import define.domain.module.Module;
+import husacct.define.domain.Application;
+import husacct.define.domain.AppliedRule;
+import husacct.define.domain.SoftwareArchitecture;
+import husacct.define.domain.module.Layer;
+import husacct.define.domain.module.Module;
 
-public class Main {
+public class MethodTest {
 
 	/**
 	 * @param args
