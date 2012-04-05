@@ -1,5 +1,12 @@
 package husacct.define;
 
+import javax.swing.JFrame;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+
 import husacct.define.dto.*;
 
 public class DefineServiceStub implements IDefineService{
@@ -123,5 +130,35 @@ public class DefineServiceStub implements IDefineService{
 		//another example:
 		//parent from module: DomainLayer.locationbasedHistory would be
 		//return "DomainLayer";
+	}
+
+	public Document exportLogicalArchitecture() throws ParserConfigurationException{
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		  //Get the DocumentBuilder
+		  DocumentBuilder parser = factory.newDocumentBuilder();
+		  //Create blank DOM Document
+		  Document doc = parser.newDocument();
+		  return doc;
+	}
+
+	public void importLogicalArchitecture(Document doc){
+			
+	}
+	
+	public Document exportPhysicalArchitecture() throws ParserConfigurationException{
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		  //Get the DocumentBuilder
+		  DocumentBuilder parser = factory.newDocumentBuilder();
+		  //Create blank DOM Document
+		  Document doc = parser.newDocument();
+		  return doc;
+	}
+	
+	public void importPhysicalArchitecture(Document doc) {
+		
+	}
+	
+	public JFrame getDefinedGUI(){
+		return new JFrame();
 	}
 }
