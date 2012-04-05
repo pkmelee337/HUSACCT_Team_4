@@ -1,5 +1,10 @@
 package husacct.define;
 
+import javax.swing.JFrame;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+
 import husacct.define.dto.*;
 
 public interface IDefineService {
@@ -9,4 +14,9 @@ public interface IDefineService {
 	public ApplicationDTO getApplicationDetails();	
 	public ModuleDTO[] getChildsFromModule(String logicalPath);
 	public String getParentFromModule(String logicalPath);
+	public Document exportLogicalArchitecture() throws ParserConfigurationException;
+	public void importLogicalArchitecture(Document doc);
+	public Document exportPhysicalArchitecture() throws ParserConfigurationException;
+	public void importPhysicalArchitecture(Document doc);
+	public JFrame getDefinedGUI();
 }
