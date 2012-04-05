@@ -2,7 +2,7 @@ package husacct.define;
 
 import husacct.define.dto.*;
 
-public class DefineService implements IDefineService {
+public class DefineServiceImpl implements IDefineService {
 
 	@Override
 	public RuleDTO[] getDefinedRules() {

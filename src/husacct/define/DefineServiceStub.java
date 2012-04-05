@@ -14,42 +14,43 @@ public class DefineServiceStub implements IDefineService{
 				"infrastructure.socialmedia.locationbased.foursquare.IMap",
 				"infrastructure.socialmedia.locationbased.foursquare.HistoryDAO"};
 		lbDAOModule.subModules = new ModuleDTO[]{};
+		lbDAOModule.type = "Module";
 		
 		ModuleDTO latitudeModule = new ModuleDTO();
 		latitudeModule.logicalPath = "DomainLayer.locationbasedConnections.latitudeConnection";
 		latitudeModule.physicalPaths = new String[] {"domain.locationbased.latitude.Account",
 				"domain.locationbased.latitude.Friends", "domain.locationbased.latitude.Map"};
 		latitudeModule.subModules = new ModuleDTO[]{};
+		latitudeModule.type = "Module";
 		
 		ModuleDTO fqConnectionModule = new ModuleDTO();
 		fqConnectionModule.logicalPath = "DomainLayer.locationbasedConnections.foursquareConnection";
 		fqConnectionModule.physicalPaths = new String[] {"domain.locationbased.foursquare.Account",
 				"domain.locationbased.foursquare.Friends", "domain.locationbased.foursquare.Map"};
 		fqConnectionModule.subModules = new ModuleDTO[]{};
+		fqConnectionModule.type = "Module";
 		
 		ModuleDTO lbHistoryModule = new ModuleDTO();
 		lbHistoryModule.logicalPath = "DomainLayer.locationbasedHistory";
 		lbHistoryModule.physicalPaths = new String[] {"domain.locationbased.foursquare.History"};
 		lbHistoryModule.subModules = new ModuleDTO[]{};
+		lbHistoryModule.type = "Module";
 		
 		ModuleDTO lbConnectionsModule = new ModuleDTO();
 		lbConnectionsModule.logicalPath = "DomainLayer.locationbasedConnections";
 		lbConnectionsModule.physicalPaths = new String[] {};
 		lbConnectionsModule.subModules = new ModuleDTO[]{fqConnectionModule, latitudeModule};
+		lbConnectionsModule.type = "Module";
 		
 		ModuleDTO infrastructureLayer = new ModuleDTO();
 		infrastructureLayer.logicalPath = "InfrastructureLayer";
 		infrastructureLayer.subModules = new ModuleDTO[]{lbDAOModule};
+		infrastructureLayer.type = "Layer";
 		
 		ModuleDTO domainLayer = new ModuleDTO();
 		domainLayer.logicalPath = "DomainLayer";
 		domainLayer.subModules = new ModuleDTO[]{lbConnectionsModule, lbHistoryModule};
-		
-		//All violationTypes
-		//IGNORE FOR ELABORATION VERSION
-//		new String[]{"Invocation of a method/contructor", "Access of a property of field," +
-//				"Extending a class/struct", "Implementing an interface", "Declaration", "Annotation of an attribute" +
-//				"Import", "Throw an exception of a class"};
+		domainLayer.type = "Layer";
 		
 		//ACTUAL RULES
 		//ACTUAL RULES
@@ -93,7 +94,7 @@ public class DefineServiceStub implements IDefineService{
 	public ApplicationDTO getApplicationDetails() {
 		ApplicationDTO application = new ApplicationDTO();
 		application.name = "Application1";
-		application.path = "c:/Application1/";
+		application.paths = new String[] {"c:/Application1/"};
 		application.programmingLanguage = "Java";
 		return application;
 	}
@@ -123,5 +124,4 @@ public class DefineServiceStub implements IDefineService{
 		//parent from module: DomainLayer.locationbasedHistory would be
 		//return "DomainLayer";
 	}
-
 }
