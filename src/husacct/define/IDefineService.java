@@ -5,7 +5,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 
-import husacct.define.dto.*;
+import husacct.common.dto.ApplicationDTO;
+import husacct.common.dto.ModuleDTO;
+import husacct.common.dto.RuleDTO;
 
 public interface IDefineService {
 	
