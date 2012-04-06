@@ -13,7 +13,8 @@ public interface IDefineService {
 	
 	public RuleDTO[] getDefinedRules();
 	public ModuleDTO[] getRootModules();
-	public ApplicationDTO getApplicationDetails();	
+	public ApplicationDTO getApplicationDetails();
+	public void createApplication(String name, String[] paths, String language);
 	public ModuleDTO[] getChildsFromModule(String logicalPath);
 	public String getParentFromModule(String logicalPath);
 	public Document exportLogicalArchitecture() throws ParserConfigurationException;

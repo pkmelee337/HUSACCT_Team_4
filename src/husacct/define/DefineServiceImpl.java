@@ -144,7 +144,7 @@ public class DefineServiceImpl implements IDefineService {
 	}
 
 	public void importLogicalArchitecture(Document doc){
-			
+		//TODO	
 	}
 	
 	public Document exportPhysicalArchitecture() throws ParserConfigurationException{
@@ -157,10 +157,15 @@ public class DefineServiceImpl implements IDefineService {
 	}
 	
 	public void importPhysicalArchitecture(Document doc) {
-		
+		//TODO
 	}
 	
 	public JFrame getDefinedGUI(){
 		return new JFrame();
+	}
+
+	@Override
+	public void createApplication(String name, String[] paths, String language) {
+		//TODO
 	}
 }
