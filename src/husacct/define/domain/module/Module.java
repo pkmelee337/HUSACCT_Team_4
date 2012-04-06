@@ -6,6 +6,8 @@ import husacct.define.domain.SoftwareUnitDefinition;
 
 public class Module {
 	
+	protected static long STATIC_ID;
+	protected long id;
 	protected String name;
 	protected String description;
 	protected String type;
@@ -14,16 +16,13 @@ public class Module {
 	
 	public Module()
 	{
-		
-	}
-
-	public Module(String description) {
-		this.description = description;
-		this.type = "Module";
+		this("", "");
 	}
 
 	public Module(String name, String description)
-	{
+	{	
+		this.id = STATIC_ID++;
+		STATIC_ID++;
 		this.name = name;
 		this.description = description;
 		this.type = "Module";
@@ -125,6 +124,26 @@ public class Module {
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj)
+	        return true;
+	    if (obj == null)
+	        return false;
+	    if (obj instanceof Module){
+	    	Module m = (Module)obj;
+	    	if (!m.name.equals(this.name)){
+	    		return false;
+	    	}
+	    	return true;
+	    }
+	    return false;
+	}
+
+	public long getId() {
+		return id;
 	}
 
 }

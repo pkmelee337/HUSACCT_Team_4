@@ -6,7 +6,8 @@ import husacct.define.domain.module.Module;
 
 public class AppliedRule {
 	
-	private int id;
+	private static long STATIC_ID;
+	private long id;
 	private String description;
 	private String[] dependencies;
 	private String prefix;
@@ -14,15 +15,15 @@ public class AppliedRule {
 	private Module usedModule;
 	private Module restrictedModule;
 	private String ruleType;
-	//TODO: Construct rule string
+	private boolean enabled;
 	private ArrayList<AppliedRule> exceptions;
 
-	
-
-	public AppliedRule(int id, String description, String[] dependencies,
+	public AppliedRule(String ruleType, String description, String[] dependencies,
 			String prefix, String suffix, Module usedModule,
 			Module restrictedModule) {
-		this.id = id;
+		this.id = STATIC_ID++;
+		STATIC_ID++;
+		this.ruleType = ruleType;
 		this.description = description;
 		this.dependencies = dependencies;
 		this.prefix = prefix;
@@ -30,18 +31,15 @@ public class AppliedRule {
 		this.usedModule = usedModule;
 		this.restrictedModule = restrictedModule;
 		this.exceptions = new ArrayList<AppliedRule>();
+		this.enabled = true;
+	}
+	
+	public AppliedRule(String ruleType, String description, Module usedModule, Module restrictedModule){
+		this(ruleType, description, new String[0], "","",usedModule,restrictedModule);
 	}
 
 	public AppliedRule() {
-		
-		this.id = 0;
-		this.description = "";
-		this.dependencies = new String[1000];
-		this.prefix = "";
-		this.suffix = "";
-		this.usedModule = null;
-		this.restrictedModule = null;
-		this.exceptions = new ArrayList<AppliedRule>();
+		this("", "",new String[0], "","",null,null);
 	}
 
 	public void setDescription(String description) {
@@ -59,7 +57,7 @@ public class AppliedRule {
 	}
 
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -136,16 +134,32 @@ public class AppliedRule {
 		}
 	}
 	
-	private boolean hasException(int id) 
+	private boolean hasException(long l) 
 	{
 		for(AppliedRule exception : exceptions) 
 		{
-			if(exception.getId() == id)
+			if(exception.getId() == l)
 			{
 				return true;
 			}
 		}
 		
 		return false;
+	}
+
+	public String getRuleType() {
+		return ruleType;
+	}
+
+	public void setRuleType(String ruleType) {
+		this.ruleType = ruleType;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

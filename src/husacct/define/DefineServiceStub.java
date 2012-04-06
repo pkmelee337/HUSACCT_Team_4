@@ -7,7 +7,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 
-import husacct.define.dto.*;
+import husacct.common.dto.ApplicationDTO;
+import husacct.common.dto.ModuleDTO;
+import husacct.common.dto.RuleDTO;
 
 public class DefineServiceStub implements IDefineService{
 
@@ -82,16 +84,18 @@ public class DefineServiceStub implements IDefineService{
 	}
 
 	@Override
-	public ModuleDTO[] getDefinedLayers() {			
+	public ModuleDTO[] getRootModules() {			
 		//Gets only the top level abstraction Modules
 		
 		ModuleDTO infrastructureLayer = new ModuleDTO();
 		infrastructureLayer.logicalPath = "InfrastructureLayer";
 		infrastructureLayer.subModules = new ModuleDTO[]{};
+		infrastructureLayer.type = "Layer";
 		
 		ModuleDTO domainLayer = new ModuleDTO();
 		domainLayer.logicalPath = "DomainLayer";
 		domainLayer.subModules = new ModuleDTO[]{};
+		domainLayer.type = "Layer";
 
 		ModuleDTO[] allLayers = new ModuleDTO[]{domainLayer,infrastructureLayer};
 		return allLayers;
@@ -142,7 +146,7 @@ public class DefineServiceStub implements IDefineService{
 	}
 
 	public void importLogicalArchitecture(Document doc){
-			
+		//TODO
 	}
 	
 	public Document exportPhysicalArchitecture() throws ParserConfigurationException{
@@ -155,10 +159,16 @@ public class DefineServiceStub implements IDefineService{
 	}
 	
 	public void importPhysicalArchitecture(Document doc) {
-		
+		//TODO
 	}
 	
 	public JFrame getDefinedGUI(){
 		return new JFrame();
 	}
+
+	@Override
+	public void createApplication(String name, String[] paths, String language) {
+		//TODO
+	}
+
 }

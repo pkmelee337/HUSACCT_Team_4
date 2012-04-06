@@ -4,18 +4,16 @@ public class Layer extends Module {
 	
 	private int hierarchicalLevel;
 	
-	public Layer(String name)
-	{
-		super.name = name;
-		super.type = "Layer";
-	}
-	
 	public Layer()
 	{
-		super();
-		super.type = "Layer";
+		this("", "", -1);
 	}
 
+	public Layer(String name, int level)
+	{
+		this(name, "", level);
+	}
+	
 	public Layer(String name, String description, int level)
 	{
 		super.name = name;
@@ -24,13 +22,6 @@ public class Layer extends Module {
 		this.hierarchicalLevel = level;
 	}
 	
-	public Layer(String name, int level)
-	{
-		super.name = name;
-		this.hierarchicalLevel = level;
-		super.type = "Layer";
-	}
-
 	public void setHierarchicalLevel(int hierarchicalLevel) {
 		this.hierarchicalLevel = hierarchicalLevel;
 	}
@@ -39,4 +30,19 @@ public class Layer extends Module {
 		return hierarchicalLevel;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj)
+	        return true;
+	    if (obj == null)
+	        return false;
+	    if (obj instanceof Layer){
+	    	Layer l = (Layer)obj;
+	    	if (l.hierarchicalLevel != this.hierarchicalLevel){
+	    		return false;
+	    	}
+	    	return true;
+	    }
+	    return false;
+	}
 }
