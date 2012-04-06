@@ -1,6 +1,7 @@
 package husacct.define.presentation.jframe;
 
 import husacct.define.presentation.tables.JTableException;
+import husacct.define.presentation.utils.KeyValueComboBox;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -29,15 +30,17 @@ import javax.swing.WindowConstants;
 public class JFrameAppliedRules extends javax.swing.JFrame {
 
 	private JPanel jPanel1;
-	private JLabel jLabel1;
+	private JLabel jLabelModuleTo;
+	private JLabel jLabelModuleFrom;
 	private JLabel jLabel2;
-	private JLabel jLabel3;
+	private JLabel jLabelExceptions;
 	private JPanel jPanel3;
 	private JScrollPane jScrollPane1;
 	public JCheckBox jCheckBoxEnabled;
-	private JLabel jLabel4;
-	public JComboBox jComboBoxToLayer;
-	public JComboBox jComboBoxAppliedRule;
+	private JLabel jLabelRuleType;
+	public JComboBox jComboBoxModuleFrom;
+	public JComboBox jComboBoxModuleTo;
+	public KeyValueComboBox jComboBoxAppliedRule;
 	public JTableException jTableException;
 	private JPanel jPanel4;
 	public JButton jButtonAddExceptionRow;
@@ -73,7 +76,7 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			setTitle("New Applied Rule");
-			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/jframeicon.jpg")).getImage());
+			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/jframeicon.jpg")).getImage());
 			{
 				jPanel1 = new JPanel();
 				GridBagLayout jPanel1Layout = new GridBagLayout();
@@ -84,10 +87,15 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 				getContentPane().add(jPanel1, BorderLayout.CENTER);
 				jPanel1.setLayout(jPanel1Layout);
 				jPanel1.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+//				{
+//					jLabelModuleFrom = new JLabel();
+//					jPanel1.add(jLabelModuleFrom, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+//					jLabelModuleFrom.setText("From Module");
+//				}
 				{
-					jLabel1 = new JLabel();
-					jPanel1.add(jLabel1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-					jLabel1.setText("To layer");
+					jLabelModuleTo = new JLabel();
+					jPanel1.add(jLabelModuleTo, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					jLabelModuleTo.setText("To Module");
 				}
 				{
 					jLabel2 = new JLabel();
@@ -95,9 +103,9 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 					jLabel2.setText("Enabled");
 				}
 				{
-					jLabel3 = new JLabel();
-					jPanel1.add(jLabel3, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-					jLabel3.setText("Exceptions");
+					jLabelExceptions = new JLabel();
+					jPanel1.add(jLabelExceptions, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					jLabelExceptions.setText("Exceptions");
 				}
 				{
 					jPanel3 = new JPanel();
@@ -136,23 +144,21 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 					}
 				}
 				{
-					jLabel4 = new JLabel();
-					jPanel1.add(jLabel4, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-					jLabel4.setText("Rule");
+					jLabelRuleType = new JLabel();
+					jPanel1.add(jLabelRuleType, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+					jLabelRuleType.setText("RuleType");
 				}
 				{
-					// old = 
-					// ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new Object[] { AbstractRuleType.back_call, AbstractRuleType.skip_call });
-					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new Object[] { "back_call", "skip_call" });
-					jComboBoxAppliedRule = new JComboBox();
+					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new Object[] {});
+					jComboBoxAppliedRule = new KeyValueComboBox();
 					jPanel1.add(jComboBoxAppliedRule, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 					jComboBoxAppliedRule.setModel(jComboBox1Model);
 				}
 				{
-					ComboBoxModel jComboBox2Model = new DefaultComboBoxModel(new String[] { "" });
-					jComboBoxToLayer = new JComboBox();
-					jPanel1.add(jComboBoxToLayer, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-					jComboBoxToLayer.setModel(jComboBox2Model);
+					ComboBoxModel jComboBox2Model = new DefaultComboBoxModel(new String[] { });
+					jComboBoxModuleTo = new JComboBox();
+					jPanel1.add(jComboBoxModuleTo, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+					jComboBoxModuleTo.setModel(jComboBox2Model);
 				}
 				{
 					jCheckBoxEnabled = new JCheckBox();

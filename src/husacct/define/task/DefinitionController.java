@@ -1,7 +1,6 @@
 package husacct.define.task;
 
 import husacct.define.domain.DefineDomainService;
-import husacct.define.domain.DefineDomainServiceOld2011;
 import husacct.define.task.ApplicationController;
 import husacct.define.presentation.helper.DataHelper;
 import husacct.define.presentation.jpanel.DefinitionJPanel;
@@ -14,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,7 +27,6 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private DefinitionJPanel definitionJPanel;
 	// create own service
-	//private DefineDomainServiceOld2011 defineDomainServiceOLD;
 	private DefineDomainService defineDomainService;
 	private ApplicationController mainController;
 
@@ -36,7 +35,6 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		mainController = mc;
 		definitionJPanel = new DefinitionJPanel();
 		defineDomainService = DefineDomainService.getInstance();
-		//defineDomainServiceOLD = DefineDomainServiceOld2011.getInstance();
 	}
 
 	/**
@@ -246,7 +244,6 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void moveLayerUp() {
 		Log.i(this, "moveLayerUp()");
-		//UiDialogs.errorDialog(definitionJPanel, "Maybe coming in future", "Error");
 		try {
 			int layerId = definitionJPanel.getSelectedLayer();
 
@@ -270,23 +267,23 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void moveLayerDown() {
 		Log.i(this, "moveLayerDown()");
-		UiDialogs.errorDialog(definitionJPanel, "Maybe coming in future", "Error");
-//		try {
-//			int layer_id = definitionJPanel.getSelectedLayer();
-//
-//			if (layer_id != -1) {
-//				JPanelStatus.getInstance("Moving layer down").start();
-//
-//				definitionService.moveLayerDown(layer_id);
-//
-//				updateLayerList();
-//			}
-//		} catch (Exception e) {
-//			Log.e(this, "moveLayerDown() - exception: " + e.getMessage());
-//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
-//		} finally {
-//			JPanelStatus.getInstance().stop();
-//		}
+//		UiDialogs.errorDialog(definitionJPanel, "Maybe coming in future", "Error");
+		try {
+			int layerId = definitionJPanel.getSelectedLayer();
+
+			if (layerId != -1) {
+				JPanelStatus.getInstance("Moving layer down").start();
+
+				defineDomainService.moveLayerDown(layerId);
+
+				updateLayerList();
+			}
+		} catch (Exception e) {
+			Log.e(this, "moveLayerDown() - exception: " + e.getMessage());
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
+		}
 	}
 
 	/**
@@ -372,78 +369,78 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private void addRuleToLayer() {
 		Log.i(this, "addRuleToLayer()");
-		UiDialogs.errorDialog(definitionJPanel, "ADDING Rules not working yet", "Error");
+		//UiDialogs.errorDialog(definitionJPanel, "ADDING Rules not working yet", "Error");
 		
-//		try {
-//			int layer_id = definitionJPanel.getSelectedLayer();
-//
-//			if (layer_id != -1) {
-//				// Create a new software unit controller
-//				AppliedRulesController a = new AppliedRulesController(layer_id, -1L);
-//				// Set the action of the view
-//				a.setAction(PopUpController.ACTION_NEW);
-//				a.addObserver(this);
-//				// Build and show the ui
-//				a.initUi();
-//			}
-//		} catch (Exception e) {
-//			Log.e(this, "addRuleToLayer() - exception: " + e.getMessage());
-//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
-//		}
+		try {
+			int layer_id = definitionJPanel.getSelectedLayer();
+
+			if (layer_id != -1) {
+				// Create a new software unit controller
+				AppliedRulesController a = new AppliedRulesController(layer_id, -1L);
+				// Set the action of the view
+				a.setAction(PopUpController.ACTION_NEW);
+				a.addObserver(this);
+				// Build and show the ui
+				a.initUi();
+			}
+		} catch (Exception e) {
+			Log.e(this, "addRuleToLayer() - exception: " + e.getMessage());
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		}
 	}
 
 	private void editRuleToLayer() {
 		Log.i(this, "editRuleToLayer()");
-		UiDialogs.errorDialog(definitionJPanel, "EDITING Rules not working yet", "Error");
+		//UiDialogs.errorDialog(definitionJPanel, "EDITING Rules not working yet", "Error");
 		
-//		try {
-//			int layer_id = definitionJPanel.getSelectedLayer();
-//			long appliedrule_id = definitionJPanel.getSelectedAppliedRule();
-//
-//			if (layer_id != -1 && appliedrule_id != -1L) {
-//				// Create a new software unit controller
-//				AppliedRulesController a = new AppliedRulesController(layer_id, appliedrule_id);
-//				// Set the action of the view
-//				a.setAction(PopUpController.ACTION_EDIT);
-//				a.addObserver(this);
-//				// Build and show the ui
-//				a.initUi();
-//			} else {
-//				Log.e(this, "editRuleToLayer() - no applied rule selected");
-//				UiDialogs.errorDialog(definitionJPanel, "Select an applied rule", "Error");
-//			}
-//		} catch (Exception e) {
-//			Log.e(this, "editRuleToLayer() - exception: " + e.getMessage());
-//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
-//		}
+		try {
+			int layer_id = definitionJPanel.getSelectedLayer();
+			long appliedrule_id = definitionJPanel.getSelectedAppliedRule();
+
+			if (layer_id != -1 && appliedrule_id != -1L) {
+				// Create a new software unit controller
+				AppliedRulesController a = new AppliedRulesController(layer_id, appliedrule_id);
+				// Set the action of the view
+				a.setAction(PopUpController.ACTION_EDIT);
+				a.addObserver(this);
+				// Build and show the ui
+				a.initUi();
+			} else {
+				Log.e(this, "editRuleToLayer() - no applied rule selected");
+				UiDialogs.errorDialog(definitionJPanel, "Select an applied rule", "Error");
+			}
+		} catch (Exception e) {
+			Log.e(this, "editRuleToLayer() - exception: " + e.getMessage());
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		}
 	}
 
 	private void removeRuleToLayer() {
 		Log.i(this, "removeRuleToLayer()");
-		UiDialogs.errorDialog(definitionJPanel, "REMOVING Rules not working yet", "Error");
+		//UiDialogs.errorDialog(definitionJPanel, "REMOVING Rules not working yet", "Error");
 		
-//		try {
-//			int layer_id = definitionJPanel.getSelectedLayer();
-//			long appliedrule_id = definitionJPanel.getSelectedAppliedRule();
-//
-//			if (layer_id != -1 && appliedrule_id != -1L) {
-//				// Ask the user if he is sure to remove the software unit
-//				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove the applied rule: \"" + definitionService.getAppliedRuleRuleType(layer_id, appliedrule_id) + "\"", "Remove?");
-//				if (confirm) {
-//					// Remove the software unit
-//					JPanelStatus.getInstance("Removing applied rule").start();
-//					definitionService.removeAppliedRule(layer_id, appliedrule_id);
-//
-//					// Update the applied rules table
-//					updateAppliedRulesTable();
-//				}
-//			}
-//		} catch (Exception e) {
-//			Log.e(this, "removeRuleToLayer() - exception: " + e.getMessage());
-//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
-//		} finally {
-//			JPanelStatus.getInstance().stop();
-//		}
+		try {
+			int layer_id = definitionJPanel.getSelectedLayer();
+			int appliedRuleId = (int)definitionJPanel.getSelectedAppliedRule();
+
+			if (layer_id != -1 && appliedRuleId != -1L) {
+				// Ask the user if he is sure to remove the software unit
+				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove the applied rule: \"" + defineDomainService.getRuleTypeByAppliedRule(appliedRuleId) + "\"", "Remove?");
+				if (confirm) {
+					// Remove the software unit
+					JPanelStatus.getInstance("Removing applied rule").start();
+					defineDomainService.removeAppliedRule(appliedRuleId);
+
+					// Update the applied rules table
+					updateAppliedRulesTable();
+				}
+			}
+		} catch (Exception e) {
+			Log.e(this, "removeRuleToLayer() - exception: " + e.getMessage());
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
+		}
 	}
 
 	/**
@@ -487,7 +484,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 		// Get all layers from the service
 		ArrayList<Integer> layers = defineDomainService.getLayerLevels();
-
+		Collections.sort(layers);
 		// Get ListModel from listlayers
 		DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();
 

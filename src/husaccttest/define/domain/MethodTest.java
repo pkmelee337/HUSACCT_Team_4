@@ -24,23 +24,23 @@ public class MethodTest {
 		Module subModule2 = new Module("Sub Module 1", "This is a submodule");		
 		Module subModule3 = new Module("Sub Module 3", "This is a submodule");		
 
-		AppliedRule rule1 = new AppliedRule(1, "Test", new String[1],
+		AppliedRule rule1 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
 				"prefix", "suffix", module1,
 				null);
-		AppliedRule rule2 = new AppliedRule(1, "Test", new String[1],
+		AppliedRule rule2 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
 				"prefix", "suffix", module1,
 				null);
-		AppliedRule rule3 = new AppliedRule(3, "Test", new String[1],
+		AppliedRule rule3 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
 				"prefix", "suffix", module1,
 				null);
 
-		AppliedRule exception1 = new AppliedRule(2, "Test", new String[1],
+		AppliedRule exception1 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
 				"prefix", "suffix", module1,
 				null);
-		AppliedRule exception2 = new AppliedRule(2, "Test", new String[1],
+		AppliedRule exception2 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
 				"prefix", "suffix", module1,
 				null);
-		AppliedRule exception3 = new AppliedRule(3, "Test", new String[1],
+		AppliedRule exception3 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
 				"prefix", "suffix", module1,
 				null);
 		
@@ -82,7 +82,7 @@ public class MethodTest {
 		sA.removeModule(module3);
 		sA.removeModule(layer2);
 		module1.removeSubModule(subModule3);
-		sA.removeAppliedRule(rule3);
+		sA.removeAppliedRule(rule3.getId());
 		rule1.removeException(exception3);
 		
 		

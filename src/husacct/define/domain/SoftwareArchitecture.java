@@ -73,7 +73,7 @@ public class SoftwareArchitecture {
 		if(!modules.contains(module) && !this.hasModule(module.getName())) {
 			modules.add(module);
 		}else{
-			System.out.println("This module has already been addded!");
+			throw new RuntimeException("This module has already been addded!");
 		}
 	}
 	
@@ -97,7 +97,7 @@ public class SoftwareArchitecture {
 			modules.remove(module);
 		}
 		else{
-			System.out.println("This module does not exist!");
+			throw new RuntimeException("This module does not exist!");
 		}
 	}
 	
@@ -105,6 +105,7 @@ public class SoftwareArchitecture {
 	{
 		for(Module module : modules) 
 		{
+			
 			if(module.getName().equals(name))
 			{
 				return true;
@@ -127,7 +128,7 @@ public class SoftwareArchitecture {
 			}
 		}
 		
-		System.out.println("This layer name cannot be set!");
+		throw new RuntimeException("This layer name cannot be set!");
 	}
 	
 	public ArrayList<Integer> getLevelFromLayers()
@@ -143,42 +144,6 @@ public class SoftwareArchitecture {
 		return integerList;
 	}
 	
-	
-	//Application
-	/*public void addApplication(Application app)
-	{
-		if(!applications.contains(app) && !this.hasApplication(app.getName())) {
-			applications.add(app);
-		}
-		else{
-			System.out.println("This application has already been added!");
-		}
-	}
-	
-	public void removeApplication(Application app)
-	{
-		if(applications.contains(app) && this.hasApplication(app.getName())) {
-			applications.remove(app);
-		}
-		else{
-			System.out.println("This application does not exist!");
-		}
-	}
-	
-	private boolean hasApplication(String name) 
-	{
-		for(Application app : applications) 
-		{
-			if(app.getName().equals(name))
-			{
-				return true;
-			}
-		}
-		
-		return false;
-	}*/
-	
-	
 	//AppliedRule
 	public void addAppliedRule(AppliedRule rule)
 	{
@@ -186,25 +151,26 @@ public class SoftwareArchitecture {
 		{
 			appliedRules.add(rule);
 		}else{
-			System.out.println("This rule has already been added!");
+			throw new RuntimeException("This rule has already been added!");
 		}
 	}
 	
-	public void removeAppliedRule(AppliedRule rule)
+	public void removeAppliedRule(long appliedRuleId)
 	{
-		if(appliedRules.contains(rule) && this.hasAppliedRule(rule.getId()))
+		if(this.hasAppliedRule(appliedRuleId))
 		{
-			appliedRules.remove(rule);
+			AppliedRule rule = getAppliedRuleById(appliedRuleId);
+			appliedRules.remove(rule);	
 		}else{
-			System.out.println("This rule does not exist!");
+			throw new RuntimeException("This rule does not exist!");
 		}
 	}
 	
-	private boolean hasAppliedRule(int id) 
+	private boolean hasAppliedRule(long l) 
 	{
 		for(AppliedRule rule : appliedRules) 
 		{
-			if(rule.getId() == id)
+			if(rule.getId() == l)
 			{
 				return true;
 			}
@@ -225,4 +191,129 @@ public class SoftwareArchitecture {
 		}
 		return layerName;
 	}
+
+	public String getRuleTypeByAppliedRule(int appliedRuleId) {
+		AppliedRule rule = getAppliedRuleById(appliedRuleId);
+		return rule.getRuleType();
+	}
+	
+	private AppliedRule getAppliedRuleById(long appliedRuleId){
+		AppliedRule appliedRule = new AppliedRule();
+		if(this.hasAppliedRule(appliedRuleId))
+		{
+			for(AppliedRule rule : appliedRules) 
+			{
+				if(rule.getId() == appliedRuleId)
+				{
+					appliedRule = rule;
+					break;
+				}
+			}		
+		}else{
+			throw new RuntimeException("This rule does not exist!");
+		}
+		return appliedRule;
+	}
+
+	public Module getModuleById(long moduleId) {
+		Module module = null;
+		if(this.hasModule(moduleId))
+		{
+			for(Module mod : modules) 
+			{
+				if(mod.getId() == moduleId)
+				{
+					module = mod;
+					break;
+				}
+			}		
+		}else{
+			throw new RuntimeException("This module does not exist!");
+		}
+		return module;
+	}
+
+	private boolean hasModule(long moduleFromId) {
+		for(Module module : modules) 
+		{
+			if(module.getId() == moduleFromId)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void setModuleName(long moduleId, String newName) {
+		Module module = getModuleById(moduleId);
+		module.setName(newName);
+	}
+
+	public void setAppliedRuleIsEnabled(long appliedRuleId, boolean enabled) {
+		AppliedRule rule = getAppliedRuleById(appliedRuleId);
+		rule.setEnabled(enabled);
+	}
+
+	public void removeAppliedRuleException(long parentRuleId, long appliedRuleId) {
+			AppliedRule parentRule = getAppliedRuleById(parentRuleId);
+			AppliedRule appliedRule = getAppliedRuleById(appliedRuleId);
+			parentRule.getExceptions().remove(appliedRule);
+	}
+	
+	public void removeAppliedRuleExceptions(long appliedRuleId) {
+		AppliedRule parentRule = getAppliedRuleById(appliedRuleId);
+		parentRule.getExceptions().clear();
+}
+
+	public void addExceptionToAppliedRule(long parentRuleId, AppliedRule rule) {
+		AppliedRule parentRule = getAppliedRuleById(parentRuleId);
+		parentRule.getExceptions().add(rule);
+	}
+
+	public void moveUpDown(int moduleId) {
+		Layer layer = (Layer)getModuleById(moduleId);
+		Layer layerAboveLayer = getTheFirstLayerAbove(layer.getHierarchicalLevel());
+		switchHierarchicalLayerLevels(layer, layerAboveLayer);
+	}
+	
+	private Layer getTheFirstLayerAbove(int currentHierarchicalLevel){
+		Layer layer = null;
+		for (Module mod : modules){
+			if (mod instanceof Layer) {
+				Layer l = (Layer)mod;
+				if (l.getHierarchicalLevel() < currentHierarchicalLevel &&
+						(layer == null || l.getHierarchicalLevel() > layer.getHierarchicalLevel())){
+					layer = l;
+				}
+			}
+		}
+		return layer;
+	}
+
+	public void moveLayerDown(int moduleId) {
+		Layer layer = (Layer)getModuleById(moduleId);
+		Layer layerBelowLayer = getTheFirstLayerBelow(layer.getHierarchicalLevel());
+		switchHierarchicalLayerLevels(layer, layerBelowLayer);
+	}
+	
+	private Layer getTheFirstLayerBelow(int currentHierarchicalLevel){
+		Layer layer = null;
+		for (Module mod : modules){
+			if (mod instanceof Layer) {
+				Layer l = (Layer)mod;
+				if (l.getHierarchicalLevel() > currentHierarchicalLevel &&
+						(layer == null || l.getHierarchicalLevel() < layer.getHierarchicalLevel())){
+					layer = l;
+				}
+			}
+		}
+		return layer;
+	}
+	
+	private void switchHierarchicalLayerLevels(Layer layerOne, Layer layerTwo){
+		int hierarchicalLevelLayerOne = layerOne.getHierarchicalLevel();
+		layerOne.setHierarchicalLevel(layerTwo.getHierarchicalLevel());
+		layerTwo.setHierarchicalLevel(hierarchicalLevelLayerOne);
+	}
+	
 }

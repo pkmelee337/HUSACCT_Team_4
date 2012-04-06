@@ -2,6 +2,7 @@ package husacct.define.task;
 
 import husacct.common.AnalyseServiceStub;
 import husacct.common.dto.AnalysedModuleDTO;
+import husacct.define.domain.DefineDomainService;
 import husacct.define.domain.domainOLD.SoftwareUnitDefinition;
 import husacct.define.presentation.helper.DataHelper;
 import husacct.define.presentation.jframe.JFrameSoftwareUnit;
@@ -40,7 +41,7 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 			// TODO:: add different types
 			SoftwareUnitDefinition softwareUnit = new SoftwareUnitDefinition(module.name, SoftwareUnitDefinition.Type.PACKAGE);
 			softwareUnits.add(softwareUnit);
-			definitionServiceOLD.addUniqueName(softwareUnit.getName(), softwareUnit);
+			//DefineDomainService.addUniqueName(softwareUnit.getName(), softwareUnit);
 		}
 	}
 	
@@ -109,7 +110,7 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 	public void save() {
 		try {
 			if (getAction().equals(PopUpController.ACTION_NEW)) {
-				definitionServiceOLD.setSoftwareUnitLayer(jframe.jComboBoxSoftwareUnit.getSelectedItem().toString(), getLayerID());
+				//DefineDomainService.setSoftwareUnitLayer(jframe.jComboBoxSoftwareUnit.getSelectedItem().toString(), getLayerID());
 				
 				// Niet Nodig naar mijn idee!
 //				JTableException table = jframe.jTableException;
