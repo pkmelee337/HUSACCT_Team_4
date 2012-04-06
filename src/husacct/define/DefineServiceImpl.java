@@ -84,7 +84,7 @@ public class DefineServiceImpl implements IDefineService {
 	}
 
 	@Override
-	public ModuleDTO[] getDefinedLayers() {			
+	public ModuleDTO[] getRootModules() {			
 		//Gets only the top level abstraction Modules
 		
 		ModuleDTO infrastructureLayer = new ModuleDTO();

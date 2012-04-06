@@ -12,7 +12,7 @@ import husacct.common.dto.RuleDTO;
 public interface IDefineService {
 	
 	public RuleDTO[] getDefinedRules();
-	public ModuleDTO[] getDefinedLayers();
+	public ModuleDTO[] getRootModules();
 	public ApplicationDTO getApplicationDetails();	
 	public ModuleDTO[] getChildsFromModule(String logicalPath);
 	public String getParentFromModule(String logicalPath);

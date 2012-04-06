@@ -84,16 +84,18 @@ public class DefineServiceStub implements IDefineService{
 	}
 
 	@Override
-	public ModuleDTO[] getDefinedLayers() {			
+	public ModuleDTO[] getRootModules() {			
 		//Gets only the top level abstraction Modules
 		
 		ModuleDTO infrastructureLayer = new ModuleDTO();
 		infrastructureLayer.logicalPath = "InfrastructureLayer";
 		infrastructureLayer.subModules = new ModuleDTO[]{};
+		infrastructureLayer.type = "Layer";
 		
 		ModuleDTO domainLayer = new ModuleDTO();
 		domainLayer.logicalPath = "DomainLayer";
 		domainLayer.subModules = new ModuleDTO[]{};
+		domainLayer.type = "Layer";
 
 		ModuleDTO[] allLayers = new ModuleDTO[]{domainLayer,infrastructureLayer};
 		return allLayers;
