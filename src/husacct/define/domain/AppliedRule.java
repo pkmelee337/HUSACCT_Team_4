@@ -1,6 +1,8 @@
 package husacct.define.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
 import husacct.define.domain.module.Module;
 
@@ -161,5 +163,21 @@ public class AppliedRule {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public boolean usesModule(long moduleId) {
+		boolean usesModule = false;
+		if (usedModule.getId() == moduleId){
+			usesModule = true;
+		}else if( restrictedModule.getId() == moduleId){
+			usesModule = true;
+		}else{			
+			for (AppliedRule ruleExceptions : exceptions){
+				if (ruleExceptions.usesModule(moduleId)){
+					usesModule = true;
+				}
+			}
+		}
+		return usesModule;
 	}
 }

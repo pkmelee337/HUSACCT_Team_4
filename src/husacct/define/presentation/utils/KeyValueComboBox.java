@@ -23,7 +23,7 @@ public class KeyValueComboBox extends JComboBox{
 	
 	public void setModel(Object[] keys, Object[] values){
 		String[] tmpKeys = Arrays.asList(keys).toArray(new String[keys.length]);
-		String[] tmpValues = Arrays.asList(keys).toArray(new String[keys.length]);
+		String[] tmpValues = Arrays.asList(values).toArray(new String[values.length]);
 		
 		setHashMap(tmpKeys, tmpValues);
 		ComboBoxModel model = new DefaultComboBoxModel(tmpValues);
@@ -48,7 +48,7 @@ public class KeyValueComboBox extends JComboBox{
 		for (Iterator iterator = keyValuePair.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry entry = (Map.Entry) iterator.next();
 			String tmpKey = (String)entry.getKey();
-			if (keyValuePair.get(key).equals(value)){
+			if (keyValuePair.get(tmpKey).equals(value)){
 				key = tmpKey;
 				break;
 			}

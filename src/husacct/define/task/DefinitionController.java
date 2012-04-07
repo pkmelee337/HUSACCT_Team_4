@@ -644,21 +644,21 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				JPanelStatus.getInstance("Updating rules applied table").start();
 
 				// Get all applied rules from the service
-				ArrayList<Long> appliedrules = defineDomainService.getAppliedRulesForModule(layerId);
+				ArrayList<Long> appliedRulesIds = defineDomainService.getAppliedRulesIdsByModule(layerId);
 
 				// Get the tablemodel from the table
 				JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableAppliedRules.getModel();
 
 				// Remove all items in the table
 				atm.getDataVector().removeAllElements();
-				if (appliedrules != null) {
-					for (long appliedRuleId : appliedrules) {
+				if (appliedRulesIds != null) {
+					for (long appliedRuleId : appliedRulesIds) {
 						DataHelper datahelper = new DataHelper();
 						datahelper.setId(appliedRuleId);
 						datahelper.setValue(defineDomainService.getRuleTypeByAppliedRule(appliedRuleId));
 
 						// To layer
-						long toLayerId = defineDomainService.getAppliedRuleToModule(appliedRuleId);
+						long toLayerId = defineDomainService.getModuleToIdOfAppliedRule(appliedRuleId);
 
 						// Is enabled
 						boolean appliedRuleIsEnabled = defineDomainService.getAppliedRuleIsEnabled(appliedRuleId);

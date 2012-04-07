@@ -1,6 +1,6 @@
 package husacct.define.presentation;
 
-import husacct.define.domain.DefineDomainServiceOld2011;
+import husacct.define.domain.DefineDomainService;
 import husacct.define.presentation.jpanel.DefinitionJPanel;
 import husacct.define.presentation.utils.JPanelStatus;
 
@@ -63,7 +63,7 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-			setTitle(DefineDomainServiceOld2011.getInstance().getArchitectureDefinitionName());
+			setTitle("HUSACCT - Define Architecture");
 			
 			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/jframeicon.jpg")).getImage());
 			{

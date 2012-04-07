@@ -1,7 +1,6 @@
 package husacct.define.task;
 
 import husacct.define.domain.DefineDomainService;
-import husacct.define.domain.DefineDomainServiceOld2011;
 
 import java.awt.event.ActionListener;
 import java.util.Locale;

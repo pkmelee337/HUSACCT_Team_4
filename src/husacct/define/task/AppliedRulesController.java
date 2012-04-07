@@ -59,10 +59,10 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 				for (long exception_id : exceptions) {
 					DataHelper datahelper = new DataHelper();
 					datahelper.setId(exception_id);
-					datahelper.setValue(defineDomainService.getAppliedruleExceptionName(getLayerID(), appliedRuleId, exception_id));
+//					datahelper.setValue(defineDomainService.getAppliedruleExceptionName(getLayerID(), appliedRuleId, exception_id));
 
-					Object[] row = { datahelper, defineDomainService.getAppliedruleExceptionType(getLayerID(), appliedRuleId, exception_id) };
-					tablemodel.addRow(row);
+//					Object[] row = { datahelper, defineDomainService.getAppliedRuleExceptionType(getLayerID(), appliedRuleId, exception_id) };
+//					tablemodel.addRow(row);
 				}
 			}
 		}
@@ -96,7 +96,7 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 			ruleTypeValues.add(value);
 		}
 		
-		jframe.jComboBoxAppliedRule.setModel(ruleTypeKeys.toArray(), ruleTypeValues.toArray());
+		jframe.keyValueComboBoxAppliedRule.setModel(ruleTypeKeys.toArray(), ruleTypeValues.toArray());
 	}
 
 	public void loadSelectBoxes() {
@@ -124,24 +124,23 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 	public void save() {
 		try {
 			if (getAction().equals(PopUpController.ACTION_NEW)) {
-				String ruleTypeValue = jframe.jComboBoxAppliedRule.getSelectedItem().toString();
-				String ruleTypeKey = ruleTypeValue;
+				String ruleTypeKey = jframe.keyValueComboBoxAppliedRule.getSelectedItemKey();
 				String description = "";
 				long moduleFromId = getLayerID();
 				long moduleToId = ((DataHelper) jframe.jComboBoxModuleTo.getSelectedItem()).getId();
 				appliedRuleId = defineDomainService.addAppliedRule(ruleTypeKey, description, moduleFromId, moduleToId);
-				//appliedrule_id = defineDomainService.addAppliedRule(getLayerID(), ((DataHelper) jframe.jComboBoxModuleTo.getSelectedItem()).getIntId(), jframe.jComboBoxAppliedRule.getSelectedItem().toString());
 				defineDomainService.setAppliedRuleIsEnabled(appliedRuleId, jframe.jCheckBoxEnabled.isSelected());
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
 				int tablerows = tablemodel.getRowCount();
 				for (int i = 0; i < tablerows; i++) {
-//					defineDomainService.addExceptionToAppliedRule(getLayerID(), appliedrule_id, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
+					defineDomainService.addExceptionToAppliedRule(appliedRuleId, ruleTypeKey, description, moduleFromId, moduleToId);
+//					defineDomainService.addExceptionToAppliedRule(appliedRuleId, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString(), moduleToId, moduleToId);
 				}
 			} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
-				//defineDomainService.setAppliedRuleToLayer(getLayerID(), appliedrule_id, ((DataHelper) jframe.jComboBoxToLayer.getSelectedItem()).getIntId());
-				//defineDomainService.setAppliedRuleRuleType(getLayerID(), appliedrule_id, jframe.jComboBoxAppliedRule.getSelectedItem().toString());
+//				defineDomainService.setAppliedRuleToLayer(getLayerID(), appliedrule_id, ((DataHelper) jframe.jComboBoxToLayer.getSelectedItem()).getIntId());
+//				defineDomainService.setAppliedRuleRuleType(getLayerID(), appliedrule_id, jframe.jComboBoxAppliedRule.getSelectedItem().toString());
 				defineDomainService.setAppliedRuleIsEnabled(appliedRuleId, jframe.jCheckBoxEnabled.isSelected());
 
 				defineDomainService.removeAppliedRuleExceptions(appliedRuleId);

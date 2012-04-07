@@ -343,5 +343,15 @@ public class SoftwareArchitecture {
 		}
 		return rootModules;	
 	}
+
+	public ArrayList<Long> getAppliedRulesIdsByModule(long moduleId) {
+		ArrayList<Long> appliedRuleIds = new ArrayList<Long>();
+		for (AppliedRule rule : appliedRules){
+			if (rule.getUsedModule().getId() == moduleId){
+				appliedRuleIds.add(rule.getId());
+			}
+		}
+		return appliedRuleIds;
+	}
 	
 }

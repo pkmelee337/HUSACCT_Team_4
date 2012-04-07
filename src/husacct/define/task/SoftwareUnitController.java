@@ -3,7 +3,7 @@ package husacct.define.task;
 import husacct.common.AnalyseServiceStub;
 import husacct.common.dto.AnalysedModuleDTO;
 import husacct.define.domain.DefineDomainService;
-import husacct.define.domain.domainOLD.SoftwareUnitDefinition;
+import husacct.define.domain.SoftwareUnitDefinition;
 import husacct.define.presentation.helper.DataHelper;
 import husacct.define.presentation.jframe.JFrameSoftwareUnit;
 import husacct.define.presentation.tables.JTableException;

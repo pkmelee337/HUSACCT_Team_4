@@ -40,7 +40,7 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 	private JLabel jLabelRuleType;
 	public JComboBox jComboBoxModuleFrom;
 	public JComboBox jComboBoxModuleTo;
-	public KeyValueComboBox jComboBoxAppliedRule;
+	public KeyValueComboBox keyValueComboBoxAppliedRule;
 	public JTableException jTableException;
 	private JPanel jPanel4;
 	public JButton jButtonAddExceptionRow;
@@ -150,9 +150,9 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 				}
 				{
 					ComboBoxModel jComboBox1Model = new DefaultComboBoxModel(new Object[] {});
-					jComboBoxAppliedRule = new KeyValueComboBox();
-					jPanel1.add(jComboBoxAppliedRule, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-					jComboBoxAppliedRule.setModel(jComboBox1Model);
+					keyValueComboBoxAppliedRule = new KeyValueComboBox();
+					jPanel1.add(keyValueComboBoxAppliedRule, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+					keyValueComboBoxAppliedRule.setModel(jComboBox1Model);
 				}
 				{
 					ComboBoxModel jComboBox2Model = new DefaultComboBoxModel(new String[] { });
