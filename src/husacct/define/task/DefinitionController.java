@@ -4,6 +4,7 @@ import husacct.define.domain.DefineDomainService;
 import husacct.define.task.ApplicationController;
 import husacct.define.presentation.helper.DataHelper;
 import husacct.define.presentation.jpanel.DefinitionJPanel;
+import husacct.define.presentation.tables.JTableTableModel;
 import husacct.define.presentation.utils.JPanelStatus;
 import husacct.define.presentation.utils.Log;
 import husacct.define.presentation.utils.UiDialogs;
@@ -192,14 +193,14 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			// Ask the user for the layer name
 			String layerName = UiDialogs.inputDialog(definitionJPanel, "Please enter layer name", "Please input a value", JOptionPane.QUESTION_MESSAGE);
 			if (layerName != null) {
-				String levelString = UiDialogs.inputDialog(definitionJPanel, "Please enter layer level", "Please input a value", JOptionPane.QUESTION_MESSAGE);
-				if (levelString != null) {
+				String layerLevelString = UiDialogs.inputDialog(definitionJPanel, "Please enter layer level", "Please input a value", JOptionPane.QUESTION_MESSAGE);
+				if (layerLevelString != null) {
 					JPanelStatus.getInstance("Creating new layer").start();
-					int layerLevel = Integer.parseInt(levelString);
+					int layerLevel = Integer.parseInt(layerLevelString);
 
-					Log.i(this, "newLayer() - name: " + layerName + " level: " + layerLevel);
+					Log.i(this, "newLayer() - name: " + layerName);
 					// Create the layer
-					defineDomainService.addLayer(layerName, layerLevel);
+					long layerId = defineDomainService.addLayer(layerName, layerLevel);
 
 					// Update the layer list
 					updateLayerList();
@@ -219,13 +220,13 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void removeLayer() {
 		Log.i(this, "removeLayer()");
 		try {
-			int layerLevel = definitionJPanel.getSelectedLayer();
-			if (layerLevel != -1) {
-				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove layer: \"" + layerLevel + "\"", "Remove?");
+			long layerId = definitionJPanel.getSelectedLayer();
+			if (layerId != -1) {
+				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove layer: \"" + layerId + "\"", "Remove?");
 				if (confirm) {
 					JPanelStatus.getInstance("Removing layer").start();
 
-					defineDomainService.removeLayerByLevel(layerLevel);
+					defineDomainService.removeModuleById(layerId);
 
 					updateLayerList();
 				}
@@ -245,7 +246,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void moveLayerUp() {
 		Log.i(this, "moveLayerUp()");
 		try {
-			int layerId = definitionJPanel.getSelectedLayer();
+			long layerId = definitionJPanel.getSelectedLayer();
 
 			if (layerId != -1) {
 				JPanelStatus.getInstance("Moving layer up").start();
@@ -269,7 +270,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		Log.i(this, "moveLayerDown()");
 //		UiDialogs.errorDialog(definitionJPanel, "Maybe coming in future", "Error");
 		try {
-			int layerId = definitionJPanel.getSelectedLayer();
+			long layerId = definitionJPanel.getSelectedLayer();
 
 			if (layerId != -1) {
 				JPanelStatus.getInstance("Moving layer down").start();
@@ -292,11 +293,11 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void addSoftwareUnit() {
 		Log.i(this, "addSoftwareUnit()");
 		try {
-			int layer_id = definitionJPanel.getSelectedLayer();
+			long layerId = definitionJPanel.getSelectedLayer();
 
-			if (layer_id != -1) {
+			if (layerId != -1) {
 				// Create a new software unit controller
-				SoftwareUnitController c = new SoftwareUnitController(layer_id, "");
+				SoftwareUnitController c = new SoftwareUnitController(layerId, "");
 				// Set the action of the view
 				c.setAction(PopUpController.ACTION_NEW);
 				c.addObserver(this);
@@ -372,11 +373,11 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		//UiDialogs.errorDialog(definitionJPanel, "ADDING Rules not working yet", "Error");
 		
 		try {
-			int layer_id = definitionJPanel.getSelectedLayer();
+			long layerId = definitionJPanel.getSelectedLayer();
 
-			if (layer_id != -1) {
+			if (layerId != -1) {
 				// Create a new software unit controller
-				AppliedRulesController a = new AppliedRulesController(layer_id, -1L);
+				AppliedRulesController a = new AppliedRulesController(layerId, -1L);
 				// Set the action of the view
 				a.setAction(PopUpController.ACTION_NEW);
 				a.addObserver(this);
@@ -394,12 +395,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		//UiDialogs.errorDialog(definitionJPanel, "EDITING Rules not working yet", "Error");
 		
 		try {
-			int layer_id = definitionJPanel.getSelectedLayer();
+			long layerId = definitionJPanel.getSelectedLayer();
 			long appliedrule_id = definitionJPanel.getSelectedAppliedRule();
 
-			if (layer_id != -1 && appliedrule_id != -1L) {
+			if (layerId != -1 && appliedrule_id != -1L) {
 				// Create a new software unit controller
-				AppliedRulesController a = new AppliedRulesController(layer_id, appliedrule_id);
+				AppliedRulesController a = new AppliedRulesController(layerId, appliedrule_id);
 				// Set the action of the view
 				a.setAction(PopUpController.ACTION_EDIT);
 				a.addObserver(this);
@@ -420,10 +421,10 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		//UiDialogs.errorDialog(definitionJPanel, "REMOVING Rules not working yet", "Error");
 		
 		try {
-			int layer_id = definitionJPanel.getSelectedLayer();
+			long layerId = definitionJPanel.getSelectedLayer();
 			int appliedRuleId = (int)definitionJPanel.getSelectedAppliedRule();
 
-			if (layer_id != -1 && appliedRuleId != -1L) {
+			if (layerId != -1 && appliedRuleId != -1L) {
 				// Ask the user if he is sure to remove the software unit
 				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove the applied rule: \"" + defineDomainService.getRuleTypeByAppliedRule(appliedRuleId) + "\"", "Remove?");
 				if (confirm) {
@@ -449,7 +450,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void updateLayer() {
 		Log.i(this, "updateLayer()");
 		try {
-			int layerId = definitionJPanel.getSelectedLayer();
+			long layerId = definitionJPanel.getSelectedLayer();
 
 			JPanelStatus.getInstance("Saving layer").start();
 
@@ -460,7 +461,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();				
 				for (int i = 0; i < dlm.getSize(); i++) {
 					DataHelper datahelper = (DataHelper) dlm.getElementAt(i);
-					if (datahelper.getIntId() == layerId) {
+					if (datahelper.getId() == layerId) {
 						datahelper.setValue(definitionJPanel.jTextFieldLayerName.getText());
 					}
 				}
@@ -483,8 +484,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		JPanelStatus.getInstance("Updating layers").start();
 
 		// Get all layers from the service
-		ArrayList<Integer> layers = defineDomainService.getLayerLevels();
-		Collections.sort(layers);
+		ArrayList<Long> layerIds = defineDomainService.getLayerIdsSorted();
 		// Get ListModel from listlayers
 		DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();
 
@@ -492,12 +492,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		dlm.removeAllElements();
 
 		// Add layers to the list
-		if (layers != null) {
-			for (int layerLevel : layers) {
+		if (layerIds != null) {
+			for (Long layerId : layerIds) {
 				DataHelper datahelper = new DataHelper();
-				datahelper.setId(layerLevel);
+				datahelper.setId(layerId);
 				try {
-					datahelper.setValue(defineDomainService.getLayerNameByLevel(layerLevel));
+					datahelper.setValue(defineDomainService.getModuleNameById(layerId));
 				} catch (Exception e) {
 					Log.e(this, "updateLayer() - exception: " + e.getMessage());
 					UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
@@ -517,12 +517,12 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void loadLayerDetail() {
 		Log.i(this, "loadLayerDetail()");
 
-		int layerLevel = definitionJPanel.getSelectedLayer();
+		long layerId = definitionJPanel.getSelectedLayer();
 
-		if (layerLevel != -1) {
+		if (layerId != -1) {
 			// Set the values
 			try {
-				definitionJPanel.jTextFieldLayerName.setText(defineDomainService.getLayerNameByLevel(layerLevel));
+				definitionJPanel.jTextFieldLayerName.setText(defineDomainService.getModuleNameById(layerId));
 			} catch (Exception e) {
 				Log.e(this, "loadLayerDetail() - exception: " + e.getMessage());
 				UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
@@ -545,10 +545,10 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void enablePanel() {
 		Log.i(this, "enablePanel()");
 
-		int layer_id = definitionJPanel.getSelectedLayer();
+		long layerId = definitionJPanel.getSelectedLayer();
 
 		boolean enabled;
-		if (layer_id == -1) {
+		if (layerId == -1) {
 			Log.i(this, "enablePanel() - false");
 			enabled = false;
 		} else {
@@ -593,99 +593,99 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	private void updateSoftwareUnitTable() {
 		Log.i(this, "updateSoftwareUnitTable()");
 		// half implemented
-//		try {
-//			int layer_id = definitionJPanel.getSelectedLayer();
-//
-//			if (layer_id != -1) {
-//				JPanelStatus.getInstance("Updating software unit table").start();
-//
-//				// Get all components from the service
-//				ArrayList<Long> softwareUnits = definitionService.getSoftwareUnits(layer_id);
-//
-//				// Get the tablemodel from the table
-//				JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableSoftwareUnits.getModel();
-//
-//				// Remove all items in the table
-//				atm.getDataVector().removeAllElements();
-//				if (softwareUnits != null) {
-//					for (long softwareUnit_id : softwareUnits) {
-//						DataHelper datahelper = new DataHelper();
-//						datahelper.setId(softwareUnit_id);
-//						datahelper.setValue(definitionService.getSoftwareUnitName(layer_id, softwareUnit_id));
-//
-//						// Number of exceptions
-//						ArrayList<Long> softwareUnitExceptions = definitionService.getSoftwareUnitExceptions(layer_id, softwareUnit_id);
-//						int numberofexceptions = 0;
-//						if (softwareUnitExceptions != null) {
-//							numberofexceptions = softwareUnitExceptions.size();
-//						}
-//
-//						Object rowdata[] = { datahelper, definitionService.getSoftwareUnitType(layer_id, softwareUnit_id), numberofexceptions };
-//						atm.addRow(rowdata);
-//					}
-//				}
-//				atm.fireTableDataChanged();
-//			}
-//		} catch (Exception e) {
-//			Log.e(this, "updateSoftwareUnitTable() - exception: " + e.getMessage());
-//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error!");
-//		} finally {
-//			JPanelStatus.getInstance().stop();
-//		}
+		try {
+			long layerId = definitionJPanel.getSelectedLayer();
+
+			if (layerId != -1) {
+				JPanelStatus.getInstance("Updating software unit table").start();
+
+				// Get all components from the service
+				ArrayList<Long> softwareUnits = defineDomainService.getSoftwareUnits(layerId);
+
+				// Get the tablemodel from the table
+				JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableSoftwareUnits.getModel();
+
+				// Remove all items in the table
+				atm.getDataVector().removeAllElements();
+				if (softwareUnits != null) {
+					for (long softwareUnit_id : softwareUnits) {
+						DataHelper datahelper = new DataHelper();
+						datahelper.setId(softwareUnit_id);
+						datahelper.setValue(defineDomainService.getSoftwareUnitName(layerId, softwareUnit_id));
+
+						// Number of exceptions
+						ArrayList<Long> softwareUnitExceptions = defineDomainService.getSoftwareUnitExceptions(layerId, softwareUnit_id);
+						int numberofexceptions = 0;
+						if (softwareUnitExceptions != null) {
+							numberofexceptions = softwareUnitExceptions.size();
+						}
+
+						Object rowdata[] = { datahelper, defineDomainService.getSoftwareUnitType(layerId, softwareUnit_id), numberofexceptions };
+						atm.addRow(rowdata);
+					}
+				}
+				atm.fireTableDataChanged();
+			}
+		} catch (Exception e) {
+			Log.e(this, "updateSoftwareUnitTable() - exception: " + e.getMessage());
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error!");
+		} finally {
+			JPanelStatus.getInstance().stop();
+		}
 	}
 
 	private void updateAppliedRulesTable() {
 		Log.i(this, "updateAppliedRulesTable()");
-		// Applied rules still have to get implemented
-//		try {
-//			int layer_id = definitionJPanel.getSelectedLayer();
-//
-//			if (layer_id != -1) {
-//				JPanelStatus.getInstance("Updating rules applied table").start();
-//
-//				// Get all applied rules from the service
-//				ArrayList<Long> appliedrules = definitionService.getAppliedRules(layer_id);
-//
-//				// Get the tablemodel from the table
-//				JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableAppliedRules.getModel();
-//
-//				// Remove all items in the table
-//				atm.getDataVector().removeAllElements();
-//				if (appliedrules != null) {
-//					for (long appliedrule_id : appliedrules) {
-//						DataHelper datahelper = new DataHelper();
-//						datahelper.setId(appliedrule_id);
-//						datahelper.setValue(definitionService.getAppliedRuleRuleType(layer_id, appliedrule_id));
-//
-//						// To layer
-//						int appliedRuleToLayer = definitionService.getAppliedRuleToLayer(layer_id, appliedrule_id);
-//
-//						// Is enabled
-//						boolean appliedRuleIsEnabled = definitionService.getAppliedRuleIsEnabled(layer_id, appliedrule_id);
-//						String enabled = "Off";
-//						if (appliedRuleIsEnabled) {
-//							enabled = "On";
-//						}
-//						// Number of exceptions
-//						ArrayList<Long> appliedRulesExceptions = definitionService.getAppliedRuleExceptions(layer_id, appliedrule_id);
-//						int numberofexceptions = 0;
-//						if (appliedRulesExceptions != null) {
-//							numberofexceptions = appliedRulesExceptions.size();
-//						}
-//
-//						Object rowdata[] = { datahelper, definitionService.getLayerName(appliedRuleToLayer), enabled, numberofexceptions };
-//
-//						atm.addRow(rowdata);
-//					}
-//				}
-//				atm.fireTableDataChanged();
-//			}
-//		} catch (Exception e) {
-//			Log.e(this, "updateAppliedRulesTable() - exception: " + e.getMessage());
-//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error!");
-//		} finally {
-//			JPanelStatus.getInstance().stop();
-//		}
+		 //Applied rules still have to get implemented
+		try {
+			long layerId = definitionJPanel.getSelectedLayer();
+
+			if (layerId != -1) {
+				JPanelStatus.getInstance("Updating rules applied table").start();
+
+				// Get all applied rules from the service
+				ArrayList<Long> appliedrules = defineDomainService.getAppliedRulesForModule(layerId);
+
+				// Get the tablemodel from the table
+				JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableAppliedRules.getModel();
+
+				// Remove all items in the table
+				atm.getDataVector().removeAllElements();
+				if (appliedrules != null) {
+					for (long appliedRuleId : appliedrules) {
+						DataHelper datahelper = new DataHelper();
+						datahelper.setId(appliedRuleId);
+						datahelper.setValue(defineDomainService.getRuleTypeByAppliedRule(appliedRuleId));
+
+						// To layer
+						long toLayerId = defineDomainService.getAppliedRuleToModule(appliedRuleId);
+
+						// Is enabled
+						boolean appliedRuleIsEnabled = defineDomainService.getAppliedRuleIsEnabled(appliedRuleId);
+						String enabled = "Off";
+						if (appliedRuleIsEnabled) {
+							enabled = "On";
+						}
+						// Number of exceptions
+						ArrayList<Long> appliedRulesExceptions = defineDomainService.getAppliedRuleExceptions(layerId, appliedRuleId);
+						int numberofexceptions = 0;
+						if (appliedRulesExceptions != null) {
+							numberofexceptions = appliedRulesExceptions.size();
+						}
+
+						Object rowdata[] = { datahelper, defineDomainService.getModuleNameById(toLayerId), enabled, numberofexceptions };
+
+						atm.addRow(rowdata);
+					}
+				}
+				atm.fireTableDataChanged();
+			}
+		} catch (Exception e) {
+			Log.e(this, "updateAppliedRulesTable() - exception: " + e.getMessage());
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error!");
+		} finally {
+			JPanelStatus.getInstance().stop();
+		}
 	}
 
 	public void actionPerformed(ActionEvent action) {

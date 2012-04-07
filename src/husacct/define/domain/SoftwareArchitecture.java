@@ -68,13 +68,16 @@ public class SoftwareArchitecture {
 
 	
 	//Module
-	public void addModule(Module module)
+	public long addModule(Module module)
 	{
+		long moduleId;
 		if(!modules.contains(module) && !this.hasModule(module.getName())) {
 			modules.add(module);
+			moduleId = module.getId();
 		}else{
 			throw new RuntimeException("This module has already been addded!");
 		}
+		return moduleId;
 	}
 	
 	public boolean removeLayerByLevel(int level)
@@ -93,11 +96,24 @@ public class SoftwareArchitecture {
 	
 	public void removeModule(Module module)
 	{
-		if(modules.contains(module) && this.hasModule(module.getName())) {
+		//TODO BUGFIX, THIS WILL GO WRONG
+		boolean moduleFound = false;
+		if(modules.contains(module)) {
 			modules.remove(module);
+		}else{
+			for (Module mod : modules){
+				if(mod.getSubModules().contains(module)) {
+					mod.getSubModules().remove(module);
+					moduleFound = true;
+					break;
+				}
+			}
 		}
-		else{
+		if (moduleFound) {
 			throw new RuntimeException("This module does not exist!");
+		}
+		else {
+			return;
 		}
 	}
 	
@@ -131,18 +147,18 @@ public class SoftwareArchitecture {
 		throw new RuntimeException("This layer name cannot be set!");
 	}
 	
-	public ArrayList<Integer> getLevelFromLayers()
-	{
-		ArrayList<Integer> integerList = new ArrayList<Integer>();
-		for(Module layer : modules)
-		{
-			if(layer instanceof Layer)
-			{
-				integerList.add(((Layer) layer).getHierarchicalLevel());
-			}
-		}
-		return integerList;
-	}
+//	public ArrayList<Integer> getLevelFromLayers()
+//	{
+//		ArrayList<Integer> integerList = new ArrayList<Integer>();
+//		for(Module layer : modules)
+//		{
+//			if(layer instanceof Layer)
+//			{
+//				integerList.add(((Layer) layer).getHierarchicalLevel());
+//			}
+//		}
+//		return integerList;
+//	}
 	
 	//AppliedRule
 	public void addAppliedRule(AppliedRule rule)
@@ -192,12 +208,12 @@ public class SoftwareArchitecture {
 		return layerName;
 	}
 
-	public String getRuleTypeByAppliedRule(int appliedRuleId) {
-		AppliedRule rule = getAppliedRuleById(appliedRuleId);
+	public String getRuleTypeByAppliedRule(long appliedruleId) {
+		AppliedRule rule = getAppliedRuleById(appliedruleId);
 		return rule.getRuleType();
 	}
 	
-	private AppliedRule getAppliedRuleById(long appliedRuleId){
+	public AppliedRule getAppliedRuleById(long appliedRuleId){
 		AppliedRule appliedRule = new AppliedRule();
 		if(this.hasAppliedRule(appliedRuleId))
 		{
@@ -270,10 +286,12 @@ public class SoftwareArchitecture {
 		parentRule.getExceptions().add(rule);
 	}
 
-	public void moveUpDown(int moduleId) {
-		Layer layer = (Layer)getModuleById(moduleId);
+	public void moveUpDown(long layerId) {
+		Layer layer = (Layer)getModuleById(layerId);
 		Layer layerAboveLayer = getTheFirstLayerAbove(layer.getHierarchicalLevel());
-		switchHierarchicalLayerLevels(layer, layerAboveLayer);
+		if (layerAboveLayer != null){
+			switchHierarchicalLayerLevels(layer, layerAboveLayer);
+		}
 	}
 	
 	private Layer getTheFirstLayerAbove(int currentHierarchicalLevel){
@@ -290,10 +308,12 @@ public class SoftwareArchitecture {
 		return layer;
 	}
 
-	public void moveLayerDown(int moduleId) {
-		Layer layer = (Layer)getModuleById(moduleId);
+	public void moveLayerDown(long layerId) {
+		Layer layer = (Layer)getModuleById(layerId);
 		Layer layerBelowLayer = getTheFirstLayerBelow(layer.getHierarchicalLevel());
-		switchHierarchicalLayerLevels(layer, layerBelowLayer);
+		if (layerBelowLayer != null){
+			switchHierarchicalLayerLevels(layer, layerBelowLayer);
+		}
 	}
 	
 	private Layer getTheFirstLayerBelow(int currentHierarchicalLevel){
@@ -314,6 +334,14 @@ public class SoftwareArchitecture {
 		int hierarchicalLevelLayerOne = layerOne.getHierarchicalLevel();
 		layerOne.setHierarchicalLevel(layerTwo.getHierarchicalLevel());
 		layerTwo.setHierarchicalLevel(hierarchicalLevelLayerOne);
+	}
+
+	public ArrayList<Module> getRootModules() {
+		ArrayList<Module> rootModules = modules;
+		for (Module m : rootModules){
+			m.setSubModules(new ArrayList<Module>(){});
+		}
+		return rootModules;	
 	}
 	
 }

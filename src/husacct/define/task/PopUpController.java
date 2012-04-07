@@ -16,7 +16,7 @@ public abstract class PopUpController extends Observable implements ActionListen
 	//protected DefineDomainServiceOld2011 definitionServiceOLD = DefineDomainServiceOld2011.getInstance();
 	protected DefineDomainService defineDomainService = DefineDomainService.getInstance();
 	protected String action = PopUpController.ACTION_NEW;
-	protected int layer_id;
+	protected long layer_id;
 
 	public abstract void initUi() throws Exception;
 
@@ -34,11 +34,11 @@ public abstract class PopUpController extends Observable implements ActionListen
 		notifyObservers();
 	}
 
-	public void setLayerID(int layer) {
-		this.layer_id = layer;
+	public void setLayerID(long layerId) {
+		this.layer_id = layerId;
 	}
 
-	protected int getLayerID() {
+	protected long getLayerID() {
 		return layer_id;
 	}
 

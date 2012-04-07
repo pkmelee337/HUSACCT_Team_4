@@ -1,8 +1,8 @@
 package husacct.define.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-import husacct.define.domain.domainOLD.ArchitectureDefinition;
 import husacct.define.domain.module.*;
 
 public class DefineDomainService {
@@ -15,22 +15,23 @@ public class DefineDomainService {
 		
 	}
 	
-	public void addLayer(String name, int level) {
+	public long addLayer(String name, int level) {
 		Module layer = new Layer(name, level);
 		((Layer) layer).setHierarchicalLevel(level);
-		SoftwareArchitecture.getInstance().addModule(layer);
+		long moduleId = SoftwareArchitecture.getInstance().addModule(layer);
+		return moduleId;
 	}
 	
 	public void removeLayerByLevel(int layerLevel) {
 		SoftwareArchitecture.getInstance().removeLayerByLevel(layerLevel);
 	}
 	
-	public void moveLayerUp(int moduleId){
-		SoftwareArchitecture.getInstance().moveUpDown(moduleId);
+	public void moveLayerUp(long layerId){
+		SoftwareArchitecture.getInstance().moveUpDown(layerId);
 	}
 	
-	public void moveLayerDown(int moduleId){
-		SoftwareArchitecture.getInstance().moveLayerDown(moduleId);
+	public void moveLayerDown(long layerId){
+		SoftwareArchitecture.getInstance().moveLayerDown(layerId);
 	}
 	
 	public void createNewArchitectureDefinition(String name) {
@@ -41,8 +42,24 @@ public class DefineDomainService {
 		SoftwareArchitecture.getInstance().setModuleName(moduleId, newName);
 	}
 
-	public ArrayList<Integer> getLayerLevels() {
-		return SoftwareArchitecture.getInstance().getLevelFromLayers();
+//	public ArrayList<Integer> getLayerLevels() {
+//		return SoftwareArchitecture.getInstance().getLevelFromLayers();
+//	}
+	
+	public ArrayList<Long> getLayerIdsSorted() {
+		ArrayList<Module> rootModules = SoftwareArchitecture.getInstance().getRootModules();
+		ArrayList<Layer> layers = new ArrayList<Layer>();
+		for (Module m : rootModules){
+			if (m instanceof Layer){
+				layers.add((Layer)m);
+			}
+		}
+		Collections.sort(layers);
+		ArrayList<Long> sortedLayerIds = new ArrayList<Long>();
+		for (Layer l : layers){
+			sortedLayerIds.add(l.getId());
+		}
+		return sortedLayerIds;
 	}
 
 	public String getLayerNameByLevel(int layerLevel) {
@@ -54,21 +71,21 @@ public class DefineDomainService {
 		
 	}
 
-	public String getRuleTypeByAppliedRule(int appliedrule_id) {
-		return SoftwareArchitecture.getInstance().getRuleTypeByAppliedRule(appliedrule_id);
+	public String getRuleTypeByAppliedRule(long appliedruleId) {
+		return SoftwareArchitecture.getInstance().getRuleTypeByAppliedRule(appliedruleId);
 	}
 
-	public ArrayList<Long> getAppliedRuleExceptions(int layerID, long appliedrule_id) {
+	public ArrayList<Long> getAppliedRuleExceptions(long l, long appliedrule_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String getAppliedruleExceptionName(int layerID, long appliedrule_id,long exception_id) {
+	public String getAppliedruleExceptionName(long l, long appliedrule_id,long exception_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Object getAppliedruleExceptionType(int layerID, long appliedrule_id,
+	public Object getAppliedruleExceptionType(long l, long appliedrule_id,
 			long exception_id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -102,5 +119,53 @@ public class DefineDomainService {
 
 	public void removeAppliedRuleExceptions(long appliedRuleId) {
 		SoftwareArchitecture.getInstance().removeAppliedRuleExceptions(appliedRuleId);
+	}
+
+	public String getModuleNameById(long moduleId) {
+		Module module = SoftwareArchitecture.getInstance().getModuleById(moduleId);
+		String moduleName = module.getName();
+		return moduleName;
+	}
+
+	public void removeModuleById(long moduleId) {
+		Module module = SoftwareArchitecture.getInstance().getModuleById(moduleId);
+		SoftwareArchitecture.getInstance().removeModule(module);
+	}
+
+	public ArrayList<Long> getAppliedRulesForModule(long moduleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getAppliedRuleToModule(long appliedRuleId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public boolean getAppliedRuleIsEnabled(long appliedRuleId) {
+		AppliedRule rule = SoftwareArchitecture.getInstance().getAppliedRuleById(appliedRuleId);
+		boolean isEnabled = rule.isEnabled();
+		return isEnabled;
+	}
+
+	public String getSoftwareUnitName(long layerId, long softwareUnit_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<Long> getSoftwareUnitExceptions(long layerId,
+			long softwareUnit_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Object getSoftwareUnitType(long layerId, long softwareUnit_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ArrayList<Long> getSoftwareUnits(long layerId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -23,9 +23,9 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 	private String softwareunit_id;
 	private static ArrayList<SoftwareUnitDefinition> softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 
-	public SoftwareUnitController(int layer_id, String softwareunit_id) {
-		Log.i(this, "constructor(" + layer_id + ", " + softwareunit_id + ")");
-		setLayerID(layer_id);
+	public SoftwareUnitController(long layerId, String softwareunit_id) {
+		Log.i(this, "constructor(" + layerId + ", " + softwareunit_id + ")");
+		setLayerID(layerId);
 		this.softwareunit_id = softwareunit_id;
 		this.fillSoftwareDefinitionUnits();
 		

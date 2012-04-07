@@ -1,24 +1,15 @@
 package husacct.define.presentation.helper;
 
 public class DataHelper {
-	private int intid;
-	private long longid;
+	private long id;
 	private String value;
 
-	public void setId(int id) {
-		this.intid = id;
-	}
-
 	public void setId(long id) {
-		this.longid = id;
-	}
-
-	public int getIntId() {		
-		return intid;
+		this.id = id;
 	}
 	
-	public long getLongId(){
-		return longid;
+	public long getId(){
+		return id;
 	}
 
 	public void setValue(String value) {

@@ -97,8 +97,6 @@ public class MethodTest {
 		System.out.println("Layer 1 is of type: " + layer1.getType());
 		System.out.println("Rule 1 has " + rule1.getExceptions().size() + " exceptions");
 		
-		System.out.println("\n" + sA.getLevelFromLayers().toString());
-		//System.out.println("\n" + new int[]{1,2,3}.toString());
 	}
 
 }

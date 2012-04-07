@@ -1,5 +1,6 @@
 package husacct.define.presentation.utils;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -20,9 +21,12 @@ public class KeyValueComboBox extends JComboBox{
 		keyValuePair = new HashMap<String,String>();
 	}
 	
-	public void setModel(String[] keys, String[] values){
-		setHashMap(keys, values);
-		ComboBoxModel model = new DefaultComboBoxModel(keys);
+	public void setModel(Object[] keys, Object[] values){
+		String[] tmpKeys = Arrays.asList(keys).toArray(new String[keys.length]);
+		String[] tmpValues = Arrays.asList(keys).toArray(new String[keys.length]);
+		
+		setHashMap(tmpKeys, tmpValues);
+		ComboBoxModel model = new DefaultComboBoxModel(tmpValues);
 		super.setModel(model);
 	}
 	

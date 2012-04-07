@@ -314,10 +314,10 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		}
 	}
 
-	public int getSelectedLayer() {
+	public long getSelectedLayer() {
 		Object selected = jListLayers.getSelectedValue();
 		if (selected instanceof DataHelper) {
-			int id = ((DataHelper) selected).getIntId();
+			long id = ((DataHelper) selected).getId();
 			return id;
 		}
 		return -1;
@@ -330,7 +330,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 
 			Object selected = c.getValueAt(selectedRow, 0);
 			if (selected instanceof DataHelper) {
-				return ((DataHelper) selected).getLongId();
+				return ((DataHelper) selected).getId();
 			}
 		}
 		return -1L;
@@ -343,7 +343,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 
 			Object selected = c.getValueAt(selectedRow, 0);
 			if (selected instanceof DataHelper) {
-				return ((DataHelper) selected).getLongId();
+				return ((DataHelper) selected).getId();
 			}
 		}
 		return -1L;
