@@ -113,7 +113,7 @@ public class Module {
 		}
 	}
 	
-	private boolean hasSubModule(String name) 
+	public boolean hasSubModule(String name) 
 	{
 		for(Module subModule : subModules) 
 		{
@@ -124,6 +124,38 @@ public class Module {
 		}
 		
 		return false;
+	}
+	
+	public boolean hasSoftwareUnit(String softwareUnitName) 
+	{
+		boolean hasSoftwareUnit = false;
+		for (SoftwareUnitDefinition unit : mappedSUunits){
+			if (unit.getName().equals(softwareUnitName)){
+				hasSoftwareUnit = true;
+			}
+		}
+		for (Module mod : subModules){
+			if (mod.hasSoftwareUnit(softwareUnitName)){
+				hasSoftwareUnit = true;
+			}
+		}
+		return hasSoftwareUnit;
+	}
+	
+	public SoftwareUnitDefinition getSoftwareUnitByName(String softwareUnitName){
+		SoftwareUnitDefinition softwareUnit = null;
+		for (SoftwareUnitDefinition unit : mappedSUunits){
+			if (unit.getName().equals(softwareUnitName)){
+				softwareUnit = unit;
+			}
+		}
+		for (Module mod : subModules){
+			if (mod.hasSoftwareUnit(softwareUnitName)){
+				softwareUnit = getSoftwareUnitByName(softwareUnitName);
+			}
+		}
+		if (softwareUnit == null){ throw new RuntimeException("This Software Unit does not exist!");}
+		return softwareUnit;
 	}
 	
 	@Override

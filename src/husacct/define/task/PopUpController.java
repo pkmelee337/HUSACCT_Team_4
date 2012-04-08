@@ -12,7 +12,6 @@ public abstract class PopUpController extends Observable implements ActionListen
 	public static final String ACTION_EDIT = "EDIT";
 	public ResourceBundle resourceBundle = ResourceBundle.getBundle("husacct/define/presentation/gui", new Locale("en", "GB"));
 
-	//protected DefineDomainServiceOld2011 definitionServiceOLD = DefineDomainServiceOld2011.getInstance();
 	protected DefineDomainService defineDomainService = DefineDomainService.getInstance();
 	protected String action = PopUpController.ACTION_NEW;
 	protected long layer_id;
@@ -21,9 +20,9 @@ public abstract class PopUpController extends Observable implements ActionListen
 
 	public abstract void save();
 
-	public abstract void addExceptionRow();
+//	public abstract void addExceptionRow();
 
-	public abstract void removeExceptionRow();
+//	public abstract void removeExceptionRow();
 
 	/**
 	 * Use this function to notify the definitioncontroller that there is a change

@@ -11,15 +11,15 @@ public class JTableSoftwareUnits extends AbstractJTable {
 
 		tablemodel.addColumn("Software unit name");
 		tablemodel.addColumn("Type");
-		tablemodel.addColumn("# Exceptions");
+		//tablemodel.addColumn("# Exceptions");
 
 		TableColumn column = null;
 		for (int i = 0; i < getColumnCount(); i++) {
 			column = getColumnModel().getColumn(i);
 			if (i == 0) {
 				column.setPreferredWidth(275); // Software unit name
-			} else if (i == 2) {
-				column.setPreferredWidth(25); // Exceptions
+//			} else if (i == 2) {
+//				column.setPreferredWidth(25); // Exceptions
 			}
 		}
 	}

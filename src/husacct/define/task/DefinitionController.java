@@ -59,13 +59,13 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		definitionJPanel.jTextAreaLayerDescription.addKeyListener(this);
 		definitionJPanel.jCheckBoxAccess.addActionListener(this);
 
-		definitionJPanel.jButtonAddComponentToLayer.addActionListener(this);
-		definitionJPanel.jButtonEditComponentFromLayer.addActionListener(this);
-		definitionJPanel.jButtonRemoveComponentFromLayer.addActionListener(this);
+		definitionJPanel.jButtonAddSoftwareUnit.addActionListener(this);
+//		definitionJPanel.jButtonEditSoftwareUnit.addActionListener(this);
+		definitionJPanel.jButtonRemoveSoftwareUnit.addActionListener(this);
 
-		definitionJPanel.jButtonAddRuleToLayer.addActionListener(this);
-		definitionJPanel.jButtonEditRuleFromLayer.addActionListener(this);
-		definitionJPanel.jButtonRemoveRuleFromLayer.addActionListener(this);
+		definitionJPanel.jButtonAddRule.addActionListener(this);
+		definitionJPanel.jButtonEditRule.addActionListener(this);
+		definitionJPanel.jButtonRemoveRule.addActionListener(this);
 
 		// Return the definition jpanel
 		return definitionJPanel;
@@ -559,14 +559,14 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 		definitionJPanel.jTextFieldLayerName.setEnabled(enabled);
 		definitionJPanel.jTextAreaLayerDescription.setEnabled(enabled);
 		definitionJPanel.jCheckBoxAccess.setEnabled(enabled);
-		definitionJPanel.jButtonAddComponentToLayer.setEnabled(enabled);
-		definitionJPanel.jButtonEditComponentFromLayer.setEnabled(enabled);
-		definitionJPanel.jButtonRemoveComponentFromLayer.setEnabled(enabled);
+		definitionJPanel.jButtonAddSoftwareUnit.setEnabled(enabled);
+//		definitionJPanel.jButtonEditSoftwareUnit.setEnabled(enabled);
+		definitionJPanel.jButtonRemoveSoftwareUnit.setEnabled(enabled);
 		definitionJPanel.jTableSoftwareUnits.setEnabled(enabled);
 		definitionJPanel.jTableAppliedRules.setEnabled(enabled);
-		definitionJPanel.jButtonAddRuleToLayer.setEnabled(enabled);
-		definitionJPanel.jButtonEditRuleFromLayer.setEnabled(enabled);
-		definitionJPanel.jButtonRemoveRuleFromLayer.setEnabled(enabled);
+		definitionJPanel.jButtonAddRule.setEnabled(enabled);
+		definitionJPanel.jButtonEditRule.setEnabled(enabled);
+		definitionJPanel.jButtonRemoveRule.setEnabled(enabled);
 		definitionJPanel.jButtonMoveLayerUp.setEnabled(enabled);
 		definitionJPanel.jButtonMoveLayerDown.setEnabled(enabled);
 		definitionJPanel.jButtonRemoveLayer.setEnabled(enabled);
@@ -600,27 +600,31 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 				JPanelStatus.getInstance("Updating software unit table").start();
 
 				// Get all components from the service
-				ArrayList<Long> softwareUnits = defineDomainService.getSoftwareUnits(layerId);
+				ArrayList<String> softwareUnitNames = defineDomainService.getSoftwareUnitNames(layerId);
 
 				// Get the tablemodel from the table
 				JTableTableModel atm = (JTableTableModel) definitionJPanel.jTableSoftwareUnits.getModel();
 
 				// Remove all items in the table
 				atm.getDataVector().removeAllElements();
-				if (softwareUnits != null) {
-					for (long softwareUnit_id : softwareUnits) {
-						DataHelper datahelper = new DataHelper();
-						datahelper.setId(softwareUnit_id);
-						datahelper.setValue(defineDomainService.getSoftwareUnitName(layerId, softwareUnit_id));
+				
+				if (softwareUnitNames != null) {
+					for (String softwareUnitName : softwareUnitNames) {
+//						DataHelper datahelper = new DataHelper();
+//						datahelper.setId(softwareUnit_id);
+						//datahelper.setValue(defineDomainService.getSoftwareUnitName(layerId, softwareUnit_id));
 
 						// Number of exceptions
-						ArrayList<Long> softwareUnitExceptions = defineDomainService.getSoftwareUnitExceptions(layerId, softwareUnit_id);
-						int numberofexceptions = 0;
-						if (softwareUnitExceptions != null) {
-							numberofexceptions = softwareUnitExceptions.size();
-						}
+//						ArrayList<Long> softwareUnitExceptions = defineDomainService.getSoftwareUnitExceptions(layerId, softwareUnit_id);
+//						int numberofexceptions = 0;
+//						if (softwareUnitExceptions != null) {
+//							numberofexceptions = softwareUnitExceptions.size();
+//						}
 
-						Object rowdata[] = { datahelper, defineDomainService.getSoftwareUnitType(layerId, softwareUnit_id), numberofexceptions };
+//						Object rowdata[] = { datahelper, defineDomainService.getSoftwareUnitType(layerId, softwareUnit_id), numberofexceptions };
+						String softwareUnitType = defineDomainService.getSoftwareUnitType(softwareUnitName);
+						Object rowdata[] = {softwareUnitName, softwareUnitType};
+						
 						atm.addRow(rowdata);
 					}
 				}
@@ -697,17 +701,17 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			moveLayerUp();
 		} else if (action.getSource() == definitionJPanel.jButtonMoveLayerDown) {
 			moveLayerDown();
-		} else if (action.getSource() == definitionJPanel.jButtonAddComponentToLayer) {
+		} else if (action.getSource() == definitionJPanel.jButtonAddSoftwareUnit) {
 			addSoftwareUnit();
-		} else if (action.getSource() == definitionJPanel.jButtonEditComponentFromLayer) {
-			editSoftwareUnit();
-		} else if (action.getSource() == definitionJPanel.jButtonRemoveComponentFromLayer) {
+//		} else if (action.getSource() == definitionJPanel.jButtonEditSoftwareUnit) {
+//			editSoftwareUnit();
+		} else if (action.getSource() == definitionJPanel.jButtonRemoveSoftwareUnit) {
 			removeSoftwareUnit();
-		} else if (action.getSource() == definitionJPanel.jButtonAddRuleToLayer) {
+		} else if (action.getSource() == definitionJPanel.jButtonAddRule) {
 			addRuleToLayer();
-		} else if (action.getSource() == definitionJPanel.jButtonEditRuleFromLayer) {
+		} else if (action.getSource() == definitionJPanel.jButtonEditRule) {
 			editRuleToLayer();
-		} else if (action.getSource() == definitionJPanel.jButtonRemoveRuleFromLayer) {
+		} else if (action.getSource() == definitionJPanel.jButtonRemoveRule) {
 			removeRuleToLayer();
 		} else if (action.getSource() == definitionJPanel.jCheckBoxAccess) {
 			updateLayer();

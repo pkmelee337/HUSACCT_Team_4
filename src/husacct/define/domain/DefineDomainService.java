@@ -3,6 +3,7 @@ package husacct.define.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import husacct.define.domain.SoftwareUnitDefinition.Type;
 import husacct.define.domain.module.*;
 
 public class DefineDomainService {
@@ -139,24 +140,37 @@ public class DefineDomainService {
 	//SOFTWARE UNIT DEFINITION
 	//SOFTWARE UNIT DEFINITION
 	//SOFTWARE UNIT DEFINITION
-	public String getSoftwareUnitName(long layerId, long softwareUnit_id) {
-		// TODO Auto-generated method stub
-		return null;
+//	public String getSoftwareUnitName(long softwareUnitName) {
+//		SoftwareUnitDefinition softwareUnit = SoftwareArchitecture.getInstance().getSoftwareUnitByName();
+//		String softwareUnitName = softwareUnit.getName();
+//		return softwareUnitName;
+//	}
+	
+	public ArrayList<String> getSoftwareUnitNames(long moduleId) {
+		Module module = SoftwareArchitecture.getInstance().getModuleById(moduleId);
+		ArrayList<SoftwareUnitDefinition> softwareUnits = module.getUnits();
+		ArrayList<String> softwareUnitNames = new ArrayList<String>();
+		for (SoftwareUnitDefinition unit : softwareUnits){
+			softwareUnitNames.add(unit.getName());
+		}
+		return softwareUnitNames;
 	}
 
-	public ArrayList<Long> getSoftwareUnitExceptions(long layerId,
-			long softwareUnit_id) {
-		// TODO Auto-generated method stub
-		return null;
+//	public ArrayList<Long> getSoftwareUnitExceptions(long layerId,
+//			long softwareUnit_id) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
+	public String getSoftwareUnitType(String softwareUnitName) {
+		SoftwareUnitDefinition unit = SoftwareArchitecture.getInstance().getSoftwareUnitByName(softwareUnitName);
+		String softwareUnitType = unit.getType().toString();
+		return softwareUnitType;
 	}
 
-	public Object getSoftwareUnitType(long layerId, long softwareUnit_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ArrayList<Long> getSoftwareUnits(long layerId) {
-		// TODO Auto-generated method stub
-		return null;
+	public void addSoftwareUnitLayer(long moduleId, String softwareUnit) {
+		Module module = SoftwareArchitecture.getInstance().getModuleById(moduleId);
+		SoftwareUnitDefinition unit = new SoftwareUnitDefinition(softwareUnit, Type.PACKAGE);
+		module.addSUDefinition(unit);
 	}
 }

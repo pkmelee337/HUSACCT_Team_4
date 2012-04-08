@@ -1,6 +1,6 @@
 package husacct.define.task;
 
-import husacct.common.AnalyseServiceStub;
+import husacct.analyse.AnalyseServiceStub;
 import husacct.common.dto.AnalysedModuleDTO;
 import husacct.define.domain.DefineDomainService;
 import husacct.define.domain.SoftwareUnitDefinition;
@@ -20,13 +20,13 @@ import java.util.ArrayList;
 public class SoftwareUnitController extends PopUpController implements KeyListener {
 
 	private JFrameSoftwareUnit jframe;
-	private String softwareunit_id;
+	private String softwareUnitName;
 	private static ArrayList<SoftwareUnitDefinition> softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 
 	public SoftwareUnitController(long layerId, String softwareunit_id) {
 		Log.i(this, "constructor(" + layerId + ", " + softwareunit_id + ")");
 		setLayerID(layerId);
-		this.softwareunit_id = softwareunit_id;
+		this.softwareUnitName = softwareunit_id;
 		this.fillSoftwareDefinitionUnits();
 		
 		if(softwareUnits.isEmpty()) {
@@ -38,10 +38,8 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 		softwareUnits = new ArrayList<SoftwareUnitDefinition>();
 		AnalysedModuleDTO[] modules = this.getAnalyzedModules();
 		for(AnalysedModuleDTO module : modules) {
-			// TODO:: add different types
 			SoftwareUnitDefinition softwareUnit = new SoftwareUnitDefinition(module.name, SoftwareUnitDefinition.Type.PACKAGE);
 			softwareUnits.add(softwareUnit);
-			//DefineDomainService.addUniqueName(softwareUnit.getName(), softwareUnit);
 		}
 	}
 	
@@ -55,7 +53,7 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 	public void initUi() throws Exception {
 		Log.i(this, "initUi()");
 		
-		String[] softwareUnitStrings = new String[softwareUnits.size()-1];
+		String[] softwareUnitStrings = new String[softwareUnits.size()];
 		int counter = 0;
 		for(SoftwareUnitDefinition softwareUnit : softwareUnits) {
 			softwareUnitStrings[counter] = softwareUnit.getName();
@@ -70,12 +68,9 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 		} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
 			jframe.jButtonSave.setText("Save");
 			jframe.setTitle("Edit software unit");
-			if (softwareunit_id != "") {
+			if (softwareUnitName != "") {
 				// Load name & type
-				jframe.jComboBoxSoftwareUnit.setSelectedItem(softwareunit_id);
-
-				
-				
+				jframe.jComboBoxSoftwareUnit.setSelectedItem(softwareUnitName);	
 				// NIET NODIG IN MIJN OGEN
 				// Load table with exceptions
 //				JTableException table = jframe.jTableException;
@@ -93,8 +88,8 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 			}
 		}
 
-		jframe.jButtonAddExceptionRow.addActionListener(this);
-		jframe.jButtonRemoveExceptionRow.addActionListener(this);
+		//jframe.jButtonAddExceptionRow.addActionListener(this);
+		//jframe.jButtonRemoveExceptionRow.addActionListener(this);
 		jframe.jButtonSave.addActionListener(this);
 		jframe.jButtonCancel.addActionListener(this);
 		jframe.addKeyListener(this);
@@ -110,17 +105,13 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 	public void save() {
 		try {
 			if (getAction().equals(PopUpController.ACTION_NEW)) {
-				//DefineDomainService.setSoftwareUnitLayer(jframe.jComboBoxSoftwareUnit.getSelectedItem().toString(), getLayerID());
+				String softwareUnit = jframe.jComboBoxSoftwareUnit.getSelectedItem().toString();
+				long moduleId = getLayerID();
+				defineDomainService.addSoftwareUnitLayer(moduleId, softwareUnit);
 				
-				// Niet Nodig naar mijn idee!
-//				JTableException table = jframe.jTableException;
-//				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
-//
-//				int tablerows = tablemodel.getRowCount();
-//				for (int i = 0; i < tablerows; i++) {
-//					definitionService.newSoftwareUnitException(getLayerID(), softwareunit_id, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
-//				}
-			} else if (getAction().equals(PopUpController.ACTION_EDIT)) {
+			}// else if (getAction().equals(PopUpController.ACTION_EDIT)) {
+				
+				
 				// EDIT nog maken
 //				definitionService.setSoftwareUnitName(getLayerID(), softwareunit_id, jframe.jTextFieldSoftwareUnitName.getText());
 //				definitionService.setSoftwareUnitType(getLayerID(), softwareunit_id, jframe.jComboBoxSoftwareUnitType.getSelectedItem().toString());
@@ -134,51 +125,51 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 //				for (int i = 0; i < tablerows; i++) {
 //					definitionService.newSoftwareUnitException(getLayerID(), softwareunit_id, tablemodel.getValueAt(i, 0).toString(), tablemodel.getValueAt(i, 1).toString());
 //				}
-			}
+			//}
 			jframe.dispose();
 			pokeObservers();
 		} catch (Exception e) {
 			UiDialogs.errorDialog(jframe, e.getMessage(), "Error");
 		}
 	}
-
-	/**
-	 * Add a new empty row to the exception table
-	 */
-	@Override
-	public void addExceptionRow() {
-		JTableException table = jframe.jTableException;
-		JTableTableModel tablemodel = (JTableTableModel) table.getModel();
-
-		Object[] emptyrow = { "", "" };
-		tablemodel.addRow(emptyrow);
-	}
-
-	/**
-	 * Remove the selected row from the exception table
-	 */
-	@Override
-	public void removeExceptionRow() {
-		JTableException table = jframe.jTableException;
-		int selectedrow = table.getSelectedRow();
-		if (selectedrow == -1) {
-			UiDialogs.errorDialog(jframe, "Select a table row", "Error");
-		} else {
-			JTableTableModel tablemodel = (JTableTableModel) table.getModel();
-			tablemodel.removeRow(selectedrow);
-		}
-	}
+//
+//	/**
+//	 * Add a new empty row to the exception table
+//	 */
+//	@Override
+//	public void addExceptionRow() {
+//		JTableException table = jframe.jTableException;
+//		JTableTableModel tablemodel = (JTableTableModel) table.getModel();
+//
+//		Object[] emptyrow = { "", "" };
+//		tablemodel.addRow(emptyrow);
+//	}
+//
+//	/**
+//	 * Remove the selected row from the exception table
+//	 */
+//	@Override
+//	public void removeExceptionRow() {
+//		JTableException table = jframe.jTableException;
+//		int selectedrow = table.getSelectedRow();
+//		if (selectedrow == -1) {
+//			UiDialogs.errorDialog(jframe, "Select a table row", "Error");
+//		} else {
+//			JTableTableModel tablemodel = (JTableTableModel) table.getModel();
+//			tablemodel.removeRow(selectedrow);
+//		}
+//	}
 
 	public void actionPerformed(ActionEvent action) {
 		Log.i(this, "actionPerformed()");
-		if (action.getSource() == jframe.jButtonAddExceptionRow) {
-			addExceptionRow();
-		} else if (action.getSource() == jframe.jButtonRemoveExceptionRow) {
-			removeExceptionRow();
-		} else if (action.getSource() == jframe.jButtonSave) {
+		if (action.getSource() == jframe.jButtonSave) {
 			save();
 		} else if (action.getSource() == jframe.jButtonCancel) {
 			jframe.dispose();
+//		} else if (action.getSource() == jframe.jButtonAddExceptionRow) {
+//			addExceptionRow();
+//		} else if (action.getSource() == jframe.jButtonRemoveExceptionRow) {
+//			removeExceptionRow();
 		} else {
 			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
 		}

@@ -40,24 +40,32 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	private JScrollPane jScrollPane3;
 	private JScrollPane jScrollPane4;
 	public JTable jTableSoftwareUnits;
-	private JLabel jLabel3;
+
 	public JCheckBox jCheckBoxAccess;
 	public JTable jTableAppliedRules;
 	public JList jListLayers;
-	private JLabel jLabel2;
-	private JLabel jLabel1;
+	
+	private JLabel jLabelModuleAccess;
+	private JLabel jLabelModuleDescription;
+	private JLabel jLabelModuleName;
+	
 	public JTextArea jTextAreaLayerDescription;
 	public JTextField jTextFieldLayerName;
-	public JButton jButtonAddComponentToLayer;
-	public JButton jButtonRemoveRuleFromLayer;
-	public JButton jButtonEditRuleFromLayer;
-	public JButton jButtonAddRuleToLayer;
-	public JButton jButtonRemoveComponentFromLayer;
-	public JButton jButtonEditComponentFromLayer;
+	//SoftwareUnits
+	public JButton jButtonAddSoftwareUnit;
+	public JButton jButtonRemoveSoftwareUnit;
+//	public JButton jButtonEditSoftwareUnit;
+	//AppliedRules
+	public JButton jButtonAddRule;
+	public JButton jButtonRemoveRule;
+	public JButton jButtonEditRule;
+	
+	//DefineModules
 	public JButton jButtonMoveLayerDown;
 	public JButton jButtonMoveLayerUp;
 	public JButton jButtonNewLayer;
 	public JButton jButtonRemoveLayer;
+	
 	private JPanel jPanel9;
 	private JPanel jPanel11;
 	private JPanel jPanel10;
@@ -181,9 +189,9 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							jPanel4.setBorder(BorderFactory.createTitledBorder("Layer configuration"));
 							jPanel4.setPreferredSize(new java.awt.Dimension(442, 105));
 							{
-								jLabel1 = new JLabel();
-								jPanel4.add(jLabel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-								jLabel1.setText("Layer name");
+								jLabelModuleName = new JLabel();
+								jPanel4.add(jLabelModuleName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+								jLabelModuleName.setText("Layer name");
 							}
 							{
 								jTextFieldLayerName = new JTextField();
@@ -191,15 +199,15 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								jPanel4.add(jTextFieldLayerName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							}
 							{
-								jLabel2 = new JLabel();
-								jPanel4.add(jLabel2, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-								jLabel2.setText("Description");
+								jLabelModuleDescription = new JLabel();
+								jPanel4.add(jLabelModuleDescription, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+								jLabelModuleDescription.setText("Description");
 							}
 							{
 								jScrollPane2 = new JScrollPane();
 								jPanel4.add(jScrollPane2, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 								jPanel4.add(getJCheckBox1(), new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-								jPanel4.add(getJLabel3(), new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+								jPanel4.add(getJLabelModuleAccess(), new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 								jScrollPane2.setPreferredSize(new java.awt.Dimension(142, 26));
 								{
 									jTextAreaLayerDescription = new JTextArea();
@@ -244,19 +252,19 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jPanel7.add(jPanel9, BorderLayout.EAST);
 									jPanel9.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
 									{
-										jButtonAddComponentToLayer = new JButton();
-										jPanel9.add(jButtonAddComponentToLayer, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButtonAddComponentToLayer.setText("Add");
+										jButtonAddSoftwareUnit = new JButton();
+										jPanel9.add(jButtonAddSoftwareUnit, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonAddSoftwareUnit.setText("Add");
 									}
+//									{
+//										jButtonEditSoftwareUnit = new JButton();
+//										jPanel9.add(jButtonEditSoftwareUnit, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+//										jButtonEditSoftwareUnit.setText("Edit");
+//									}
 									{
-										jButtonEditComponentFromLayer = new JButton();
-										jPanel9.add(jButtonEditComponentFromLayer, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButtonEditComponentFromLayer.setText("Edit");
-									}
-									{
-										jButtonRemoveComponentFromLayer = new JButton();
-										jPanel9.add(jButtonRemoveComponentFromLayer, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButtonRemoveComponentFromLayer.setText("Remove");
+										jButtonRemoveSoftwareUnit = new JButton();
+										jPanel9.add(jButtonRemoveSoftwareUnit, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonRemoveSoftwareUnit.setText("Remove");
 									}
 								}
 							}
@@ -287,19 +295,19 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 									jPanel10.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 4));
 									jPanel10.setPreferredSize(new java.awt.Dimension(78, 156));
 									{
-										jButtonAddRuleToLayer = new JButton();
-										jPanel10.add(jButtonAddRuleToLayer, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButtonAddRuleToLayer.setText("Add");
+										jButtonAddRule = new JButton();
+										jPanel10.add(jButtonAddRule, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonAddRule.setText("Add");
 									}
 									{
-										jButtonEditRuleFromLayer = new JButton();
-										jPanel10.add(jButtonEditRuleFromLayer, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButtonEditRuleFromLayer.setText("Edit");
+										jButtonEditRule = new JButton();
+										jPanel10.add(jButtonEditRule, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonEditRule.setText("Edit");
 									}
 									{
-										jButtonRemoveRuleFromLayer = new JButton();
-										jPanel10.add(jButtonRemoveRuleFromLayer, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
-										jButtonRemoveRuleFromLayer.setText("Remove");
+										jButtonRemoveRule = new JButton();
+										jPanel10.add(jButtonRemoveRule, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+										jButtonRemoveRule.setText("Remove");
 									}
 								}
 							}
@@ -358,11 +366,11 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		return jCheckBoxAccess;
 	}
 
-	private JLabel getJLabel3() {
-		if (jLabel3 == null) {
-			jLabel3 = new JLabel();
-			jLabel3.setText("Access:");
+	private JLabel getJLabelModuleAccess() {
+		if (jLabelModuleAccess == null) {
+			jLabelModuleAccess = new JLabel();
+			jLabelModuleAccess.setText("Access:");
 		}
-		return jLabel3;
+		return jLabelModuleAccess;
 	}
 }

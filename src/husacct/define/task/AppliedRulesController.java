@@ -161,43 +161,43 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 
 	}
 
-	/**
-	 * Add a new empty row to the exception table
-	 */
-	@Override
-	public void addExceptionRow() {
-		JTableException table = jframe.jTableException;
-		JTableTableModel tablemodel = (JTableTableModel) table.getModel();
-
-		Object[] emptyrow = { "", "" };
-		tablemodel.addRow(emptyrow);
-	}
-
-	/**
-	 * Remove the selected row from the exception table
-	 */
-	@Override
-	public void removeExceptionRow() {
-		JTableException table = jframe.jTableException;
-		int selectedrow = table.getSelectedRow();
-		if (selectedrow == -1) {
-			UiDialogs.errorDialog(jframe, "Select a table row", "Error");
-		} else {
-			JTableTableModel tablemodel = (JTableTableModel) table.getModel();
-			tablemodel.removeRow(selectedrow);
-		}
-	}
+//	/**
+//	 * Add a new empty row to the exception table
+//	 */
+//	@Override
+//	public void addExceptionRow() {
+//		JTableException table = jframe.jTableException;
+//		JTableTableModel tablemodel = (JTableTableModel) table.getModel();
+//
+//		Object[] emptyrow = { "", "" };
+//		tablemodel.addRow(emptyrow);
+//	}
+//
+//	/**
+//	 * Remove the selected row from the exception table
+//	 */
+//	@Override
+//	public void removeExceptionRow() {
+//		JTableException table = jframe.jTableException;
+//		int selectedrow = table.getSelectedRow();
+//		if (selectedrow == -1) {
+//			UiDialogs.errorDialog(jframe, "Select a table row", "Error");
+//		} else {
+//			JTableTableModel tablemodel = (JTableTableModel) table.getModel();
+//			tablemodel.removeRow(selectedrow);
+//		}
+//	}
 
 	public void actionPerformed(ActionEvent action) {
 		Log.i(this, "actionPerformed()");
-		if (action.getSource() == jframe.jButtonAddExceptionRow) {
-			addExceptionRow();
-		} else if (action.getSource() == jframe.jButtonRemoveExceptionRow) {
-			removeExceptionRow();
-		} else if (action.getSource() == jframe.jButtonSave) {
+		if (action.getSource() == jframe.jButtonSave) {
 			save();
 		} else if (action.getSource() == jframe.jButtonCancel) {
 			jframe.dispose();
+//		else if (action.getSource() == jframe.jButtonAddExceptionRow) {
+//			addExceptionRow();
+//		} else if (action.getSource() == jframe.jButtonRemoveExceptionRow) {
+//			removeExceptionRow();
 		} else {
 			Log.i(this, "actionPerformed(" + action + ") - unknown button event");
 		}

@@ -46,12 +46,12 @@ public class JFrameSoftwareUnit extends JFrame {
 	private JLabel jLabel2;
 	private JLabel jLabel3;
 	private JScrollPane jScrollPane1;
-	public JButton jButtonAddExceptionRow;
-	public JButton jButtonRemoveExceptionRow;
+//	public JButton jButtonAddExceptionRow;
+//	public JButton jButtonRemoveExceptionRow;
 	public JButton jButtonSave;
 	public JButton jButtonCancel;
 	public JComboBox jComboBoxSoftwareUnit;
-	public JTableException jTableException;
+//	public JTableException jTableException;
 
 	/**
 	 * Auto-generated main method to display this JFrame
@@ -66,7 +66,7 @@ public class JFrameSoftwareUnit extends JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			setTitle("New Software Unit");
-			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("hu/project/innovation/resources/jframeicon.jpg")).getImage());
+			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/jframeicon.jpg")).getImage());
 			{
 				jPanel1 = new JPanel();
 				GridBagLayout jPanel1Layout = new GridBagLayout();

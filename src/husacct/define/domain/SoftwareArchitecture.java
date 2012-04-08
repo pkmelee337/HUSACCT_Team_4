@@ -353,5 +353,17 @@ public class SoftwareArchitecture {
 		}
 		return appliedRuleIds;
 	}
+
+	public SoftwareUnitDefinition getSoftwareUnitByName(String softwareUnitName) {
+		SoftwareUnitDefinition softwareUnit = null;
+		for (Module mod : modules){
+			if (mod.hasSoftwareUnit(softwareUnitName)){
+				softwareUnit = mod.getSoftwareUnitByName(softwareUnitName);
+				break;
+			}
+		}
+		if (softwareUnit == null){ throw new RuntimeException("This Software Unit does not exist!");}
+		return softwareUnit;
+	}
 	
 }
