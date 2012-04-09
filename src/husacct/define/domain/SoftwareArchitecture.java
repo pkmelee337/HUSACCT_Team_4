@@ -356,17 +356,14 @@ public class SoftwareArchitecture {
 		if (softwareUnit == null){ throw new RuntimeException("This Software Unit does not exist!");}
 		return softwareUnit;
 	}
-
-	public Module getModuleByLogicalPath(String logicalPath) {
-		
-		//TODO bugfix if path is not correct
+	
+	public Module getModuleByLogicalPath(String logicalPath) {		
 		String[] moduleNames = logicalPath.split("\\.");
 		int i = 0;
 		Module currentModule = null;
 		for (Module module : modules){
 			if (module.getName().equals(moduleNames[i])){
 				currentModule = module;
-				
 				
 				for (int j = i;j<moduleNames.length;j++){
 					for (Module subModule : currentModule.getSubModules()){
@@ -377,7 +374,10 @@ public class SoftwareArchitecture {
 				}
 			}
 		}
-		if (currentModule == null){ throw new RuntimeException("This module does not exist!");}
+		if (currentModule == null || 
+				!currentModule.getName().equals(moduleNames[moduleNames.length-1])){ 
+			throw new RuntimeException("This module is not found!");
+		}
 		return currentModule;
 	}
 
@@ -390,14 +390,14 @@ public class SoftwareArchitecture {
 			if (mod.getName().equals(wantedModule.getName()) || 
 					mod.hasSubModule(wantedModule.getName())){
 				logicalPath += mod.getName();
-				currentModule = wantedModule;
+				currentModule = mod;
 				
 				while (!currentModule.getName().equals(wantedModule.getName())){
 					for (Module subModule : currentModule.getSubModules()){
 						if (subModule.getName().equals(wantedModule.getName()) ||
 								subModule.hasSubModule(wantedModule.getName())){
-							logicalPath += "." + mod.getName();
-							currentModule = wantedModule;
+							logicalPath += "." + subModule.getName();
+							currentModule = subModule;
 						}
 					}
 				}

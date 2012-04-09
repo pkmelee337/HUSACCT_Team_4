@@ -2,15 +2,9 @@ package husaccttest.define.domain;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import husacct.common.dto.ApplicationDTO;
 import husacct.common.dto.ModuleDTO;
+import husacct.common.dto.RuleDTO;
 import husacct.define.DefineServiceImpl;
 import husacct.define.domain.Application;
 import husacct.define.domain.AppliedRule;
@@ -42,25 +36,13 @@ public class DefineServiceTests {
 		Module subModule2 = new Module("Sub Module 2", "This is a submodule");		
 		Module subModule3 = new Module("Sub Module 3", "This is a submodule");		
 
-		AppliedRule rule1 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
+		AppliedRule rule1 = new AppliedRule("IsNotAllowedToUse", "Test", new String[]{},
 				"prefix", "suffix", module1,
-				null);
-		AppliedRule rule2 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
-				"prefix", "suffix", module1,
-				null);
-		AppliedRule rule3 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
-				"prefix", "suffix", module1,
-				null);
+				module2);
 
-		AppliedRule exception1 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
-				"prefix", "suffix", module1,
-				null);
-		AppliedRule exception2 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
-				"prefix", "suffix", module1,
-				null);
-		AppliedRule exception3 = new AppliedRule("IsNotAllowedToUse", "Test", new String[1],
-				"prefix", "suffix", module1,
-				null);
+		AppliedRule exception1 = new AppliedRule("IsAllowedToUse", "Test", new String[]{},
+				"prefix", "suffix", subModule1,
+				subModule2);
 		
 		//TODO: Test SoftwareUnitDefinitions
 		module1.addSubModule(subModule1);
@@ -69,10 +51,6 @@ public class DefineServiceTests {
 		module3.addSubModule(subModule3);
 		
 		rule1.addException(exception1);
-		rule1.addException(exception1);
-		rule1.addException(exception2);
-		rule1.addException(exception2);
-		rule1.addException(exception3);
 		
 		layer1.addSubModule(module1);
 		layer2.addSubModule(module2);
@@ -82,8 +60,6 @@ public class DefineServiceTests {
 		sA.addModule(module3);
 		
 		sA.addAppliedRule(rule1);
-		sA.addAppliedRule(rule2);
-		sA.addAppliedRule(rule3);
 	}
 	
 	@Test
@@ -111,7 +87,6 @@ public class DefineServiceTests {
 	
 	@Test 
 	public void getRootModules(){
-		//TODO
 		boolean testWorks = true;
 		ModuleDTO[] rootModuleDTOs = defineService.getRootModules();
 		testWorks = testWorks && rootModuleDTOs.length == 3;
@@ -131,6 +106,71 @@ public class DefineServiceTests {
 		testWorks = testWorks && areArraysEqual(rootModuleDTOs[2].physicalPaths, new String[] {});
 		testWorks = testWorks && rootModuleDTOs[2].subModules.length == 0;
 		
+		assertTrue(testWorks);
+	}
+	
+	@Test
+	public void getAppliedRules(){
+		boolean testWorks = true;
+		RuleDTO[] ruleDTOs = defineService.getDefinedRules();
+		testWorks = testWorks && ruleDTOs.length == 1;
+		
+		//Rule1
+		testWorks = testWorks && ruleDTOs[0].ruleTypeKey.equals("IsNotAllowedToUse");
+		//Rule1 ModuleFrom
+		testWorks = testWorks && ruleDTOs[0].moduleFrom.logicalPath.equals("Layer 1.Module 1");
+		testWorks = testWorks && ruleDTOs[0].moduleFrom.type.equals("Module");
+		testWorks = testWorks && areArraysEqual(ruleDTOs[0].moduleFrom.physicalPaths, new String[] {});
+		//Rule1 ModuleTo
+		testWorks = testWorks && ruleDTOs[0].moduleTo.logicalPath.equals("Layer 2.Module 2");
+		testWorks = testWorks && ruleDTOs[0].moduleTo.type.equals("Module");
+		testWorks = testWorks && areArraysEqual(ruleDTOs[0].moduleTo.physicalPaths, new String[] {});
+		testWorks = testWorks && areArraysEqual(ruleDTOs[0].violationTypeKeys, new String[] {});
+		testWorks = testWorks && ruleDTOs[0].exceptionRules.length == 1;
+		//Rule1 Exception	
+		testWorks = testWorks && ruleDTOs[0].exceptionRules[0].ruleTypeKey.equals("IsAllowedToUse");
+		//Rule1 ModuleFrom
+		testWorks = testWorks && ruleDTOs[0].exceptionRules[0].moduleFrom.logicalPath.equals("Layer 1.Module 1.Sub Module 1");
+		testWorks = testWorks && ruleDTOs[0].exceptionRules[0].moduleFrom.type.equals("Module");
+		testWorks = testWorks && areArraysEqual(ruleDTOs[0].exceptionRules[0].moduleFrom.physicalPaths, new String[] {});
+		//Rule1 ModuleTo
+		testWorks = testWorks && ruleDTOs[0].exceptionRules[0].moduleTo.logicalPath.equals("Layer 2.Module 2.Sub Module 2");
+		testWorks = testWorks && ruleDTOs[0].exceptionRules[0].moduleTo.type.equals("Module");
+		testWorks = testWorks && areArraysEqual(ruleDTOs[0].exceptionRules[0].moduleTo.physicalPaths, new String[] {});
+		testWorks = testWorks && areArraysEqual(ruleDTOs[0].exceptionRules[0].violationTypeKeys, new String[] {});
+		testWorks = testWorks && ruleDTOs[0].exceptionRules[0].exceptionRules.length == 0;
+		
+		assertTrue(testWorks);
+	}
+	
+	@Test
+	public void getChildsFromModule(){
+		boolean testWorks = true;
+		ModuleDTO[] childModuleDTOs = defineService.getChildsFromModule("Layer 1");
+		testWorks = testWorks && childModuleDTOs.length == 1;
+		
+		testWorks = testWorks && childModuleDTOs[0].logicalPath.equals("Layer 1.Module 1");
+		testWorks = testWorks && childModuleDTOs[0].type.equals("Module");
+		testWorks = testWorks && areArraysEqual(childModuleDTOs[0].physicalPaths, new String[] {});
+		//TODO Not sure if they also want childsfrom childmodule
+		//testWorks = testWorks && childModuleDTOs[0].subModules.length == 0;
+		
+		assertTrue(testWorks);
+	}
+	
+	@Test
+	public void getParentFromModule(){
+		boolean testWorks = true;
+		String parentModuleName;
+		
+		parentModuleName = defineService.getParentFromModule("Layer 1.Module 1");
+		testWorks = testWorks && parentModuleName.equals("Layer 1");
+		parentModuleName = defineService.getParentFromModule("Layer 1");
+		testWorks = testWorks && parentModuleName.equals("**");
+		
+		parentModuleName = defineService.getParentFromModule("Layer 1.Module 1.Sub Module 1");
+		testWorks = testWorks && parentModuleName.equals("Layer 1.Module 1");
+
 		assertTrue(testWorks);
 	}
 	

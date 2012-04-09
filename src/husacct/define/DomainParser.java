@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import husacct.common.dto.ApplicationDTO;
 import husacct.common.dto.ModuleDTO;
+import husacct.common.dto.RuleDTO;
 import husacct.define.domain.Application;
+import husacct.define.domain.AppliedRule;
 import husacct.define.domain.SoftwareArchitecture;
 import husacct.define.domain.module.Module;
 
@@ -45,6 +47,36 @@ public class DomainParser {
 		subModuleDTOsList.toArray(subModuleDTOs);
 		modDTO.subModules = subModuleDTOs; 
 		return modDTO;
+	}
+	
+	public RuleDTO[] parseRule(AppliedRule[] rules) {
+		ArrayList<RuleDTO> ruleDTOsList = new ArrayList<RuleDTO>();
+		for (AppliedRule rule : rules){
+			RuleDTO ruleDTO = parseRule(rule);
+			ruleDTOsList.add(ruleDTO);
+		}
+		RuleDTO[] ruleDTOs = new RuleDTO[ruleDTOsList.size()];
+		ruleDTOsList.toArray(ruleDTOs);
+		return ruleDTOs;
+	}
+	
+	public RuleDTO parseRule(AppliedRule rule){
+		RuleDTO ruleDTO = new RuleDTO();
+		ruleDTO.ruleTypeKey = rule.getRuleType();
+		ruleDTO.moduleFrom = parseModule(rule.getUsedModule());
+		ruleDTO.moduleTo = parseModule(rule.getRestrictedModule());
+		ruleDTO.violationTypeKeys = rule.getDependencies();
+		
+		ArrayList<RuleDTO> exceptionRuleList = new ArrayList<RuleDTO>();
+		for (AppliedRule exceptionRule : rule.getExceptions()){
+			RuleDTO exceptionRuleDTO = parseRule(exceptionRule);
+			exceptionRuleList.add(exceptionRuleDTO);
+		}
+		
+		RuleDTO[] exceptionRuleDTOs = new RuleDTO[exceptionRuleList.size()];
+		exceptionRuleList.toArray(exceptionRuleDTOs);
+		ruleDTO.exceptionRules = exceptionRuleDTOs; 
+		return ruleDTO;
 	}
 	
 	public String getLogicalPath(long moduleId){

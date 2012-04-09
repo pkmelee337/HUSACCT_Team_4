@@ -11,10 +11,14 @@ import husacct.common.dto.ApplicationDTO;
 import husacct.common.dto.ModuleDTO;
 import husacct.common.dto.RuleDTO;
 import husacct.define.domain.Application;
+import husacct.define.domain.AppliedRule;
 import husacct.define.domain.DefineDomainService;
 import husacct.define.domain.SoftwareArchitecture;
 import husacct.define.domain.module.Module;
+import husacct.define.presentation.ApplicationJFrame;
 import husacct.define.presentation.jpanel.DefinitionJPanel;
+import husacct.define.presentation.utils.UiDialogs;
+import husacct.define.task.ApplicationController;
 
 public class DefineServiceImpl implements IDefineService {
 	private DefineDomainService defineDomainService = new DefineDomainService();
@@ -49,108 +53,43 @@ public class DefineServiceImpl implements IDefineService {
 	
 	@Override
 	public RuleDTO[] getDefinedRules() {
-		//Temporary architecture
-		ModuleDTO lbDAOModule = new ModuleDTO();
-		lbDAOModule.logicalPath = "InfrastructureLayer.locationbasedDAO";
-		lbDAOModule.physicalPaths = new String[] {"infrastructure.socialmedia.locationbased.foursquare.AccountDAO",
-				"infrastructure.socialmedia.locationbased.foursquare.FriendsDAO",
-				"infrastructure.socialmedia.locationbased.foursquare.IMap",
-				"infrastructure.socialmedia.locationbased.foursquare.HistoryDAO"};
-		lbDAOModule.subModules = new ModuleDTO[]{};
-		lbDAOModule.type = "Module";
-		
-		ModuleDTO latitudeModule = new ModuleDTO();
-		latitudeModule.logicalPath = "DomainLayer.locationbasedConnections.latitudeConnection";
-		latitudeModule.physicalPaths = new String[] {"domain.locationbased.latitude.Account",
-				"domain.locationbased.latitude.Friends", "domain.locationbased.latitude.Map"};
-		latitudeModule.subModules = new ModuleDTO[]{};
-		latitudeModule.type = "Module";
-		
-		ModuleDTO fqConnectionModule = new ModuleDTO();
-		fqConnectionModule.logicalPath = "DomainLayer.locationbasedConnections.foursquareConnection";
-		fqConnectionModule.physicalPaths = new String[] {"domain.locationbased.foursquare.Account",
-				"domain.locationbased.foursquare.Friends", "domain.locationbased.foursquare.Map"};
-		fqConnectionModule.subModules = new ModuleDTO[]{};
-		fqConnectionModule.type = "Module";
-		
-		ModuleDTO lbHistoryModule = new ModuleDTO();
-		lbHistoryModule.logicalPath = "DomainLayer.locationbasedHistory";
-		lbHistoryModule.physicalPaths = new String[] {"domain.locationbased.foursquare.History"};
-		lbHistoryModule.subModules = new ModuleDTO[]{};
-		lbHistoryModule.type = "Module";
-		
-		ModuleDTO lbConnectionsModule = new ModuleDTO();
-		lbConnectionsModule.logicalPath = "DomainLayer.locationbasedConnections";
-		lbConnectionsModule.physicalPaths = new String[] {};
-		lbConnectionsModule.subModules = new ModuleDTO[]{fqConnectionModule, latitudeModule};
-		lbConnectionsModule.type = "Module";
-		
-		ModuleDTO infrastructureLayer = new ModuleDTO();
-		infrastructureLayer.logicalPath = "InfrastructureLayer";
-		infrastructureLayer.subModules = new ModuleDTO[]{lbDAOModule};
-		infrastructureLayer.type = "Layer";
-		
-		ModuleDTO domainLayer = new ModuleDTO();
-		domainLayer.logicalPath = "DomainLayer";
-		domainLayer.subModules = new ModuleDTO[]{lbConnectionsModule, lbHistoryModule};
-		domainLayer.type = "Layer";
-		
-		//ACTUAL RULES
-		//ACTUAL RULES
-		RuleDTO ruleOne = new RuleDTO();
-		ruleOne.ruleTypeKey = "Is not allowed to use";
-			//IGNORE FOR ELABORATION VERSION
-			ruleOne.violationTypeKeys = new String[]{"Invocation of a method/contructor","Extending an abstract class", "Implementing an interface"};
-		ruleOne.moduleFrom = lbConnectionsModule;			
-		ruleOne.moduleTo = lbDAOModule;
-		ruleOne.exceptionRules = new RuleDTO[]{};
-
-		RuleDTO ruleTwo = new RuleDTO();
-		ruleTwo.ruleTypeKey = "Is not allowed to use";		
-			//IGNORE FOR ELABORATION VERSION
-			ruleTwo.violationTypeKeys = new String[] {"Extending a class/struct"};
-		ruleTwo.moduleFrom = lbHistoryModule;
-		ruleTwo.moduleTo = lbDAOModule;
-		ruleOne.exceptionRules = new RuleDTO[]{};
-		
-		RuleDTO[] rules = new RuleDTO[]{ruleOne, ruleTwo};
-		return rules;
+		AppliedRule[] rules = defineDomainService.getAppliedRules();
+		RuleDTO[] ruleDTOs = domainParser.parseRule(rules);
+		return ruleDTOs;
 	}
 
 	@Override
 	public ModuleDTO[] getChildsFromModule(String logicalPath) {
-		ModuleDTO lbHistoryModule = new ModuleDTO();
-		lbHistoryModule.logicalPath = "DomainLayer.locationbasedHistory";
-		lbHistoryModule.physicalPaths = new String[] {"domain.locationbased.foursquare.History"};
-		lbHistoryModule.subModules = new ModuleDTO[]{};
-		
-		ModuleDTO lbConnectionsModule = new ModuleDTO();
-		lbConnectionsModule.logicalPath = "DomainLayer.locationbasedConnections";
-		lbConnectionsModule.physicalPaths = new String[] {};
-		lbConnectionsModule.subModules = new ModuleDTO[]{};
-		
-		ModuleDTO[] subModules = new ModuleDTO[]{lbConnectionsModule,lbHistoryModule};
-		return subModules;
+		Module module = defineDomainService.getModuleByLogicalPath(logicalPath);
+		ModuleDTO moduleDTO = domainParser.parseModule(module);
+		ModuleDTO[] childModuleDTOs = moduleDTO.subModules;
+		//TODO removes subModules from childModulesDTOs
+		return childModuleDTOs;
 	}
 
 	@Override
 	public String getParentFromModule(String logicalPath) {
-		Module module = SoftwareArchitecture.getInstance().getModuleByLogicalPath(logicalPath);
-		
-		//returns parent from DomainLayer
-		return "**";
-		
-		//another example:
-		//parent from module: DomainLayer.locationbasedHistory would be
-		//return "DomainLayer";
+		String parentLogicalPath = "";
+		if (logicalPath.contains(".")){
+			String[] moduleNames = logicalPath.split("\\.");
+			parentLogicalPath += moduleNames[0];
+			for (int i = 1;i<moduleNames.length-1;i++){
+				parentLogicalPath += "." + moduleNames[i];
+			}
+			//Check if exists, an exception with automaticly be thrown
+			SoftwareArchitecture.getInstance().getModuleByLogicalPath(parentLogicalPath);
+		}
+		else {
+			parentLogicalPath = "**";
+		}
+		return parentLogicalPath;
 	}
 	
 	
 	public JFrame getDefinedGUI(){
-		DefinitionJPanel jpanel = new DefinitionJPanel();
-		JFrame frame = new JFrame();
-		frame.add(jpanel);
-		return frame;
+		ApplicationController applicationController = new ApplicationController();
+		applicationController.initUi();
+		return applicationController.getApplicationFrame();
 	}
 	
 	//TODO: Implement in Construction phase

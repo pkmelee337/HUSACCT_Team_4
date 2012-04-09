@@ -29,21 +29,21 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6858870868564931134L;
 	private String defaultTitle = "HUSACCT";
 	private JSeparator jSeparator1;
-	public JMenuItem jMenuItemExit;
-	private JMenuBar jMenuBar;
 	public JLabel jLabelStatus;
 	private JToolBar jToolBar;
 	public JPanel jPanelContentView;
-	public JMenuItem jMenuItemAbout;
-	public JMenuItem jMenuItemOnlineHelp;
-	public JMenuItem jMenuItemStartAnalyse;
-	public JMenuItem jMenuItemCheckDependencies;
-	public JMenuItem jMenuItemSaveArchitecture;
-	public JMenuItem jMenuItemOpenArchitecture;
-	public JMenuItem jMenuItemNewArchitecture;
-	private JMenu jMenu3;
-	private JMenu jMenu2;
-	private JMenu jMenu1;
+//	public JMenuItem jMenuItemExit;
+//	private JMenuBar jMenuBar;
+//	public JMenuItem jMenuItemAbout;
+//	public JMenuItem jMenuItemOnlineHelp;
+//	public JMenuItem jMenuItemStartAnalyse;
+//	public JMenuItem jMenuItemCheckDependencies;
+//	public JMenuItem jMenuItemSaveArchitecture;
+//	public JMenuItem jMenuItemOpenArchitecture;
+//	public JMenuItem jMenuItemNewArchitecture;
+//	private JMenu jMenu3;
+//	private JMenu jMenu2;
+//	private JMenu jMenu1;
 
 	{
 		// Set Look & Feel
@@ -80,83 +80,83 @@ public class ApplicationJFrame extends javax.swing.JFrame {
 				jToolBar.setBorderPainted(false);
 				jToolBar.add(JPanelStatus.getInstance(""));
 			}
-			{
-				jMenuBar = new JMenuBar();
-				setJMenuBar(jMenuBar);
-				{
-					jMenu1 = new JMenu();
-					jMenuBar.add(jMenu1);
-					jMenu1.setText("Architecture");
-					{
-						jMenuItemNewArchitecture = new JMenuItem();
-						jMenu1.add(jMenuItemNewArchitecture);
-						jMenuItemNewArchitecture.setText("New architecture");
-						jMenuItemNewArchitecture.setMnemonic(KeyEvent.VK_N);
-						jMenuItemNewArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/new.png")));
-						jMenuItemNewArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
-					}
-					{
-						jMenuItemOpenArchitecture = new JMenuItem();
-						jMenu1.add(jMenuItemOpenArchitecture);
-						jMenuItemOpenArchitecture.setText("Open architecture");
-						jMenuItemOpenArchitecture.setMnemonic(KeyEvent.VK_O);
-						jMenuItemOpenArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/open.png")));
-						jMenuItemOpenArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-					}
-					{
-						jMenuItemSaveArchitecture = new JMenuItem();
-						jMenu1.add(jMenuItemSaveArchitecture);
-						jMenuItemSaveArchitecture.setText("Save architecture");
-						jMenuItemSaveArchitecture.setMnemonic(KeyEvent.VK_S);
-						jMenuItemSaveArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/save.png")));
-						jMenuItemSaveArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
-					}
-					{
-						jSeparator1 = new JSeparator();
-						jMenu1.add(jSeparator1);
-					}
-					{
-						jMenuItemExit = new JMenuItem();
-						jMenu1.add(jMenuItemExit);
-						jMenuItemExit.setText("Exit");
-						jMenuItemExit.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/exit.png")));
-					}
-				}
-				{
-					jMenu2 = new JMenu();
-					jMenuBar.add(jMenu2);
-					jMenu2.setText("Analyse");
-					{
-						jMenuItemStartAnalyse = new JMenuItem();
-						jMenu2.add(jMenuItemStartAnalyse);
-						jMenuItemStartAnalyse.setText("Start analyse");
-						jMenuItemStartAnalyse.setMnemonic(KeyEvent.VK_1);
-						jMenuItemStartAnalyse.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/analyse.png")));
-						jMenuItemStartAnalyse.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.CTRL_MASK));
-					}
-					{
-						jMenuItemCheckDependencies = new JMenuItem();
-						jMenu2.add(jMenuItemCheckDependencies);
-						jMenuItemCheckDependencies.setText("Check dependencies");
-						jMenuItemCheckDependencies.setMnemonic(KeyEvent.VK_2);
-						jMenuItemCheckDependencies.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/analyse.png")));
-						jMenuItemCheckDependencies.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.CTRL_MASK));
-					}
-				}
-				{
-					jMenu3 = new JMenu();
-					jMenuBar.add(jMenu3);
-					jMenu3.setText("Help");
-					{
-						jMenuItemAbout = new JMenuItem();
-						jMenu3.add(jMenuItemAbout);
-						jMenuItemAbout.setText("About");
-						jMenuItemAbout.setMnemonic(KeyEvent.VK_H);
-						jMenuItemAbout.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/about.png")));
-						jMenuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.CTRL_MASK));
-					}
-				}
-			}
+//			{
+//				jMenuBar = new JMenuBar();
+//				setJMenuBar(jMenuBar);
+//				{
+//					jMenu1 = new JMenu();
+//					jMenuBar.add(jMenu1);
+//					jMenu1.setText("Architecture");
+//					{
+//						jMenuItemNewArchitecture = new JMenuItem();
+//						jMenu1.add(jMenuItemNewArchitecture);
+//						jMenuItemNewArchitecture.setText("New architecture");
+//						jMenuItemNewArchitecture.setMnemonic(KeyEvent.VK_N);
+//						jMenuItemNewArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/new.png")));
+//						jMenuItemNewArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+//					}
+//					{
+//						jMenuItemOpenArchitecture = new JMenuItem();
+//						jMenu1.add(jMenuItemOpenArchitecture);
+//						jMenuItemOpenArchitecture.setText("Open architecture");
+//						jMenuItemOpenArchitecture.setMnemonic(KeyEvent.VK_O);
+//						jMenuItemOpenArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/open.png")));
+//						jMenuItemOpenArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+//					}
+//					{
+//						jMenuItemSaveArchitecture = new JMenuItem();
+//						jMenu1.add(jMenuItemSaveArchitecture);
+//						jMenuItemSaveArchitecture.setText("Save architecture");
+//						jMenuItemSaveArchitecture.setMnemonic(KeyEvent.VK_S);
+//						jMenuItemSaveArchitecture.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/save.png")));
+//						jMenuItemSaveArchitecture.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+//					}
+//					{
+//						jSeparator1 = new JSeparator();
+//						jMenu1.add(jSeparator1);
+//					}
+//					{
+//						jMenuItemExit = new JMenuItem();
+//						jMenu1.add(jMenuItemExit);
+//						jMenuItemExit.setText("Exit");
+//						jMenuItemExit.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/exit.png")));
+//					}
+//				}
+//				{
+//					jMenu2 = new JMenu();
+//					jMenuBar.add(jMenu2);
+//					jMenu2.setText("Analyse");
+//					{
+//						jMenuItemStartAnalyse = new JMenuItem();
+//						jMenu2.add(jMenuItemStartAnalyse);
+//						jMenuItemStartAnalyse.setText("Start analyse");
+//						jMenuItemStartAnalyse.setMnemonic(KeyEvent.VK_1);
+//						jMenuItemStartAnalyse.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/analyse.png")));
+//						jMenuItemStartAnalyse.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.CTRL_MASK));
+//					}
+//					{
+//						jMenuItemCheckDependencies = new JMenuItem();
+//						jMenu2.add(jMenuItemCheckDependencies);
+//						jMenuItemCheckDependencies.setText("Check dependencies");
+//						jMenuItemCheckDependencies.setMnemonic(KeyEvent.VK_2);
+//						jMenuItemCheckDependencies.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/analyse.png")));
+//						jMenuItemCheckDependencies.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.CTRL_MASK));
+//					}
+//				}
+//				{
+//					jMenu3 = new JMenu();
+//					jMenuBar.add(jMenu3);
+//					jMenu3.setText("Help");
+//					{
+//						jMenuItemAbout = new JMenuItem();
+//						jMenu3.add(jMenuItemAbout);
+//						jMenuItemAbout.setText("About");
+//						jMenuItemAbout.setMnemonic(KeyEvent.VK_H);
+//						jMenuItemAbout.setIcon(new ImageIcon(getClass().getClassLoader().getResource("husacct/define/presentation/resources/about.png")));
+//						jMenuItemAbout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.CTRL_MASK));
+//					}
+//				}
+//			}
 			pack();
 			setSize(1000, 700);
 		} catch (Exception e) {

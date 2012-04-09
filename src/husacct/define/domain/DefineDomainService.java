@@ -40,6 +40,11 @@ public class DefineDomainService {
 		return modules;
 	}
 	
+	public Module getModuleByLogicalPath(String logicalPath){
+		Module module = SoftwareArchitecture.getInstance().getModuleByLogicalPath(logicalPath);
+		return module;
+	}
+	
 	//LAYERS
 	//LAYERS
 	//LAYERS
@@ -81,6 +86,13 @@ public class DefineDomainService {
 	//APPLIED RULES	
 	//APPLIED RULES
 	//APPLIED RULES
+	
+	public AppliedRule[] getAppliedRules() {
+		ArrayList<AppliedRule> ruleList = SoftwareArchitecture.getInstance().getAppliedRules();
+		AppliedRule[] rules = new AppliedRule[ruleList.size()]; ruleList.toArray(rules);
+		return rules;
+	}
+	
 	public long addAppliedRule(String ruleType, String description, long moduleFromId, long moduleToId) {
 		Module moduleFrom = SoftwareArchitecture.getInstance().getModuleById(moduleFromId);
 		Module moduleTo = SoftwareArchitecture.getInstance().getModuleById(moduleToId);
@@ -180,4 +192,5 @@ public class DefineDomainService {
 	public Application getApplicationDetails(){
 		return Application.getInstance();
 	}
+
 }

@@ -578,10 +578,10 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 //			mainController.jframe.jMenuItemStartAnalyse.setEnabled(false);
 //			mainController.jframe.jMenuItemCheckDependencies.setEnabled(false);
 //		} else {
-			definitionJPanel.jButtonNewLayer.setEnabled(true);
-			mainController.jframe.jMenuItemSaveArchitecture.setEnabled(true);
-			mainController.jframe.jMenuItemStartAnalyse.setEnabled(true);
-			mainController.jframe.jMenuItemCheckDependencies.setEnabled(true);
+//			definitionJPanel.jButtonNewLayer.setEnabled(true);
+//			mainController.jframe.jMenuItemSaveArchitecture.setEnabled(true);
+//			mainController.jframe.jMenuItemStartAnalyse.setEnabled(true);
+//			mainController.jframe.jMenuItemCheckDependencies.setEnabled(true);
 //		}
 	}
 
