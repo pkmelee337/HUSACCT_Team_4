@@ -10,9 +10,43 @@ import org.w3c.dom.Document;
 import husacct.common.dto.ApplicationDTO;
 import husacct.common.dto.ModuleDTO;
 import husacct.common.dto.RuleDTO;
+import husacct.define.domain.Application;
+import husacct.define.domain.DefineDomainService;
+import husacct.define.domain.SoftwareArchitecture;
+import husacct.define.domain.module.Module;
+import husacct.define.presentation.jpanel.DefinitionJPanel;
 
 public class DefineServiceImpl implements IDefineService {
-
+	private DefineDomainService defineDomainService = new DefineDomainService();
+	private DomainParser domainParser = new DomainParser();
+	
+	@Override
+	public void createApplication(String name, String[] paths, String language) {
+		defineDomainService.createApplication(name, paths, language);
+	}
+	
+	@Override
+	public ApplicationDTO getApplicationDetails() {
+		Application app = defineDomainService.getApplicationDetails();
+		ApplicationDTO appDTO = domainParser.parseApplication(app);
+		return appDTO;		
+	}
+	
+	@Override
+	public ModuleDTO[] getRootModules() {	
+		ModuleDTO[] moduleDTOs = getModules();
+		for (ModuleDTO moduleDTO : moduleDTOs){
+			moduleDTO.subModules = new ModuleDTO[]{};
+		}
+		return moduleDTOs;
+	}
+	
+	private ModuleDTO[] getModules() {
+		Module[] modules = defineDomainService.getModules();
+		ModuleDTO[] moduleDTOs = domainParser.parseModules(modules);
+		return moduleDTOs;
+	}
+	
 	@Override
 	public RuleDTO[] getDefinedRules() {
 		//Temporary architecture
@@ -84,31 +118,6 @@ public class DefineServiceImpl implements IDefineService {
 	}
 
 	@Override
-	public ModuleDTO[] getRootModules() {			
-		//Gets only the top level abstraction Modules
-		
-		ModuleDTO infrastructureLayer = new ModuleDTO();
-		infrastructureLayer.logicalPath = "InfrastructureLayer";
-		infrastructureLayer.subModules = new ModuleDTO[]{};
-		
-		ModuleDTO domainLayer = new ModuleDTO();
-		domainLayer.logicalPath = "DomainLayer";
-		domainLayer.subModules = new ModuleDTO[]{};
-
-		ModuleDTO[] allLayers = new ModuleDTO[]{domainLayer,infrastructureLayer};
-		return allLayers;
-	}
-
-	@Override
-	public ApplicationDTO getApplicationDetails() {
-		ApplicationDTO application = new ApplicationDTO();
-		application.name = "Application1";
-		application.paths = new String[] {"c:/Application1/"};
-		application.programmingLanguage = "Java";
-		return application;
-	}
-
-	@Override
 	public ModuleDTO[] getChildsFromModule(String logicalPath) {
 		ModuleDTO lbHistoryModule = new ModuleDTO();
 		lbHistoryModule.logicalPath = "DomainLayer.locationbasedHistory";
@@ -126,6 +135,8 @@ public class DefineServiceImpl implements IDefineService {
 
 	@Override
 	public String getParentFromModule(String logicalPath) {
+		Module module = SoftwareArchitecture.getInstance().getModuleByLogicalPath(logicalPath);
+		
 		//returns parent from DomainLayer
 		return "**";
 		
@@ -133,6 +144,16 @@ public class DefineServiceImpl implements IDefineService {
 		//parent from module: DomainLayer.locationbasedHistory would be
 		//return "DomainLayer";
 	}
+	
+	
+	public JFrame getDefinedGUI(){
+		DefinitionJPanel jpanel = new DefinitionJPanel();
+		JFrame frame = new JFrame();
+		frame.add(jpanel);
+		return frame;
+	}
+	
+	//TODO: Implement in Construction phase
 
 	public Document exportLogicalArchitecture() throws ParserConfigurationException{
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -160,12 +181,7 @@ public class DefineServiceImpl implements IDefineService {
 		//TODO
 	}
 	
-	public JFrame getDefinedGUI(){
-		return new JFrame();
-	}
 
-	@Override
-	public void createApplication(String name, String[] paths, String language) {
-		//TODO
-	}
+
+
 }

@@ -18,6 +18,11 @@ public class SoftwareArchitecture {
 		return instance == null ? (instance = new SoftwareArchitecture()) : instance;
 	}
 	
+	public static void setInstance(SoftwareArchitecture sA)
+	{
+		instance = sA;
+	}
+	
 	public SoftwareArchitecture() {
 		
 		setName("");
@@ -232,32 +237,26 @@ public class SoftwareArchitecture {
 	}
 
 	public Module getModuleById(long moduleId) {
-		Module module = null;
-		if(this.hasModule(moduleId))
-		{
-			for(Module mod : modules) 
-			{
-				if(mod.getId() == moduleId)
-				{
-					module = mod;
-					break;
-				}
-			}		
-		}else{
-			throw new RuntimeException("This module does not exist!");
-		}
-		return module;
-	}
-
-	private boolean hasModule(long moduleFromId) {
+		Module currentModule = null;
 		for(Module module : modules) 
 		{
-			if(module.getId() == moduleFromId)
-			{
-				return true;
+			if (module.getId() == moduleId ||
+					module.hasSubModule(moduleId)){
+
+				currentModule = module;
+				while (currentModule.getId() != moduleId){
+					for (Module subModule : currentModule.getSubModules()){
+						if (subModule.getId() == moduleId ||
+								subModule.hasSubModule(moduleId)){
+							currentModule = subModule;
+						}
+					}
+				}
+				break;
 			}
-		}
-		return false;
+		}		
+		if (currentModule == null){throw new RuntimeException("This module does not exist!");}
+		return currentModule;
 	}
 
 	public void setModuleName(long moduleId, String newName) {
@@ -336,14 +335,6 @@ public class SoftwareArchitecture {
 		layerTwo.setHierarchicalLevel(hierarchicalLevelLayerOne);
 	}
 
-	public ArrayList<Module> getRootModules() {
-		ArrayList<Module> rootModules = modules;
-		for (Module m : rootModules){
-			m.setSubModules(new ArrayList<Module>(){});
-		}
-		return rootModules;	
-	}
-
 	public ArrayList<Long> getAppliedRulesIdsByModule(long moduleId) {
 		ArrayList<Long> appliedRuleIds = new ArrayList<Long>();
 		for (AppliedRule rule : appliedRules){
@@ -364,6 +355,56 @@ public class SoftwareArchitecture {
 		}
 		if (softwareUnit == null){ throw new RuntimeException("This Software Unit does not exist!");}
 		return softwareUnit;
+	}
+
+	public Module getModuleByLogicalPath(String logicalPath) {
+		
+		//TODO bugfix if path is not correct
+		String[] moduleNames = logicalPath.split("\\.");
+		int i = 0;
+		Module currentModule = null;
+		for (Module module : modules){
+			if (module.getName().equals(moduleNames[i])){
+				currentModule = module;
+				
+				
+				for (int j = i;j<moduleNames.length;j++){
+					for (Module subModule : currentModule.getSubModules()){
+						if (subModule.getName().equals(moduleNames[j])){
+							currentModule = subModule;							
+						}
+					}
+				}
+			}
+		}
+		if (currentModule == null){ throw new RuntimeException("This module does not exist!");}
+		return currentModule;
+	}
+
+	public String getLogicalPath(long moduleId) {
+		String logicalPath = "";
+		Module wantedModule =  getModuleById(moduleId);
+		Module currentModule = null;
+		
+		for (Module mod : modules){
+			if (mod.getName().equals(wantedModule.getName()) || 
+					mod.hasSubModule(wantedModule.getName())){
+				logicalPath += mod.getName();
+				currentModule = wantedModule;
+				
+				while (!currentModule.getName().equals(wantedModule.getName())){
+					for (Module subModule : currentModule.getSubModules()){
+						if (subModule.getName().equals(wantedModule.getName()) ||
+								subModule.hasSubModule(wantedModule.getName())){
+							logicalPath += "." + mod.getName();
+							currentModule = wantedModule;
+						}
+					}
+				}
+				break;
+			}
+		}
+		return logicalPath;
 	}
 	
 }

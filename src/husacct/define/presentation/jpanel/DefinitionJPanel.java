@@ -117,7 +117,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							BorderLayout jPanel3Layout = new BorderLayout();
 							jPanel3.setLayout(jPanel3Layout);
 							jPanelLeft.add(jPanel3, BorderLayout.CENTER);
-							jPanel3.setBorder(BorderFactory.createTitledBorder("Layer hierarchy"));
+							jPanel3.setBorder(BorderFactory.createTitledBorder("Module hierarchy"));
 							{
 								jPanel5 = new JPanel();
 								BorderLayout jPanel5Layout = new BorderLayout();
@@ -147,7 +147,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								{
 									jButtonNewLayer = new JButton();
 									jPanel6.add(jButtonNewLayer);
-									jButtonNewLayer.setText("New layer");
+									jButtonNewLayer.setText("New Module");
 
 								}
 								{
@@ -159,7 +159,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 								{
 									jButtonRemoveLayer = new JButton();
 									jPanel6.add(jButtonRemoveLayer);
-									jButtonRemoveLayer.setText("Remove layer");
+									jButtonRemoveLayer.setText("Remove Module");
 
 								}
 								{
@@ -186,12 +186,12 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							jPanel4Layout.columnWidths = new int[] { 118, 7 };
 							jPanel4.setLayout(jPanel4Layout);
 							jPanelRight.add(jPanel4, BorderLayout.NORTH);
-							jPanel4.setBorder(BorderFactory.createTitledBorder("Layer configuration"));
+							jPanel4.setBorder(BorderFactory.createTitledBorder("Module configuration"));
 							jPanel4.setPreferredSize(new java.awt.Dimension(442, 105));
 							{
 								jLabelModuleName = new JLabel();
 								jPanel4.add(jLabelModuleName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-								jLabelModuleName.setText("Layer name");
+								jLabelModuleName.setText("Module name");
 							}
 							{
 								jTextFieldLayerName = new JTextField();

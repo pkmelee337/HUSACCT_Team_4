@@ -34,6 +34,12 @@ public class DefineDomainService {
 		SoftwareArchitecture.getInstance().removeModule(module);
 	}
 	
+	public Module[] getModules(){
+		ArrayList<Module> moduleList = SoftwareArchitecture.getInstance().getModules();
+		Module[] modules = new Module[moduleList.size()]; moduleList.toArray(modules);
+		return modules;
+	}
+	
 	//LAYERS
 	//LAYERS
 	//LAYERS
@@ -57,7 +63,7 @@ public class DefineDomainService {
 	}
 	
 	public ArrayList<Long> getLayerIdsSorted() {
-		ArrayList<Module> rootModules = SoftwareArchitecture.getInstance().getRootModules();
+		ArrayList<Module> rootModules = SoftwareArchitecture.getInstance().getModules();
 		ArrayList<Layer> layers = new ArrayList<Layer>();
 		for (Module m : rootModules){
 			if (m instanceof Layer){
@@ -139,13 +145,7 @@ public class DefineDomainService {
 	
 	//SOFTWARE UNIT DEFINITION
 	//SOFTWARE UNIT DEFINITION
-	//SOFTWARE UNIT DEFINITION
-//	public String getSoftwareUnitName(long softwareUnitName) {
-//		SoftwareUnitDefinition softwareUnit = SoftwareArchitecture.getInstance().getSoftwareUnitByName();
-//		String softwareUnitName = softwareUnit.getName();
-//		return softwareUnitName;
-//	}
-	
+	//SOFTWARE UNIT DEFINITION	
 	public ArrayList<String> getSoftwareUnitNames(long moduleId) {
 		Module module = SoftwareArchitecture.getInstance().getModuleById(moduleId);
 		ArrayList<SoftwareUnitDefinition> softwareUnits = module.getUnits();
@@ -155,12 +155,6 @@ public class DefineDomainService {
 		}
 		return softwareUnitNames;
 	}
-
-//	public ArrayList<Long> getSoftwareUnitExceptions(long layerId,
-//			long softwareUnit_id) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 	
 	public String getSoftwareUnitType(String softwareUnitName) {
 		SoftwareUnitDefinition unit = SoftwareArchitecture.getInstance().getSoftwareUnitByName(softwareUnitName);
@@ -172,5 +166,18 @@ public class DefineDomainService {
 		Module module = SoftwareArchitecture.getInstance().getModuleById(moduleId);
 		SoftwareUnitDefinition unit = new SoftwareUnitDefinition(softwareUnit, Type.PACKAGE);
 		module.addSUDefinition(unit);
+	}
+
+	
+	//APPLICATION
+	//APPLICATION
+	//APPLICATION
+	public void createApplication(String name, String[] paths, String language) {
+			Application app = new Application(name, paths, language);
+			Application.setInstance(app);	
+	}
+	
+	public Application getApplicationDetails(){
+		return Application.getInstance();
 	}
 }

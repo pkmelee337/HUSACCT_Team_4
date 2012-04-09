@@ -7,6 +7,17 @@ public class Application {
 	private String programmingLanguage;
 	private SoftwareArchitecture architecture;
 	
+	private static Application instance = null;
+	public static Application getInstance()
+	{
+		return instance == null ? (instance = new Application()) : instance;
+	}
+	
+	public static void setInstance(Application app)
+	{
+		instance = app;
+	}
+	
 	public Application()
 	{
 		this.setName("");
@@ -52,6 +63,14 @@ public class Application {
 
 	public String getLanguage() {
 		return programmingLanguage;
+	}
+
+	public SoftwareArchitecture getArchitecture() {
+		return architecture;
+	}
+
+	public void setArchitecture(SoftwareArchitecture architecture) {
+		this.architecture = architecture;
 	}
 	
 	

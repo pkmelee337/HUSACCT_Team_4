@@ -57,6 +57,16 @@ public class Module {
 	public ArrayList<SoftwareUnitDefinition> getUnits() {
 		return mappedSUunits;
 	}
+	
+	public String[] getPhysicalPaths(){
+		ArrayList<String> pathsList = new ArrayList<String>();
+		for (SoftwareUnitDefinition unit : mappedSUunits){
+			pathsList.add(unit.getName());
+		}
+		String[] paths = new String[pathsList.size()];
+		pathsList.toArray(paths);
+		return paths;
+	}
 
 	public void setUnits(ArrayList<SoftwareUnitDefinition> units) {
 		this.mappedSUunits = units;
@@ -115,15 +125,28 @@ public class Module {
 	
 	public boolean hasSubModule(String name) 
 	{
+		boolean hasSubModule = false;
 		for(Module subModule : subModules) 
 		{
-			if(subModule.getName().equals(name))
+			if(subModule.getName().equals(name) || subModule.hasSubModule(name))
 			{
-				return true;
+				hasSubModule = true;
 			}
 		}
-		
-		return false;
+		return hasSubModule;
+	}
+	
+	public boolean hasSubModule(long id) 
+	{
+		boolean hasSubModule = false;
+		for(Module subModule : subModules) 
+		{
+			if(subModule.getId() == id || subModule.hasSubModule(id))
+			{
+				hasSubModule = true;
+			}
+		}
+		return hasSubModule;
 	}
 	
 	public boolean hasSoftwareUnit(String softwareUnitName) 
