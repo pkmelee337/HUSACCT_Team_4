@@ -344,28 +344,28 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void removeSoftwareUnit() {
 		Log.i(this, "removeSoftwareUnit()");
-		UiDialogs.errorDialog(definitionJPanel, "REMOVING SoftwareUnits not working yet", "Error");
-//		try {
-//			int layer_id = definitionJPanel.getSelectedLayer();
-//			long softwareunit_id = definitionJPanel.getSelectedSoftwareUnit();
-//
-//			if (layer_id != -1 && softwareunit_id != -1L) {
-//				// Ask the user if he is sure to remove the software unit
-//				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove software unit: \"" + definitionService.getSoftwareUnitName(layer_id, softwareunit_id) + "\"", "Remove?");
-//				if (confirm) {
-//					// Remove the software unit
-//					JPanelStatus.getInstance("Removing software unit").start();
-//					definitionService.removeSoftwareUnit(layer_id, softwareunit_id);
-//					// Update the software unit table
-//					updateSoftwareUnitTable();
-//				}
-//			}
-//		} catch (Exception e) {
-//			Log.e(this, "removeSoftwareUnit() - exception: " + e.getMessage());
-//			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
-//		} finally {
-//			JPanelStatus.getInstance().stop();
-//		}
+//		UiDialogs.errorDialog(definitionJPanel, "REMOVING SoftwareUnits not working yet", "Error");
+		try {
+			long moduleId = definitionJPanel.getSelectedLayer();
+			String softwareUnitName = definitionJPanel.getSelectedSoftwareUnitName();
+
+			if (moduleId != -1 && softwareUnitName != null && !softwareUnitName.equals("")) {
+				// Ask the user if he is sure to remove the software unit
+				boolean confirm = UiDialogs.confirmDialog(definitionJPanel, "Are you sure you want to remove software unit: \"" + softwareUnitName + "\"", "Remove?");
+				if (confirm) {
+					// Remove the software unit
+					JPanelStatus.getInstance("Removing software unit").start();
+					defineDomainService.removeSoftwareUnit(moduleId, softwareUnitName);
+					// Update the software unit table
+					updateSoftwareUnitTable();
+				}
+			}
+		} catch (Exception e) {
+			Log.e(this, "removeSoftwareUnit() - exception: " + e.getMessage());
+			UiDialogs.errorDialog(definitionJPanel, e.getMessage(), "Error");
+		} finally {
+			JPanelStatus.getInstance().stop();
+		}
 	}
 
 	private void addRuleToLayer() {

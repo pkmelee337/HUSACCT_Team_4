@@ -174,10 +174,16 @@ public class DefineDomainService {
 		return softwareUnitType;
 	}
 
-	public void addSoftwareUnitLayer(long moduleId, String softwareUnit) {
+	public void addSoftwareUnit(long moduleId, String softwareUnit) {
 		Module module = SoftwareArchitecture.getInstance().getModuleById(moduleId);
 		SoftwareUnitDefinition unit = new SoftwareUnitDefinition(softwareUnit, Type.PACKAGE);
 		module.addSUDefinition(unit);
+	}
+	
+	public void removeSoftwareUnit(long moduleId, String softwareUnit) {
+		Module module = SoftwareArchitecture.getInstance().getModuleById(moduleId);
+		SoftwareUnitDefinition unit = SoftwareArchitecture.getInstance().getSoftwareUnitByName(softwareUnit);
+		module.removeSUDefintion(unit);
 	}
 
 	

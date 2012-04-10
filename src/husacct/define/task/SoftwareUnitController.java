@@ -107,7 +107,7 @@ public class SoftwareUnitController extends PopUpController implements KeyListen
 			if (getAction().equals(PopUpController.ACTION_NEW)) {
 				String softwareUnit = jframe.jComboBoxSoftwareUnit.getSelectedItem().toString();
 				long moduleId = getLayerID();
-				defineDomainService.addSoftwareUnitLayer(moduleId, softwareUnit);
+				defineDomainService.addSoftwareUnit(moduleId, softwareUnit);
 				
 			}// else if (getAction().equals(PopUpController.ACTION_EDIT)) {
 				

@@ -352,6 +352,22 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 		}
 		return -1L;
 	}
+	
+	public String getSelectedSoftwareUnitName() {
+		String selectedValue = "";
+		int selectedRow = jTableSoftwareUnits.getSelectedRow();
+		if (selectedRow >= 0) {
+			JTableTableModel c = (JTableTableModel) jTableSoftwareUnits.getModel();
+
+			Object selected = c.getValueAt(selectedRow, 0);
+			selectedValue = selected.toString();
+			
+//			if (selected instanceof DataHelper) {
+//				selectedValue = ((DataHelper) selected).getValue();
+//			}
+		}
+		return selectedValue;
+	}
 
 	public long getSelectedAppliedRule() {
 		int selectedRow = jTableAppliedRules.getSelectedRow();
