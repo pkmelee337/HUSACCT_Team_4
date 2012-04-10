@@ -65,12 +65,13 @@ public class DefineServiceTests {
 	@Test
 	public void createApplication(){
 		boolean testWorks = true;
-		defineService.createApplication("Application1", new String[] {"c:/Application1/"}, "Java");
+		defineService.createApplication("Application1", new String[] {"c:/Application1/"}, "Java", "1.0");
 		Application app = Application.getInstance();
 		
 		testWorks = testWorks && app.getName().equals("Application1");
 		testWorks = testWorks && areArraysEqual(app.getPaths(), new String[] {"c:/Application1/"});
 		testWorks = testWorks && app.getLanguage().equals("Java");
+		testWorks = testWorks && app.getVersion().equals("1.0");
 		assertTrue(testWorks);
 	}
 	
@@ -82,6 +83,7 @@ public class DefineServiceTests {
 		testWorks = testWorks && appDTO.name.equals("Application1");
 		testWorks = testWorks && areArraysEqual(appDTO.paths, new String[] {"c:/Application1/"});
 		testWorks = testWorks && appDTO.programmingLanguage.equals("Java");
+		testWorks = testWorks && appDTO.version.equals("1.0");
 		assertTrue(testWorks);
 	}
 	
