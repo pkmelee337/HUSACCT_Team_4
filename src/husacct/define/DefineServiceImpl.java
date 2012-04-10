@@ -15,9 +15,6 @@ import husacct.define.domain.AppliedRule;
 import husacct.define.domain.DefineDomainService;
 import husacct.define.domain.SoftwareArchitecture;
 import husacct.define.domain.module.Module;
-import husacct.define.presentation.ApplicationJFrame;
-import husacct.define.presentation.jpanel.DefinitionJPanel;
-import husacct.define.presentation.utils.UiDialogs;
 import husacct.define.task.ApplicationController;
 
 public class DefineServiceImpl implements IDefineService {

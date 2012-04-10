@@ -40,6 +40,7 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 	private JScrollPane jScrollPane3;
 	private JScrollPane jScrollPane4;
 	public JTable jTableSoftwareUnits;
+	public JButton jButtonNext;
 
 	public JCheckBox jCheckBoxAccess;
 	public JTable jTableAppliedRules;
@@ -313,7 +314,15 @@ public class DefinitionJPanel extends javax.swing.JPanel {
 							}
 						}
 					}
-
+//					JPanel jPanelBottom = new JPanel();
+//					BorderLayout jPanel2Layout = new BorderLayout();
+//					jPanelBottom.setLayout(jPanel2Layout);
+//					jSplitPane.add(jPanelBottom, JSplitPane.BOTTOM);
+//					jPanelBottom.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+//					
+//					jButtonNext = new JButton();
+//					jPanelBottom.add(jButtonNext, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+//					jButtonNext.setText("Next");
 				}
 			}
 

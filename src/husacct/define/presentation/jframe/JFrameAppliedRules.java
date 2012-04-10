@@ -133,11 +133,13 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 						jPanel4.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
 						{
 							jButtonAddExceptionRow = new JButton();
+							jButtonAddExceptionRow.setEnabled(false);
 							jPanel4.add(jButtonAddExceptionRow, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							jButtonAddExceptionRow.setText("Add row");
 						}
 						{
 							jButtonRemoveExceptionRow = new JButton();
+							jButtonRemoveExceptionRow.setEnabled(false);
 							jPanel4.add(jButtonRemoveExceptionRow, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 							jButtonRemoveExceptionRow.setText("Remove row");
 						}
@@ -162,6 +164,7 @@ public class JFrameAppliedRules extends javax.swing.JFrame {
 				}
 				{
 					jCheckBoxEnabled = new JCheckBox();
+					jCheckBoxEnabled.setSelected(true);
 					jPanel1.add(jCheckBoxEnabled, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.FIRST_LINE_START, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 				}
 			}
