@@ -190,8 +190,8 @@ public class DefineDomainService {
 	//APPLICATION
 	//APPLICATION
 	//APPLICATION
-	public void createApplication(String name, String[] paths, String language) {
-			Application app = new Application(name, paths, language);
+	public void createApplication(String name, String[] paths, String language, String version) {
+			Application app = new Application(name, paths, language, version);
 			Application.setInstance(app);	
 	}
 	

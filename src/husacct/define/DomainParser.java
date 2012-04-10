@@ -17,6 +17,7 @@ public class DomainParser {
 		appDTO.name = app.getName();
 		appDTO.paths = app.getPaths();
 		appDTO.programmingLanguage = app.getLanguage();
+		appDTO.version = app.getVersion();
 		return appDTO;
 	}
 	

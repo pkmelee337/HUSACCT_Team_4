@@ -4,4 +4,5 @@ public class ApplicationDTO {
 	public String name;
 	public String[] paths;
 	public String programmingLanguage;
+	public String version;
 }

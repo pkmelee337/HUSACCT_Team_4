@@ -167,7 +167,7 @@ public class DefineServiceStub implements IDefineService{
 	}
 
 	@Override
-	public void createApplication(String name, String[] paths, String language) {
+	public void createApplication(String name, String[] paths, String language, String version) {
 		//TODO
 	}
 

@@ -5,6 +5,7 @@ public class Application {
 	private String name;
 	private String[] paths;
 	private String programmingLanguage;
+	private String version;
 	private SoftwareArchitecture architecture;
 	
 	private static Application instance = null;
@@ -20,24 +21,20 @@ public class Application {
 	
 	public Application()
 	{
-		this.setName("");
-		this.setPaths(new String[1]);
-		this.setLanguage("");
-		this.architecture = new SoftwareArchitecture();
+		this("",new String[]{},"", "1.0");
 	}
 	
 	public Application(String name, String lang)
 	{
-		this.setName(name);
-		this.setLanguage(lang);
-		this.architecture = new SoftwareArchitecture();
+		this(name,new String[]{},lang, "1.0");
 	}
 	
-	public Application(String name, String[] paths, String lang)
+	public Application(String name, String[] paths, String lang, String version)
 	{
 		this.setName(name);
 		this.setPaths(paths);
 		this.setLanguage(lang);
+		this.setVersion(version);
 		this.architecture = new SoftwareArchitecture();
 	}
 
@@ -71,6 +68,14 @@ public class Application {
 
 	public void setArchitecture(SoftwareArchitecture architecture) {
 		this.architecture = architecture;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 	
 	
