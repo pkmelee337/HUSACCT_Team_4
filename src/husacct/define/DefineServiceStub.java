@@ -64,7 +64,7 @@ public class DefineServiceStub implements IDefineService{
 		//ACTUAL RULES
 		//ACTUAL RULES
 		RuleDTO ruleOne = new RuleDTO();
-		ruleOne.ruleTypeKey = "Is not allowed to use";
+		ruleOne.ruleTypeKey = "IsNotAllowedToUse";
 			//IGNORE FOR ELABORATION VERSION
 			ruleOne.violationTypeKeys = new String[]{"Invocation of a method/contructor","Extending an abstract class", "Implementing an interface"};
 		ruleOne.moduleFrom = lbConnectionsModule;			
@@ -72,7 +72,7 @@ public class DefineServiceStub implements IDefineService{
 		ruleOne.exceptionRules = new RuleDTO[]{};
 
 		RuleDTO ruleTwo = new RuleDTO();
-		ruleTwo.ruleTypeKey = "Is not allowed to use";		
+		ruleTwo.ruleTypeKey = "IsNotAllowedToUse";		
 			//IGNORE FOR ELABORATION VERSION
 			ruleTwo.violationTypeKeys = new String[] {"Extending a class/struct"};
 		ruleTwo.moduleFrom = lbHistoryModule;
