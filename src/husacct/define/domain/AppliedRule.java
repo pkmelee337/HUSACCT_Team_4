@@ -51,7 +51,7 @@ public class AppliedRule {
 	//LOGIC
 	public void addException(AppliedRule exception)
 	{
-		if(exceptions.contains(exception) && !this.hasException(exception.getId())) {
+		if(!exceptions.contains(exception) && !this.hasException(exception.getId())) {
 			exceptions.add(exception);
 		} else {
 			throw new RuntimeException("This exception has already been added!");

@@ -55,8 +55,8 @@ public class AppliedRulesController extends PopUpController implements KeyListen
 				JTableException table = jframe.jTableException;
 				JTableTableModel tablemodel = (JTableTableModel) table.getModel();
 
-				ArrayList<Long> exceptions = defineDomainService.getAppliedRuleExceptions(getLayerID(), appliedRuleId);
-				for (long exception_id : exceptions) {
+				ArrayList<Long> exceptionIds = defineDomainService.getExceptionIdsByAppliedRule(appliedRuleId);
+				for (long exception_id : exceptionIds) {
 					DataHelper datahelper = new DataHelper();
 					datahelper.setId(exception_id);
 //					datahelper.setValue(defineDomainService.getAppliedruleExceptionName(getLayerID(), appliedRuleId, exception_id));
