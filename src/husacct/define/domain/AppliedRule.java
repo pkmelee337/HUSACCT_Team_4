@@ -20,6 +20,9 @@ public class AppliedRule {
 	private boolean enabled;
 	private ArrayList<AppliedRule> exceptions;
 
+	
+	//CONSTRUCTORS
+	//CONSTRUCTORS
 	public AppliedRule(String ruleType, String description, String[] dependencies,
 			String prefix, String suffix, Module usedModule,
 			Module restrictedModule) {
@@ -44,6 +47,85 @@ public class AppliedRule {
 		this("", "",new String[0], "","",null,null);
 	}
 
+	//LOGIC
+	//LOGIC
+	public void addException(AppliedRule exception)
+	{
+		if(exceptions.contains(exception) && !this.hasException(exception.getId())) {
+			exceptions.add(exception);
+		} else {
+			throw new RuntimeException("This exception has already been added!");
+		}
+	}
+	
+	private boolean hasException(long l) 
+	{
+		for(AppliedRule exception : exceptions) 
+		{
+			if(exception.getId() == l)
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public void removeException(AppliedRule exception)
+	{
+		removeExceptionById(exception.getId());
+	}
+	
+	public void removeExceptionById(long exceptionRuleId) {
+		boolean exceptionFound = false;
+		for (AppliedRule rule : exceptions){
+			if (rule.getId() == exceptionRuleId){
+				exceptionFound = true;
+				exceptions.remove(rule);
+			}
+		}
+		if (!exceptionFound){throw new RuntimeException("This exception does not exist!");}
+	}
+	
+	public void removeAllExceptions() {
+		exceptions = new ArrayList<AppliedRule>();
+	}
+	
+	public boolean usesModule(long moduleId) {
+		boolean usesModule = false;
+		if (usedModule.getId() == moduleId){
+			usesModule = true;
+		}else if( restrictedModule.getId() == moduleId){
+			usesModule = true;
+		}else{			
+			for (AppliedRule ruleExceptions : exceptions){
+				if (ruleExceptions.usesModule(moduleId)){
+					usesModule = true;
+				}
+			}
+		}
+		return usesModule;
+	}
+	
+	//GETTER & SETTERS
+	//GETTER & SETTERS
+	//GETTER & SETTERS
+	public String getRuleType() {
+		return ruleType;
+	}
+
+	public void setRuleType(String ruleType) {
+		this.ruleType = ruleType;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -114,70 +196,5 @@ public class AppliedRule {
 
 	public String getSuffix() {
 		return suffix;
-	}
-	
-	public void addException(AppliedRule exception)
-	{
-		if(!exceptions.contains(exception) && !this.hasException(exception.getId()))
-		{
-			exceptions.add(exception);
-		}else{
-			System.out.println("This exception has already been added!");
-		}
-	}
-	
-	public void removeException(AppliedRule exception)
-	{
-		if(exceptions.contains(exception) && this.hasException(exception.getId()))
-		{
-			exceptions.remove(exception);
-		}else{
-			System.out.println("This exception does not exist!");
-		}
-	}
-	
-	private boolean hasException(long l) 
-	{
-		for(AppliedRule exception : exceptions) 
-		{
-			if(exception.getId() == l)
-			{
-				return true;
-			}
-		}
-		
-		return false;
-	}
-
-	public String getRuleType() {
-		return ruleType;
-	}
-
-	public void setRuleType(String ruleType) {
-		this.ruleType = ruleType;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public boolean usesModule(long moduleId) {
-		boolean usesModule = false;
-		if (usedModule.getId() == moduleId){
-			usesModule = true;
-		}else if( restrictedModule.getId() == moduleId){
-			usesModule = true;
-		}else{			
-			for (AppliedRule ruleExceptions : exceptions){
-				if (ruleExceptions.usesModule(moduleId)){
-					usesModule = true;
-				}
-			}
-		}
-		return usesModule;
 	}
 }

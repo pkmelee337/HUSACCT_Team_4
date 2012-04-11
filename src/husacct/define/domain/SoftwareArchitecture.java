@@ -24,21 +24,24 @@ public class SoftwareArchitecture {
 	}
 	
 	public SoftwareArchitecture() {
-		
-		setName("");
-		setDescription("");
-		setModules(new ArrayList<Module>());
-		setAppliedRules(new ArrayList<AppliedRule>());
+		this("","",new ArrayList<Module>(),new ArrayList<AppliedRule>());
 	}
 	
 	public SoftwareArchitecture(String name, String description) {
+		this(name,description,new ArrayList<Module>(),new ArrayList<AppliedRule>());
+	}
+	
+	public SoftwareArchitecture(String name, String description, ArrayList<Module> modules, ArrayList<AppliedRule> rules) {
 		
 		this.setName(name);
 		this.setDescription(description);
-		setModules(new ArrayList<Module>());
-		setAppliedRules(new ArrayList<AppliedRule>());
+		setModules(modules);
+		setAppliedRules(rules);
 	}
-
+	
+	//GETTERS & SETTERS
+	//GETTERS & SETTERS
+	//GETTERS & SETTERS
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -71,101 +74,19 @@ public class SoftwareArchitecture {
 		return appliedRules;
 	}
 
-	
-	//Module
-	public long addModule(Module module)
-	{
-		long moduleId;
-		if(!modules.contains(module) && !this.hasModule(module.getName())) {
-			modules.add(module);
-			moduleId = module.getId();
-		}else{
-			throw new RuntimeException("This module has already been addded!");
-		}
-		return moduleId;
-	}
-	
-	public boolean removeLayerByLevel(int level)
-	{
-		for(Module layer : modules) 
-		{
-			if(layer instanceof Layer)
-			{
-				modules.remove(layer);
-				return true;
-			}
-			return false;
-		}
-		return false;
-	}
-	
-	public void removeModule(Module module)
-	{
-		//TODO BUGFIX, THIS WILL GO WRONG
-		boolean moduleFound = false;
-		if(modules.contains(module)) {
-			modules.remove(module);
-		}else{
-			for (Module mod : modules){
-				if(mod.getSubModules().contains(module)) {
-					mod.getSubModules().remove(module);
-					moduleFound = true;
-					break;
-				}
+	//APPLIEDRULES
+	//APPLIEDRULES
+	//APPLIEDRULES
+	public ArrayList<Long> getAppliedRulesIdsByModule(long moduleId) {
+		ArrayList<Long> appliedRuleIds = new ArrayList<Long>();
+		for (AppliedRule rule : appliedRules){
+			if (rule.getUsedModule().getId() == moduleId){
+				appliedRuleIds.add(rule.getId());
 			}
 		}
-		if (moduleFound) {
-			throw new RuntimeException("This module does not exist!");
-		}
-		else {
-			return;
-		}
+		return appliedRuleIds;
 	}
 	
-	private boolean hasModule(String name) 
-	{
-		for(Module module : modules) 
-		{
-			
-			if(module.getName().equals(name))
-			{
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	public void setLayerName(int level, String newName)
-	{
-		for(Module layer : modules) 
-		{
-			if(layer instanceof Layer)
-			{
-				if (((Layer) layer).getHierarchicalLevel() == level)
-				{
-					layer.setName(newName);
-				}
-			}
-		}
-		
-		throw new RuntimeException("This layer name cannot be set!");
-	}
-	
-//	public ArrayList<Integer> getLevelFromLayers()
-//	{
-//		ArrayList<Integer> integerList = new ArrayList<Integer>();
-//		for(Module layer : modules)
-//		{
-//			if(layer instanceof Layer)
-//			{
-//				integerList.add(((Layer) layer).getHierarchicalLevel());
-//			}
-//		}
-//		return integerList;
-//	}
-	
-	//AppliedRule
 	public void addAppliedRule(AppliedRule rule)
 	{
 		if(!appliedRules.contains(rule) && !this.hasAppliedRule(rule.getId()))
@@ -189,33 +110,15 @@ public class SoftwareArchitecture {
 	
 	private boolean hasAppliedRule(long l) 
 	{
+		boolean ruleFound = false;
 		for(AppliedRule rule : appliedRules) 
 		{
 			if(rule.getId() == l)
 			{
-				return true;
+				ruleFound = true;
 			}
 		}
-		
-		return false;
-	}
-
-	public String getLayerNameByLevel(int layerLevel) {
-		String layerName = "";
-		for(Module layer : modules)
-		{
-			if(layer instanceof Layer && ((Layer) layer).getHierarchicalLevel() == layerLevel)
-			{
-				layerName = layer.getName();
-				break;
-			}
-		}
-		return layerName;
-	}
-
-	public String getRuleTypeByAppliedRule(long appliedruleId) {
-		AppliedRule rule = getAppliedRuleById(appliedruleId);
-		return rule.getRuleType();
+		return ruleFound;
 	}
 	
 	public AppliedRule getAppliedRuleById(long appliedRuleId){
@@ -236,6 +139,24 @@ public class SoftwareArchitecture {
 		return appliedRule;
 	}
 
+	//SoftwareUnitDefinitions
+	//SoftwareUnitDefinitions
+	//SoftwareUnitDefinitions
+	public SoftwareUnitDefinition getSoftwareUnitByName(String softwareUnitName) {
+		SoftwareUnitDefinition softwareUnit = null;
+		for (Module mod : modules){
+			if (mod.hasSoftwareUnit(softwareUnitName)){
+				softwareUnit = mod.getSoftwareUnitByName(softwareUnitName);
+				break;
+			}
+		}
+		if (softwareUnit == null){ throw new RuntimeException("This Software Unit does not exist!");}
+		return softwareUnit;
+	}
+	
+	//MODULES
+	//MODULES
+	//MODULES
 	public Module getModuleById(long moduleId) {
 		Module currentModule = null;
 		for(Module module : modules) 
@@ -258,33 +179,119 @@ public class SoftwareArchitecture {
 		if (currentModule == null){throw new RuntimeException("This module does not exist!");}
 		return currentModule;
 	}
-
-	public void setModuleName(long moduleId, String newName) {
-		Module module = getModuleById(moduleId);
-		module.setName(newName);
-	}
-
-	public void setAppliedRuleIsEnabled(long appliedRuleId, boolean enabled) {
-		AppliedRule rule = getAppliedRuleById(appliedRuleId);
-		rule.setEnabled(enabled);
-	}
-
-	public void removeAppliedRuleException(long parentRuleId, long appliedRuleId) {
-			AppliedRule parentRule = getAppliedRuleById(parentRuleId);
-			AppliedRule appliedRule = getAppliedRuleById(appliedRuleId);
-			parentRule.getExceptions().remove(appliedRule);
+	
+	public long addModule(Module module)
+	{
+		long moduleId;
+		if(!modules.contains(module) && !this.hasModule(module.getName())) {
+			modules.add(module);
+			moduleId = module.getId();
+		}else{
+			throw new RuntimeException("This module has already been addded!");
+		}
+		return moduleId;
 	}
 	
-	public void removeAppliedRuleExceptions(long appliedRuleId) {
-		AppliedRule parentRule = getAppliedRuleById(appliedRuleId);
-		parentRule.getExceptions().clear();
-}
-
-	public void addExceptionToAppliedRule(long parentRuleId, AppliedRule rule) {
-		AppliedRule parentRule = getAppliedRuleById(parentRuleId);
-		parentRule.getExceptions().add(rule);
+	public void removeModule(Module moduleToRemove)
+	{
+		Module currentModule = null;
+		boolean moduleFound = false;
+		if(modules.contains(moduleToRemove)) {
+			modules.remove(moduleToRemove);
+		}else{
+			for (Module mod : modules){
+				if(mod.getSubModules().contains(moduleToRemove)) {
+					mod.getSubModules().remove(moduleToRemove);
+					moduleFound = true;
+					break;
+				}else if (mod.hasSubModule(moduleToRemove.getId())){	
+					currentModule = mod;
+					while (mod.hasSubModule(moduleToRemove.getId())){
+						for (Module subModule : currentModule.getSubModules()){
+							if (subModule.getId() == moduleToRemove.getId()){
+								currentModule.removeSubModule(subModule);
+								moduleFound = true;
+								break;
+							}else if (subModule.hasSubModule(moduleToRemove.getId())){
+								currentModule = subModule;
+							}
+						}
+					}
+				}
+			}
+		}
+		if (!moduleFound) {	throw new RuntimeException("This module does not exist!");}
+	}
+	
+	private boolean hasModule(String name) 
+	{
+		for(Module module : modules) 
+		{
+			
+			if(module.getName().equals(name))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public Module getModuleByLogicalPath(String logicalPath) {		
+		String[] moduleNames = logicalPath.split("\\.");
+		int i = 0;
+		Module currentModule = null;
+		for (Module module : modules){
+			if (module.getName().equals(moduleNames[i])){
+				currentModule = module;
+				
+				for (int j = i;j<moduleNames.length;j++){
+					for (Module subModule : currentModule.getSubModules()){
+						if (subModule.getName().equals(moduleNames[j])){
+							currentModule = subModule;							
+						}
+					}
+				}
+			}
+		}
+		if (currentModule == null || 
+				!currentModule.getName().equals(moduleNames[moduleNames.length-1])){ 
+			throw new RuntimeException("This module is not found!");
+		}
+		return currentModule;
 	}
 
+	public String getModulesLogicalPath(long moduleId) {
+		String logicalPath = "";
+		Module wantedModule =  getModuleById(moduleId);
+		Module currentModule = null;
+		
+		for (Module mod : modules){
+			if (mod.getName().equals(wantedModule.getName()) || 
+					mod.hasSubModule(wantedModule.getName())){
+				logicalPath += mod.getName();
+				currentModule = mod;
+				
+				while (!currentModule.getName().equals(wantedModule.getName())){
+					for (Module subModule : currentModule.getSubModules()){
+						if (subModule.getName().equals(wantedModule.getName()) ||
+								subModule.hasSubModule(wantedModule.getName())){
+							logicalPath += "." + subModule.getName();
+							currentModule = subModule;
+						}
+					}
+				}
+				break;
+			}
+		}
+		return logicalPath;
+	}
+	
+	//LAYERS
+	//LAYERS
+	//LAYERS
+	
+	
 	public void moveUpDown(long layerId) {
 		Layer layer = (Layer)getModuleById(layerId);
 		Layer layerAboveLayer = getTheFirstLayerAbove(layer.getHierarchicalLevel());
@@ -334,77 +341,4 @@ public class SoftwareArchitecture {
 		layerOne.setHierarchicalLevel(layerTwo.getHierarchicalLevel());
 		layerTwo.setHierarchicalLevel(hierarchicalLevelLayerOne);
 	}
-
-	public ArrayList<Long> getAppliedRulesIdsByModule(long moduleId) {
-		ArrayList<Long> appliedRuleIds = new ArrayList<Long>();
-		for (AppliedRule rule : appliedRules){
-			if (rule.getUsedModule().getId() == moduleId){
-				appliedRuleIds.add(rule.getId());
-			}
-		}
-		return appliedRuleIds;
-	}
-
-	public SoftwareUnitDefinition getSoftwareUnitByName(String softwareUnitName) {
-		SoftwareUnitDefinition softwareUnit = null;
-		for (Module mod : modules){
-			if (mod.hasSoftwareUnit(softwareUnitName)){
-				softwareUnit = mod.getSoftwareUnitByName(softwareUnitName);
-				break;
-			}
-		}
-		if (softwareUnit == null){ throw new RuntimeException("This Software Unit does not exist!");}
-		return softwareUnit;
-	}
-	
-	public Module getModuleByLogicalPath(String logicalPath) {		
-		String[] moduleNames = logicalPath.split("\\.");
-		int i = 0;
-		Module currentModule = null;
-		for (Module module : modules){
-			if (module.getName().equals(moduleNames[i])){
-				currentModule = module;
-				
-				for (int j = i;j<moduleNames.length;j++){
-					for (Module subModule : currentModule.getSubModules()){
-						if (subModule.getName().equals(moduleNames[j])){
-							currentModule = subModule;							
-						}
-					}
-				}
-			}
-		}
-		if (currentModule == null || 
-				!currentModule.getName().equals(moduleNames[moduleNames.length-1])){ 
-			throw new RuntimeException("This module is not found!");
-		}
-		return currentModule;
-	}
-
-	public String getLogicalPath(long moduleId) {
-		String logicalPath = "";
-		Module wantedModule =  getModuleById(moduleId);
-		Module currentModule = null;
-		
-		for (Module mod : modules){
-			if (mod.getName().equals(wantedModule.getName()) || 
-					mod.hasSubModule(wantedModule.getName())){
-				logicalPath += mod.getName();
-				currentModule = mod;
-				
-				while (!currentModule.getName().equals(wantedModule.getName())){
-					for (Module subModule : currentModule.getSubModules()){
-						if (subModule.getName().equals(wantedModule.getName()) ||
-								subModule.hasSubModule(wantedModule.getName())){
-							logicalPath += "." + subModule.getName();
-							currentModule = subModule;
-						}
-					}
-				}
-				break;
-			}
-		}
-		return logicalPath;
-	}
-	
 }

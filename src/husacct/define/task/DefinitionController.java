@@ -344,7 +344,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 	 */
 	private void removeSoftwareUnit() {
 		Log.i(this, "removeSoftwareUnit()");
-//		UiDialogs.errorDialog(definitionJPanel, "REMOVING SoftwareUnits not working yet", "Error");
+
 		try {
 			long moduleId = definitionJPanel.getSelectedLayer();
 			String softwareUnitName = definitionJPanel.getSelectedSoftwareUnitName();
@@ -370,8 +370,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private void addRuleToLayer() {
 		Log.i(this, "addRuleToLayer()");
-		//UiDialogs.errorDialog(definitionJPanel, "ADDING Rules not working yet", "Error");
-		
+
 		try {
 			long layerId = definitionJPanel.getSelectedLayer();
 
@@ -392,8 +391,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private void editRuleToLayer() {
 		Log.i(this, "editRuleToLayer()");
-		//UiDialogs.errorDialog(definitionJPanel, "EDITING Rules not working yet", "Error");
-		
+
 		try {
 			long layerId = definitionJPanel.getSelectedLayer();
 			long appliedrule_id = definitionJPanel.getSelectedAppliedRule();
@@ -418,8 +416,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 
 	private void removeRuleToLayer() {
 		Log.i(this, "removeRuleToLayer()");
-		//UiDialogs.errorDialog(definitionJPanel, "REMOVING Rules not working yet", "Error");
-		
+	
 		try {
 			long layerId = definitionJPanel.getSelectedLayer();
 			int appliedRuleId = (int)definitionJPanel.getSelectedAppliedRule();
@@ -455,7 +452,7 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 			JPanelStatus.getInstance("Saving layer").start();
 
 			if (layerId != -1) {
-				defineDomainService.setLayerName(layerId, definitionJPanel.jTextFieldLayerName.getText());
+				defineDomainService.setModuleName(layerId, definitionJPanel.jTextFieldLayerName.getText());
 
 				//To update the layer list: we need to fetch the DataHelper from the list, update it and fire an updateUI to notice that there is an update
 				DefaultListModel dlm = (DefaultListModel) definitionJPanel.jListLayers.getModel();				
@@ -671,11 +668,8 @@ public class DefinitionController implements ActionListener, ListSelectionListen
 							enabled = "On";
 						}
 						// Number of exceptions
-						ArrayList<Long> appliedRulesExceptions = defineDomainService.getAppliedRuleExceptions(layerId, appliedRuleId);
-						int numberofexceptions = 0;
-						if (appliedRulesExceptions != null) {
-							numberofexceptions = appliedRulesExceptions.size();
-						}
+						ArrayList<Long> appliedRulesExceptionIds = defineDomainService.getExceptionIdsByAppliedRule(appliedRuleId);
+						int numberofexceptions = appliedRulesExceptionIds.size();
 
 						Object rowdata[] = { datahelper, defineDomainService.getModuleNameById(toLayerId), enabled, numberofexceptions };
 

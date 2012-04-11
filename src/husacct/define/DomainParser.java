@@ -81,7 +81,7 @@ public class DomainParser {
 	}
 	
 	public String getLogicalPath(long moduleId){
-		String logicalPath = SoftwareArchitecture.getInstance().getLogicalPath(moduleId);
+		String logicalPath = SoftwareArchitecture.getInstance().getModulesLogicalPath(moduleId);
 		return logicalPath;
 	}
 }

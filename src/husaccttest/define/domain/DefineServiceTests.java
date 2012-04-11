@@ -60,6 +60,7 @@ public class DefineServiceTests {
 		sA.addModule(module3);
 		
 		sA.addAppliedRule(rule1);
+		
 	}
 	
 	@Test

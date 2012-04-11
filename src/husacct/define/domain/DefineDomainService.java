@@ -55,8 +55,9 @@ public class DefineDomainService {
 		return moduleId;
 	}
 	
-	public void setLayerName(long moduleId, String newName) {
-		SoftwareArchitecture.getInstance().setModuleName(moduleId, newName);
+	public void setModuleName(long moduleId, String newName) {
+		Module module = SoftwareArchitecture.getInstance().getModuleById(moduleId);
+		module.setName(newName);
 	}
 
 	public void moveLayerUp(long layerId){
@@ -86,7 +87,6 @@ public class DefineDomainService {
 	//APPLIED RULES	
 	//APPLIED RULES
 	//APPLIED RULES
-	
 	public AppliedRule[] getAppliedRules() {
 		ArrayList<AppliedRule> ruleList = SoftwareArchitecture.getInstance().getAppliedRules();
 		AppliedRule[] rules = new AppliedRule[ruleList.size()]; ruleList.toArray(rules);
@@ -107,11 +107,14 @@ public class DefineDomainService {
 	}
 
 	public String getRuleTypeByAppliedRule(long appliedruleId) {
-		return SoftwareArchitecture.getInstance().getRuleTypeByAppliedRule(appliedruleId);
+		AppliedRule rule = SoftwareArchitecture.getInstance().getAppliedRuleById(appliedruleId);
+		String ruleTypeKey = rule.getRuleType();
+		return ruleTypeKey;
 	}
 
 	public void setAppliedRuleIsEnabled(long appliedRuleId, boolean enabled) {
-		SoftwareArchitecture.getInstance().setAppliedRuleIsEnabled(appliedRuleId, enabled);
+		AppliedRule rule = SoftwareArchitecture.getInstance().getAppliedRuleById(appliedRuleId);
+		rule.setEnabled(enabled);
 	}
 	
 	public ArrayList<Long> getAppliedRulesIdsByModule(long moduleId) {
@@ -137,22 +140,30 @@ public class DefineDomainService {
 		Module moduleFrom = SoftwareArchitecture.getInstance().getModuleById(moduleFromId);
 		Module moduleTo = SoftwareArchitecture.getInstance().getModuleById(moduleToId);
 
-		AppliedRule rule = new AppliedRule(ruleType,description, moduleFrom, moduleTo);
-		SoftwareArchitecture.getInstance().addExceptionToAppliedRule(parentRuleId, rule);
+		AppliedRule exceptionRule = new AppliedRule(ruleType,description, moduleFrom, moduleTo);
 		
+		AppliedRule parentRule = SoftwareArchitecture.getInstance().getAppliedRuleById(parentRuleId);
+		parentRule.addException(exceptionRule);
 	}
 	
-	public void removeAppliedRuleException(long parentRuleId, long appliedRuleId) {
-		SoftwareArchitecture.getInstance().removeAppliedRuleException(parentRuleId, appliedRuleId);
+	public void removeAppliedRuleException(long parentRuleId, long exceptionRuleId) {
+		AppliedRule parentRule = SoftwareArchitecture.getInstance().getAppliedRuleById(parentRuleId);
+		parentRule.removeExceptionById(exceptionRuleId);
 	}
 
 	public void removeAppliedRuleExceptions(long appliedRuleId) {
-		SoftwareArchitecture.getInstance().removeAppliedRuleExceptions(appliedRuleId);
+		AppliedRule parentRule = SoftwareArchitecture.getInstance().getAppliedRuleById(appliedRuleId);
+		parentRule.removeAllExceptions();
 	}
 
-	public ArrayList<Long> getAppliedRuleExceptions(long l, long appliedrule_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Long> getExceptionIdsByAppliedRule(long parentRuleId) {
+		AppliedRule parentRule = SoftwareArchitecture.getInstance().getAppliedRuleById(parentRuleId);
+		ArrayList<AppliedRule> exceptionRules = parentRule.getExceptions();
+		ArrayList<Long> exceptionIds = new ArrayList<Long>();
+		for (AppliedRule exception : exceptionRules){
+			exceptionIds.add(exception.getId());
+		}
+		return exceptionIds;
 	}
 	
 	//SOFTWARE UNIT DEFINITION
